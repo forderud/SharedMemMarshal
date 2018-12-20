@@ -171,6 +171,7 @@
   <ItemGroup>
     <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="TestSharedMem.hpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,8 @@
 #pragma once
-#include <vector>
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestComponent_h.h"
-
+#include "SharedMem.hpp"
 
 
 class ATL_NO_VTABLE TestSharedMem :
@@ -11,7 +10,8 @@ class ATL_NO_VTABLE TestSharedMem :
     public CComCoClass<TestSharedMem, &CLSID_TestSharedMem>,
     public ISharedMem {
 public:
-    TestSharedMem() : m_data(1024) {
+    TestSharedMem() {
+        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", 0, 1024));
     }
 
     /*NOT virtual*/ ~TestSharedMem() {
@@ -21,22 +21,25 @@ public:
         if (!size)
             return E_INVALIDARG;
 
-        *size = static_cast<unsigned int>(m_data.size());
+        *size = static_cast<unsigned int>(m_data->size);
         return S_OK;
     }
 
     HRESULT STDMETHODCALLTYPE GetData(unsigned int idx, /*out*/unsigned char * val) override {
         if (!val)
             return E_INVALIDARG;
-        if (idx >= m_data.size())
+        if (idx >= m_data->size)
             return E_BOUNDS;
 
-        *val = m_data[idx];
+        *val = m_data->ptr[idx];
         return S_OK;
     }
 
     HRESULT STDMETHODCALLTYPE SetData (unsigned int idx, /*in*/unsigned char val) override {
-        m_data[idx] = val;
+        if (idx >= m_data->size)
+            return E_BOUNDS;
+
+        m_data->ptr[idx] = val;
         return S_OK;
     }
 
@@ -47,7 +50,7 @@ public:
     END_COM_MAP()
 
 private:
-    std::vector<unsigned char> m_data;
+    std::unique_ptr<SharedMem> m_data;
 };
 
 OBJECT_ENTRY_AUTO(CLSID_TestSharedMem, TestSharedMem)
