@@ -3,6 +3,22 @@
 #include <Windows.h>
 
 
+/** Serialize/deserialize an arbitrary POD type. */
+template <class T> IStream& operator<< (IStream& stream, const T& data) {
+    unsigned long bytes_written = 0;
+    CHECK(stream.Write(&data, sizeof(data), &bytes_written));
+    if (bytes_written != sizeof(data))
+        throw std::runtime_error("Truncated IStream write");
+    return stream;
+}
+template <class T> IStream& operator>> (IStream& stream, T& data) {
+    unsigned long bytes_read = 0;
+    CHECK(stream.Read(&data, sizeof(data), &bytes_read));
+    if (bytes_read != sizeof(data))
+        throw std::runtime_error("Truncated IStream read");
+    return stream;
+}
+
 static void CheckErrorAndThrow(const char * error_msg) {
     DWORD err = GetLastError();
 
@@ -19,7 +35,7 @@ struct SharedMem {
         CLIENT,
     };
 
-    SharedMem(MODE mode, std::string name, unsigned int segm_idx, size_t segm_size) : size(segm_size) {
+    SharedMem(MODE mode, std::string name, unsigned int segm_idx, unsigned int segm_size) : size(segm_size) {
         if (size != static_cast<unsigned int>(size))
             throw std::runtime_error("SharedMemAlloc: too large buffer");
 
@@ -57,7 +73,7 @@ struct SharedMem {
         handle = nullptr;
     }
 
-    HANDLE          handle = nullptr; ///< shared mem segment handle
-    unsigned char * ptr    = nullptr; ///< pointer to start of shared mem segment
-    const size_t    size   = 0;       ///< shared mem size
+    HANDLE             handle = nullptr; ///< shared mem segment handle
+    unsigned char    * ptr    = nullptr; ///< pointer to start of shared mem segment
+    const unsigned int size   = 0;       ///< shared mem size
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include <atomic>
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestComponent_h.h"
@@ -10,8 +11,9 @@ class ATL_NO_VTABLE TestSharedMem :
     public CComCoClass<TestSharedMem, &CLSID_TestSharedMem>,
     public ISharedMem {
 public:
-    TestSharedMem() {
-        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", 0, 1024));
+    TestSharedMem() : m_obj_idx(s_counter) {
+        s_counter++;
+        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", m_obj_idx, 1024));
     }
 
     /*NOT virtual*/ ~TestSharedMem() {
@@ -50,7 +52,10 @@ public:
     END_COM_MAP()
 
 private:
-    std::unique_ptr<SharedMem> m_data;
+    std::unique_ptr<SharedMem>       m_data;
+    const unsigned int               m_obj_idx;
+
+    static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
 };
 
 OBJECT_ENTRY_AUTO(CLSID_TestSharedMem, TestSharedMem)

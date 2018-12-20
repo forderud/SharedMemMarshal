@@ -167,6 +167,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="TestSharedMem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComSupport.hpp" />
