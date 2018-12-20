@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ComSupport.hpp" />
+    <ClInclude Include="TestSharedMem.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="TestComponent.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestSharedMem.rgs" />
+    <None Include="Module.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TestComponent.rc" />
+  </ItemGroup>
+</Project>

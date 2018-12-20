@@ -1,0 +1,26 @@
+HKCR
+{
+	TestComponent.TestSharedMem.1 = s 'TestSharedMem Object'
+	{
+		CLSID = s '{B7B84F73-8638-4EE5-A486-2C9455C0CD2B}'
+	}
+	TestComponent.TestSharedMem = s 'TestSharedMem Object'
+	{		
+		CLSID = s '{B7B84F73-8638-4EE5-A486-2C9455C0CD2B}'
+		CurVer = s 'TestComponent.TestSharedMem.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B7B84F73-8638-4EE5-A486-2C9455C0CD2B} = s 'TestSharedMem Object'
+		{
+			ProgID = s 'TestComponent.TestSharedMem.1'
+			VersionIndependentProgID = s 'TestComponent.TestSharedMem'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{8E42F33F-E5E3-46B4-8B39-0A03DCF338CC}'
+			Version = s '1.0'
+		}
+	}
+}
