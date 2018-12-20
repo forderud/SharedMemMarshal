@@ -15,6 +15,7 @@ HKCR
 		{
 			ProgID = s 'TestComponent.TestSharedMem.1'
 			VersionIndependentProgID = s 'TestComponent.TestSharedMem'
+			val AppID = s '%APPID%'
 			InprocServer32 = s '%MODULE%'
 			{
 				val ThreadingModel = s 'Apartment'

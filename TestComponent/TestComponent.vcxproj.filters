@@ -16,6 +16,7 @@
   <ItemGroup>
     <None Include="TestSharedMem.rgs" />
     <None Include="Module.def" />
+    <None Include="AppID.rgs" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestComponent.rc" />

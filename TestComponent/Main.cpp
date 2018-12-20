@@ -8,6 +8,7 @@
 class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
 public:
     DECLARE_LIBID(LIBID_TestComponent)
+    DECLARE_REGISTRY_APPID_RESOURCEID(IDR_AppID, "{CDD196FE-70ED-46F4-BED7-57615CB78F9B}")
 };
 
 TestComponentModule _AtlModule;
