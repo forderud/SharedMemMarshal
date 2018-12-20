@@ -3,6 +3,7 @@
 #include "TestComponent_h.h"
 #include "TestComponent_i.c"
 #include "ComSupport.hpp"
+#include <psapi.h>
 
 
 class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
@@ -17,7 +18,17 @@ TestComponentModule _AtlModule;
 
 // DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE /*hInstance*/, DWORD dwReason, LPVOID lpReserved) {
-    if (dwReason == DLL_PROCESS_DETACH) {
+    if (dwReason == DLL_PROCESS_ATTACH) {
+#if 0
+        // break dllhost.exe until debugger is attached
+        HANDLE process = GetCurrentProcess();
+        TCHAR filename[MAX_PATH] = {};
+        GetProcessImageFileName(process, filename, MAX_PATH);
+        if (std::string(filename).find("dllhost.exe") != std::string::npos) {
+            while (!IsDebuggerPresent())
+                Sleep(200);
+        }
+#endif
     }
 
     return _AtlModule.DllMain(dwReason, lpReserved);
