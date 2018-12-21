@@ -18,7 +18,7 @@ HKCR
 			val AppID = s '%APPID%'
 			InprocServer32 = s '%MODULE%'
 			{
-				val ThreadingModel = s 'Apartment'
+				val ThreadingModel = s 'Both'
 			}
 			TypeLib = s '{8E42F33F-E5E3-46B4-8B39-0A03DCF338CC}'
 			Version = s '1.0'
