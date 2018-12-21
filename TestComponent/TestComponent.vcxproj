@@ -85,7 +85,13 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <PostBuildEvent>
-      <Command>regsvr32.exe /s $(TargetPath)</Command>
+      <Command>IF $(ConfigurationType) == DynamicLibrary (
+  echo Registering DLL...
+  regsvr32.exe /s $(TargetPath)
+) ELSE (
+  echo Registering EXE...
+  $(TargetPath) /regserver
+)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Post-build registration</Message>
@@ -95,6 +101,7 @@
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(ConfigurationType)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -105,7 +112,13 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <PostBuildEvent>
-      <Command>regsvr32.exe /s $(TargetPath)</Command>
+      <Command>IF $(ConfigurationType) == DynamicLibrary (
+  echo Registering DLL...
+  regsvr32.exe /s $(TargetPath)
+) ELSE (
+  echo Registering EXE...
+  $(TargetPath) /regserver
+)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Post-build registration</Message>
@@ -115,6 +128,7 @@
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(ConfigurationType)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -132,13 +146,20 @@
       <ModuleDefinitionFile>Module.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>regsvr32.exe /s $(TargetPath)</Command>
+      <Command>IF $(ConfigurationType) == DynamicLibrary (
+  echo Registering DLL...
+  regsvr32.exe /s $(TargetPath)
+) ELSE (
+  echo Registering EXE...
+  $(TargetPath) /regserver
+)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Post-build registration</Message>
     </PostBuildEvent>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(ConfigurationType)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -156,13 +177,20 @@
       <ModuleDefinitionFile>Module.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>regsvr32.exe /s $(TargetPath)</Command>
+      <Command>IF $(ConfigurationType) == DynamicLibrary (
+  echo Registering DLL...
+  regsvr32.exe /s $(TargetPath)
+) ELSE (
+  echo Registering EXE...
+  $(TargetPath) /regserver
+)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Post-build registration</Message>
     </PostBuildEvent>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(ConfigurationType)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -183,9 +211,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AppID.rgs" />
-    <None Include="DataCollection.rgs" />
-    <None Include="Module.def" />
+    <None Include="DataCollectionDll.rgs" />
+    <None Include="DataCollectionExe.rgs" />
     <None Include="DataHandle.rgs" />
+    <None Include="Module.def" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestComponent.rc" />

@@ -19,8 +19,9 @@
   <ItemGroup>
     <None Include="Module.def" />
     <None Include="AppID.rgs" />
+    <None Include="DataCollectionDll.rgs" />
+    <None Include="DataCollectionExe.rgs" />
     <None Include="DataHandle.rgs" />
-    <None Include="DataCollection.rgs" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestComponent.rc" />

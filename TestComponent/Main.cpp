@@ -5,7 +5,13 @@
 #include <psapi.h>
 
 
-class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
+class TestComponentModule : 
+#ifdef _WINDLL
+    public ATL::CAtlDllModuleT<TestComponentModule>
+#else
+    public ATL::CAtlExeModuleT<TestComponentModule>
+#endif
+{
 public:
     DECLARE_LIBID(LIBID_TestComponent)
     DECLARE_REGISTRY_APPID_RESOURCEID(IDR_AppID, "{CDD196FE-70ED-46F4-BED7-57615CB78F9B}")
@@ -15,6 +21,7 @@ TestComponentModule _AtlModule;
 
 
 
+#ifdef _WINDLL
 // DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE /*hInstance*/, DWORD dwReason, LPVOID lpReserved) {
     if (dwReason == DLL_PROCESS_ATTACH) {
@@ -75,3 +82,17 @@ STDAPI DllInstall(BOOL bInstall, _In_opt_  LPCWSTR pszCmdLine) {
 
     return hr;
 }
+
+#else
+
+extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPTSTR /*lpCmdLine*/, int nShowCmd) {
+#if 0
+    // break until debugger is attached
+    while (!IsDebuggerPresent())
+        Sleep(200);
+#endif
+
+    return _AtlModule.WinMain(nShowCmd);
+}
+
+#endif
