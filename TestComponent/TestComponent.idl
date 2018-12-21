@@ -25,5 +25,6 @@ library TestComponent {
      helpstring("Class for testing shared memory")]
     coclass TestSharedMem {
         [default] interface ISharedMem;
+        interface IMarshal;
     };
 };

@@ -9,11 +9,11 @@
 class ATL_NO_VTABLE TestSharedMem :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<TestSharedMem, &CLSID_TestSharedMem>,
-    public ISharedMem {
+    public ISharedMem,
+    public IMarshal {
 public:
     TestSharedMem() : m_obj_idx(s_counter) {
         s_counter++;
-        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", m_obj_idx, 1024));
     }
 
     /*NOT virtual*/ ~TestSharedMem() {
@@ -45,10 +45,77 @@ public:
         return S_OK;
     }
 
+
+    /** IMarshal implementation. Called from server (stub). */
+    HRESULT STDMETHODCALLTYPE GetUnmarshalClass(const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags, CLSID* clsid) override {
+        assert(iid == IID_ISharedMem);
+        assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
+
+        *clsid = GetObjectCLSID(); // class will unmarshal itself
+        return S_OK;
+    }
+
+    /** Indicate the total size of the marshaled object reference. Called from server (stub). */
+    HRESULT STDMETHODCALLTYPE GetMarshalSizeMax(const IID& iid, void * /*pv*/, DWORD /*destContext*/, void * /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) override {
+        assert(iid == IID_ISharedMem);
+        assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
+
+        *size = 2*sizeof(unsigned int);
+        return S_OK;
+    }
+
+    /** Serialize object. Called from server (stub). */
+    HRESULT STDMETHODCALLTYPE MarshalInterface(IStream* strm, const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags) override {
+        // verify that comm is between processes on same computer with shared-mem support 
+        //if (destContext != MSHCTX_LOCAL)
+        //    return E_FAIL;
+
+        assert(iid == IID_ISharedMem);
+        assert(pv == this); pv;             // class marshals itself
+        assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
+
+        // create shared-mem segment
+        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", m_obj_idx, 1024));
+
+        // serialize shared-mem metadata
+        *strm << m_obj_idx;
+        *strm << m_data->size;
+
+        // increment ref-count to avoid premature destruction
+        // WARNING: Object will leak
+        AddRef();
+
+        return S_OK;
+    }
+
+    /** Deserialize object. Called from client (proxy). */
+    HRESULT STDMETHODCALLTYPE UnmarshalInterface(IStream* strm, const IID& iid, void ** ppv) override {
+        // de-serialize shared-mem metadata
+        unsigned int obj_idx = 0;
+        *strm >> obj_idx;
+        unsigned int obj_size = 0;
+        *strm >> obj_size;
+        // map shared-mem
+        m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", obj_idx, obj_size));
+
+        return QueryInterface(iid, ppv);
+    }
+
+    /** Destroys a marshaled data packet. Have never been observed called. */
+    HRESULT STDMETHODCALLTYPE ReleaseMarshalData(IStream * /*strm*/) override {
+        return S_OK;
+    }
+
+    /** Releases all connections to an object. Have never been observed called.  */
+    HRESULT STDMETHODCALLTYPE DisconnectObject(DWORD /*reserved*/) override {
+        return S_OK;
+    }
+
     DECLARE_REGISTRY_RESOURCEID(IDR_TestSharedMem)
 
     BEGIN_COM_MAP(TestSharedMem)
         COM_INTERFACE_ENTRY(ISharedMem)
+        COM_INTERFACE_ENTRY(IMarshal)
     END_COM_MAP()
 
 private:
