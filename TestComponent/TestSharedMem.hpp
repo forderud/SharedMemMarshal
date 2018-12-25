@@ -12,8 +12,11 @@ class ATL_NO_VTABLE TestSharedMem :
     public ISharedMem,
     public IMarshal {
 public:
-    TestSharedMem() : m_obj_idx(s_counter) {
+    TestSharedMem() {
         s_counter++;
+
+        // create shared-mem segment
+        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", s_counter, 1024));
     }
 
     /*NOT virtual*/ ~TestSharedMem() {
@@ -74,11 +77,8 @@ public:
         assert(pv == this); pv;             // class marshals itself
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
-        // create shared-mem segment
-        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", m_obj_idx, 1024));
-
         // serialize shared-mem metadata
-        *strm << m_obj_idx;
+        *strm << m_data->segm_idx;
         *strm << m_data->size;
 
         // increment ref-count to avoid premature destruction
@@ -95,6 +95,7 @@ public:
         *strm >> obj_idx;
         unsigned int obj_size = 0;
         *strm >> obj_size;
+
         // map shared-mem
         m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", obj_idx, obj_size));
 
@@ -120,7 +121,6 @@ public:
 
 private:
     std::unique_ptr<SharedMem>       m_data;
-    const unsigned int               m_obj_idx;
 
     static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
 };
