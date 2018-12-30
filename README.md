@@ -1,11 +1,11 @@
 Sample code for custom COM marshaling with shared memory.
 
-Goal:
-* Leverage COM runtime to keep server object alive until all associated proxies have been destroyed.
-* How to establish a "strong connection" between proxy & server when implemenging IMarshal?
-
 Challenge:
-* Must call `AddRef()` in [`IMarshal::MarshalInterface`](https://docs.microsoft.com/nb-no/windows/desktop/api/objidl/nf-objidl-imarshal-marshalinterface) to avoid premature server object destruction. This introduces a reference leak. I'm unable to find a corresponding place to put a `Release()` to avoid leaking without having to introduce complex IPC schemes that rely on event signaling to manage lifetime between proxy and server.
+* Must call `AddRef()` in [`IMarshal::MarshalInterface`](https://docs.microsoft.com/nb-no/windows/desktop/api/objidl/nf-objidl-imarshal-marshalinterface) to avoid premature server object destruction. This triggers the need for implementing a manual IPC mechanism to signal proxy destruction back to the server, so that the server can call `Release()`.
+
+Question:
+* Possible to leverage the COM runtime to keep server object alive until all associated proxies have been destroyed?
+* Possible to establish a "strong connection" between proxy & server when implementing IMarshal?
 
 References:
 * [IMarhal](https://docs.microsoft.com/nb-no/windows/desktop/api/objidl/nn-objidl-imarshal) interface
