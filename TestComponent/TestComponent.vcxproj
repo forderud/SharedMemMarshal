@@ -166,11 +166,13 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataCollection.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DataHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComSupport.hpp" />
+    <ClInclude Include="DataCollection.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="SignalHandler.hpp" />

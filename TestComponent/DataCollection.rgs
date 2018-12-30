@@ -1,0 +1,27 @@
+HKCR
+{
+	TestComponent.DataCollection.1 = s 'DataCollection Object'
+	{
+		CLSID = s '{C8767698-8297-4BE1-904E-FC25034851D2}'
+	}
+	TestComponent.DataCollection = s 'DataCollection Object'
+	{		
+		CLSID = s '{C8767698-8297-4BE1-904E-FC25034851D2}'
+		CurVer = s 'TestComponent.DataCollection.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C8767698-8297-4BE1-904E-FC25034851D2} = s 'DataCollection Object'
+		{
+			ProgID = s 'TestComponent.DataCollection.1'
+			VersionIndependentProgID = s 'TestComponent.DataCollection'
+			val AppID = s '%APPID%'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			TypeLib = s '{8E42F33F-E5E3-46B4-8B39-0A03DCF338CC}'
+			Version = s '1.0'
+		}
+	}
+}

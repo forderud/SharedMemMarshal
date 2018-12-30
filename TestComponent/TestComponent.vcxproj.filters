@@ -3,6 +3,7 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DataHandle.cpp" />
+    <ClCompile Include="DataCollection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
@@ -10,6 +11,7 @@
     <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="SignalHandler.hpp" />
     <ClInclude Include="DataHandle.hpp" />
+    <ClInclude Include="DataCollection.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestComponent.idl" />
