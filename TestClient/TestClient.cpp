@@ -7,7 +7,7 @@ int main() {
     ComInitialize com(COINIT_MULTITHREADED);
 
     // create COM object (will live in a separate apartment)
-    CComPtr<ISharedMem> obj;
+    CComPtr<IDataHandle> obj;
     CHECK(obj.CoCreateInstance(L"TestComponent.TestSharedMem", nullptr, CLSCTX_LOCAL_SERVER));
     std::cout << "Object created" << std::endl;
 

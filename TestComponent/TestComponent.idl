@@ -5,8 +5,8 @@ import "ocidl.idl";
 [object,
  oleautomation, // use "automation" marshaler (oleaut32.dll)
  uuid(54E049DB-C39C-4025-B1EF-2FC0E5246277),
- helpstring("Interface for communicating a values over shared memory.")]
-interface ISharedMem : IUnknown {
+ helpstring("Interface for exchanging data over shared memory.")]
+interface IDataHandle : IUnknown {
     HRESULT GetSize ([out,retval] unsigned int * size);
     HRESULT SetData ([in] unsigned int idx, [in] unsigned char val);
     HRESULT GetData ([in] unsigned int idx, [out,retval] unsigned char * val);
@@ -24,7 +24,7 @@ library TestComponent {
      uuid(B7B84F73-8638-4EE5-A486-2C9455C0CD2B),
      helpstring("Class for testing shared memory")]
     coclass TestSharedMem {
-        [default] interface ISharedMem;
+        [default] interface IDataHandle;
         interface IMarshal;
     };
 };

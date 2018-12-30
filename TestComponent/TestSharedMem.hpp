@@ -10,7 +10,7 @@
 class ATL_NO_VTABLE TestSharedMem :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<TestSharedMem, &CLSID_TestSharedMem>,
-    public ISharedMem,
+    public IDataHandle,
     public IMarshal {
 public:
     TestSharedMem() : m_signal("TestSharedMem_") {
@@ -67,7 +67,7 @@ public:
 
     /** IMarshal implementation. Called from server (stub). */
     HRESULT STDMETHODCALLTYPE GetUnmarshalClass(const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags, CLSID* clsid) override {
-        assert(iid == IID_ISharedMem);
+        assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
         *clsid = GetObjectCLSID(); // class will unmarshal itself
@@ -76,7 +76,7 @@ public:
 
     /** Indicate the total size of the marshaled object reference. Called from server (stub). */
     HRESULT STDMETHODCALLTYPE GetMarshalSizeMax(const IID& iid, void * /*pv*/, DWORD /*destContext*/, void * /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) override {
-        assert(iid == IID_ISharedMem);
+        assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
         *size = 2*sizeof(unsigned int);
@@ -89,7 +89,7 @@ public:
         //if (destContext != MSHCTX_LOCAL)
         //    return E_FAIL;
 
-        assert(iid == IID_ISharedMem);
+        assert(iid == IID_IDataHandle);
         assert(pv == this); pv;             // class marshals itself
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
@@ -132,7 +132,7 @@ public:
     DECLARE_REGISTRY_RESOURCEID(IDR_TestSharedMem)
 
     BEGIN_COM_MAP(TestSharedMem)
-        COM_INTERFACE_ENTRY(ISharedMem)
+        COM_INTERFACE_ENTRY(IDataHandle)
         COM_INTERFACE_ENTRY(IMarshal)
     END_COM_MAP()
 
