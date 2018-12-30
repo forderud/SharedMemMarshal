@@ -4,6 +4,7 @@
 #include "Resource.h"
 #include "TestComponent_h.h"
 #include "SharedMem.hpp"
+#include "SignalHandler.hpp"
 
 
 class ATL_NO_VTABLE TestSharedMem :
@@ -12,7 +13,7 @@ class ATL_NO_VTABLE TestSharedMem :
     public ISharedMem,
     public IMarshal {
 public:
-    TestSharedMem() {
+    TestSharedMem() : m_signal("TestSharedMem_") {
         s_counter++;
 
         // create shared-mem segment
@@ -20,6 +21,21 @@ public:
     }
 
     /*NOT virtual*/ ~TestSharedMem() {
+    }
+
+    typedef CComObjectRootEx<CComMultiThreadModel> PARENT;
+
+    ULONG InternalAddRef() {
+        return PARENT::InternalAddRef();
+    }
+
+    ULONG InternalRelease() {
+        if (m_data && (m_data->mode == SharedMem::CLIENT) && (m_dwRef == 1)) {
+            // last proxy reference released
+            m_signal.Signal();
+        }
+
+        return PARENT::InternalRelease();
     }
 
     HRESULT STDMETHODCALLTYPE GetSize(/*out*/unsigned int* size) override {
@@ -81,9 +97,8 @@ public:
         *strm << m_data->segm_idx;
         *strm << m_data->size;
 
-        // increment ref-count to avoid premature destruction
-        // WARNING: Object will leak
-        AddRef();
+        // create signal to receive proxy destruction event (will increment ref-count to avoid premature destruction)
+        m_signal.Create(m_data->segm_idx, GetUnknown());
 
         return S_OK;
     }
@@ -98,6 +113,8 @@ public:
 
         // map shared-mem
         m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", obj_idx, obj_size));
+
+        m_signal.Open(obj_idx);
 
         return QueryInterface(iid, ppv);
     }
@@ -121,6 +138,7 @@ public:
 
 private:
     std::unique_ptr<SharedMem>       m_data;
+    SignalHandler                    m_signal;
 
     static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
 };
