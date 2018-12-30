@@ -7,9 +7,13 @@ int main() {
     ComInitialize com(COINIT_MULTITHREADED);
 
     // create COM object (will live in a separate apartment)
+    CComPtr<ISharedMem> mgr;
+    CHECK(mgr.CoCreateInstance(L"TestComponent.DataCollection", nullptr, CLSCTX_LOCAL_SERVER));
+    std::cout << "Collection created" << std::endl;
+
     CComPtr<IDataHandle> obj;
-    CHECK(obj.CoCreateInstance(L"TestComponent.DataHandle", nullptr, CLSCTX_LOCAL_SERVER));
-    std::cout << "Object created" << std::endl;
+    CHECK(mgr->GetHandle(0, &obj));
+    std::cout << "Object retrieved" << std::endl;
 
     const unsigned int idx = 0;
     const unsigned char set_val = 42;
