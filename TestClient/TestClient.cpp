@@ -8,7 +8,7 @@ int main() {
 
     // create COM object (will live in a separate apartment)
     CComPtr<IDataHandle> obj;
-    CHECK(obj.CoCreateInstance(L"TestComponent.TestSharedMem", nullptr, CLSCTX_LOCAL_SERVER));
+    CHECK(obj.CoCreateInstance(L"TestComponent.DataHandle", nullptr, CLSCTX_LOCAL_SERVER));
     std::cout << "Object created" << std::endl;
 
     const unsigned int idx = 0;

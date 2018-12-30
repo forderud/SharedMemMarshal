@@ -7,20 +7,20 @@
 #include "SignalHandler.hpp"
 
 
-class ATL_NO_VTABLE TestSharedMem :
+class ATL_NO_VTABLE DataHandle :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
-    public CComCoClass<TestSharedMem, &CLSID_TestSharedMem>,
+    public CComCoClass<DataHandle, &CLSID_DataHandle>,
     public IDataHandle,
     public IMarshal {
 public:
-    TestSharedMem() : m_signal("TestSharedMem_") {
+    DataHandle() : m_signal("TestSharedMem_") {
         s_counter++;
 
         // create shared-mem segment
         m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", s_counter, 1024));
     }
 
-    /*NOT virtual*/ ~TestSharedMem() {
+    /*NOT virtual*/ ~DataHandle() {
     }
 
     typedef CComObjectRootEx<CComMultiThreadModel> PARENT;
@@ -129,9 +129,9 @@ public:
         return S_OK;
     }
 
-    DECLARE_REGISTRY_RESOURCEID(IDR_TestSharedMem)
+    DECLARE_REGISTRY_RESOURCEID(IDR_DataHandle)
 
-    BEGIN_COM_MAP(TestSharedMem)
+    BEGIN_COM_MAP(DataHandle)
         COM_INTERFACE_ENTRY(IDataHandle)
         COM_INTERFACE_ENTRY(IMarshal)
     END_COM_MAP()
@@ -143,4 +143,4 @@ private:
     static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
 };
 
-OBJECT_ENTRY_AUTO(CLSID_TestSharedMem, TestSharedMem)
+OBJECT_ENTRY_AUTO(CLSID_DataHandle, DataHandle)

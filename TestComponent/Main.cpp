@@ -1,5 +1,4 @@
 #include "Resource.h"
-#include "TestSharedMem.hpp"
 #include "TestComponent_h.h"
 #include "TestComponent_i.c"
 #include "ComSupport.hpp"

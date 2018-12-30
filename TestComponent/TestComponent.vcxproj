@@ -167,14 +167,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="TestSharedMem.cpp" />
+    <ClCompile Include="DataHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="SignalHandler.hpp" />
-    <ClInclude Include="TestSharedMem.hpp" />
+    <ClInclude Include="DataHandle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestComponent.idl" />
@@ -182,7 +182,7 @@
   <ItemGroup>
     <None Include="AppID.rgs" />
     <None Include="Module.def" />
-    <None Include="TestSharedMem.rgs" />
+    <None Include="DataHandle.rgs" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestComponent.rc" />

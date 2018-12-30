@@ -2,7 +2,7 @@ HKCR
 {
 	NoRemove AppID
 	{
-		ForceRemove '%APPID%' = s 'TestSharedMem Object'
+		ForceRemove '%APPID%' = s 'TestComponent Object'
 		{
 			val DllSurrogate = s ''
 		}

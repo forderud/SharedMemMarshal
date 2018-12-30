@@ -23,7 +23,7 @@ library TestComponent {
     [version(1.0),
      uuid(B7B84F73-8638-4EE5-A486-2C9455C0CD2B),
      helpstring("Class for testing shared memory")]
-    coclass TestSharedMem {
+    coclass DataHandle {
         [default] interface IDataHandle;
         interface IMarshal;
     };
