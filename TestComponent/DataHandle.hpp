@@ -15,12 +15,15 @@ class ATL_NO_VTABLE DataHandle :
 public:
     DataHandle() : m_signal("TestSharedMem_") {
         s_counter++;
-
-        // create shared-mem segment
-        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", s_counter, 1024));
+        Initialize(s_counter);
     }
 
     /*NOT virtual*/ ~DataHandle() {
+    }
+
+    void Initialize(unsigned int idx) {
+        // create shared-mem segment
+        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", idx, 1024));
     }
 
     typedef CComObjectRootEx<CComMultiThreadModel> PARENT;
