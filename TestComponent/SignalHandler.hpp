@@ -48,8 +48,13 @@ public:
         }
 
         // call AddRef to keep "ptr" alive while the proxy lives
-        assert(!m_ref);
-        m_ref = ptr;
+        if (!m_ref) {
+            m_ref = ptr;
+        } else {
+            assert(m_ref == ptr);
+            m_ref.p->AddRef();
+            m_extra_refs++;
+        }
     }
 
     /** Open event object associated with "val". Called in proxy. */
@@ -82,7 +87,12 @@ private:
 
         // call Release on "ptr"
         // do this last, since it might trigger deletion of "obj"
-        obj->m_ref = nullptr;
+        if (obj->m_extra_refs > 0) {
+            obj->m_extra_refs--;
+            obj->m_ref.p->Release();
+        } else {
+            obj->m_ref = nullptr;
+        }
     }
 
     /** Generate a unique name based on "val". */
@@ -98,6 +108,7 @@ private:
     HANDLE            m_event = 0;
     HANDLE            m_wait  = 0; ///< wait callback handle (used by server)
     CComPtr<IUnknown> m_ref;       ///< extra ref-count (used by server to indicate ref-count held by proxy)
+    int               m_extra_refs = 0;
 #endif
     std::string m_name;
 };
