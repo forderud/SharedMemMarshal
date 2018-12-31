@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestComponent_h.h"
@@ -18,9 +19,18 @@ public:
     }
 
     HRESULT GetHandle(unsigned int idx, IDataHandle ** object) {
-        auto obj = CreateLocalInstance<DataHandle>();
-        obj->Initialize(idx);
-        *object = obj.Detach();
+        auto it = m_cache.find(idx);
+
+        if (it == m_cache.end()) {
+            // create object, since it's not in cache
+            auto obj = CreateLocalInstance<DataHandle>();
+            obj->Initialize(idx);
+            m_cache[idx] = obj;
+            it = m_cache.find(idx);
+        }
+
+        CComPtr<DataHandle> copy = it->second;
+        *object = copy.Detach();
         return S_OK;
     }
 
@@ -31,6 +41,8 @@ public:
     END_COM_MAP()
 
 private:
+    std::map<unsigned int, CComPtr<DataHandle>> m_cache;
+
 };
 
 OBJECT_ENTRY_AUTO(CLSID_DataCollection, DataCollection)
