@@ -183,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AppID.rgs" />
+    <None Include="DataCollection.rgs" />
     <None Include="Module.def" />
     <None Include="DataHandle.rgs" />
   </ItemGroup>
