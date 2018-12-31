@@ -14,30 +14,41 @@ public:
     }
 
     ~SignalHandler () {
-#ifdef _WIN32
+        if (m_wait) {
+            // unregister callback
+            if (!UnregisterWaitEx(m_wait, NULL)) {
+                DWORD err = GetLastError();
+                // disregard ERROR_IO_PENDING errors
+                if (err != ERROR_IO_PENDING)
+                    abort();
+            }
+            m_wait = 0;
+        }
+
         if (m_event) {
             CloseHandle(m_event);
             m_event = 0;
         }
-#endif
     }
 
 #ifdef _WIN32
     /** Create event object that is named based on "val" to keep it unique. Called in server. */
     void Create (uint32_t val, IUnknown * ptr) {
-        assert(!m_event);
-        m_event = CreateEventEx(NULL/*security*/, EventName(val), 0/*flags*/, SYNCHRONIZE);
-        assert(m_event);
+        if (!m_event) {
+            m_event = CreateEventEx(NULL/*security*/, EventName(val), 0/*flags*/, SYNCHRONIZE);
+            assert(m_event);
 
-        assert(!m_wait);
-        if (!RegisterWaitForSingleObject(&m_wait, m_event, SignalHandler::SignalCB, this, INFINITE, WT_EXECUTEONLYONCE)) {
-            DWORD err = GetLastError();
-            err;
-            abort();
+            assert(!m_wait);
+            if (!RegisterWaitForSingleObject(&m_wait, m_event, SignalHandler::SignalCB, this, INFINITE, WT_EXECUTEDEFAULT)) {
+                DWORD err = GetLastError();
+                err;
+                abort();
+            }
+            assert(m_wait);
         }
-        assert(m_wait);
 
         // call AddRef to keep "ptr" alive while the proxy lives
+        assert(!m_ref);
         m_ref = ptr;
     }
 
@@ -68,16 +79,9 @@ private:
         SignalHandler * obj = reinterpret_cast<SignalHandler*>(pv);
         assert(obj);
 
-        // unregister callback
-        if (!UnregisterWaitEx(obj->m_wait, NULL)) {
-            DWORD err = GetLastError();
-            // disregard ERROR_IO_PENDING errors
-            if (err != ERROR_IO_PENDING)
-                abort();
-        }
-
         // call Release on "ptr"
         // do this last, since it might trigger deletion of "obj"
+        assert(obj->m_ref);
         obj->m_ref = nullptr;
     }
 
