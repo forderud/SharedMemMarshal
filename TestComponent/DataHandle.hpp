@@ -15,7 +15,6 @@ class ATL_NO_VTABLE DataHandle :
 public:
     DataHandle() : m_signal("TestSharedMem_") {
         s_counter++;
-        Initialize(s_counter);
     }
 
     /*NOT virtual*/ ~DataHandle() {

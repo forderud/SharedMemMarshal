@@ -78,10 +78,10 @@ private:
     static void CALLBACK SignalCB (void* pv, BOOLEAN /*timedOut*/) {
         SignalHandler * obj = reinterpret_cast<SignalHandler*>(pv);
         assert(obj);
+        assert(obj->m_ref);
 
         // call Release on "ptr"
         // do this last, since it might trigger deletion of "obj"
-        assert(obj->m_ref);
         obj->m_ref = nullptr;
     }
 
