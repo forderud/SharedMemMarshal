@@ -1,21 +1,9 @@
 HKCR
 {
-	TestComponent.DataHandle.1 = s 'DataHandle Object'
-	{
-		CLSID = s '{B7B84F73-8638-4EE5-A486-2C9455C0CD2B}'
-	}
-	TestComponent.DataHandle = s 'DataHandle Object'
-	{		
-		CLSID = s '{B7B84F73-8638-4EE5-A486-2C9455C0CD2B}'
-		CurVer = s 'TestComponent.DataHandle.1'
-	}
 	NoRemove CLSID
 	{
 		ForceRemove {B7B84F73-8638-4EE5-A486-2C9455C0CD2B} = s 'DataHandle Object'
 		{
-			ProgID = s 'TestComponent.DataHandle.1'
-			VersionIndependentProgID = s 'TestComponent.DataHandle'
-			val AppID = s '%APPID%'
 			InprocServer32 = s '%MODULE%'
 			{
 				val ThreadingModel = s 'Both'
