@@ -5,12 +5,13 @@
 #include <Windows.h>
 
 
+
 /** Support class for signaling destruction events from "proxy" objects to the associated server. */
 class SignalHandler {
-    static const unsigned int HEX_ENC_LEN = 8; ///< number of characters required to encode a uint32_t in hexadecimal representation
+    static const unsigned int HEX_ENC_LEN = 16; ///< number of characters required to encode a uint64_t in hexadecimal representation
 public:
     SignalHandler (std::string name) : m_name(name) {
-        // reserve space for hex-encoded uint32_t
+        // reserve space for hex-encoded uint64_t
         m_name.resize(m_name.size() + HEX_ENC_LEN);
     }
 
@@ -35,7 +36,7 @@ public:
 #ifdef _WIN32
     /** Create event object that is named based on "val" to keep it unique.
         Called in server for each MarshalInterface, which might occur concurrent. Therefore, must be thread-safe. */
-    void Create (uint32_t val, IUnknown * ptr) {
+    void Create (uint64_t val, IUnknown * ptr) {
         std::lock_guard<std::mutex> lock(m_mutex);
 
         if (!m_event) {
@@ -61,8 +62,8 @@ public:
         }
     }
 
-    /** Open event object associated with "val". Called in proxy as part of UnmarshalInterface. */
-    void Open (uint32_t val) {
+    /** Open event object associated with "val". Called in proxy. */
+    void Open (uint64_t val) {
         assert(!m_event);
         m_event = OpenEvent(EVENT_MODIFY_STATE, FALSE, EventName(val));
         assert(m_event);
@@ -118,11 +119,11 @@ private:
     }
 
     /** Generate a unique name based on "val". */
-    const char* EventName (uint32_t val) {
+    const char* EventName (uint64_t val) {
         // using sprintf instead of std::to_string to avoid dynamic memory mgmt.
 #pragma warning(push)
 #pragma warning(disable: 4996) // function or variable may be unsafe
-        sprintf(const_cast<char*>(m_name.data()) + m_name.size()-HEX_ENC_LEN, "%I32X", val); // append hex-encoded uint32_t and null-termination
+        sprintf(const_cast<char*>(m_name.data()) + m_name.size()-HEX_ENC_LEN, "%I64X", val); // append hex-encoded uint64_t and null-termination
 #pragma warning(pop)
         return m_name.c_str();
     }
