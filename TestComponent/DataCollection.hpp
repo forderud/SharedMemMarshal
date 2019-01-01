@@ -19,6 +19,8 @@ public:
     }
 
     HRESULT GetHandle(unsigned int idx, IDataHandle ** object) {
+        std::lock_guard<std::mutex> lock(m_mutex);
+
         auto it = m_cache.find(idx);
 
         if (it == m_cache.end()) {
@@ -42,7 +44,7 @@ public:
 
 private:
     std::map<unsigned int, CComPtr<DataHandle>> m_cache;
-
+    std::mutex                                  m_mutex;
 };
 
 OBJECT_ENTRY_AUTO(CLSID_DataCollection, DataCollection)
