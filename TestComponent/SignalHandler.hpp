@@ -1,5 +1,6 @@
 #pragma once
 #include <cassert>
+#include <mutex>
 #include <string>
 #include <Windows.h>
 
