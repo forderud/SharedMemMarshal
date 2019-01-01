@@ -33,7 +33,8 @@ public:
     }
 
 #ifdef _WIN32
-    /** Create event object that is named based on "val" to keep it unique. Called in server. */
+    /** Create event object that is named based on "val" to keep it unique.
+        Called in server for each MarshalInterface, which might occur concurrent. Therefore, must be thread-safe. */
     void Create (uint32_t val, IUnknown * ptr) {
         std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -60,14 +61,14 @@ public:
         }
     }
 
-    /** Open event object associated with "val". Called in proxy. */
+    /** Open event object associated with "val". Called in proxy as part of UnmarshalInterface. */
     void Open (uint32_t val) {
         assert(!m_event);
         m_event = OpenEvent(EVENT_MODIFY_STATE, FALSE, EventName(val));
         assert(m_event);
     }
 
-    /** Send "release" event back to server, now that the object is deserialized.
+    /** Send "Release" event back to server. Called in client when proxy object is destructed.
         Based loosely on https://thrysoee.dk/InsideCOM+/ch14c.htm */
     void Signal () {
         assert(m_event);
@@ -82,7 +83,8 @@ public:
 
 private:
 #ifdef _WIN32
-    /** Called in server after proxy have called SetEvent. */
+    /** Called in server by OS thread-pool after proxy have called SetEvent.
+        Must be thread-safe, since multiple proxies might signal concurrently. */
     static void CALLBACK SignalCB (void* pv, BOOLEAN /*timedOut*/) {
         SignalHandler * obj = reinterpret_cast<SignalHandler*>(pv);
         assert(obj);
@@ -91,6 +93,7 @@ private:
         obj->ReleaseReference();
     }
 
+    /** Thread-safe proxy ref-count decrement. */
     void ReleaseReference () {
         assert(m_ref);
         bool last_release = false;
