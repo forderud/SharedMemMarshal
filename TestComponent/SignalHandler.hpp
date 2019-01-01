@@ -83,15 +83,22 @@ private:
     static void CALLBACK SignalCB (void* pv, BOOLEAN /*timedOut*/) {
         SignalHandler * obj = reinterpret_cast<SignalHandler*>(pv);
         assert(obj);
-        assert(obj->m_ref);
 
         // call Release on "ptr"
         // do this last, since it might trigger deletion of "obj"
-        if (obj->m_extra_refs > 0) {
-            obj->m_extra_refs--;
-            obj->m_ref.p->Release();
+        obj->ReleaseReference();
+    }
+
+    void ReleaseReference () {
+        assert(m_ref);
+
+        if (m_extra_refs > 0) {
+            // release one reference
+            m_extra_refs--;
+            m_ref.p->Release();
         } else {
-            obj->m_ref = nullptr;
+            // release last reference
+            m_ref = nullptr;
         }
     }
 
