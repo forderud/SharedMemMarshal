@@ -18,7 +18,7 @@ public:
     /*NOT virtual*/ ~DataCollection() {
     }
 
-    HRESULT GetHandle(unsigned int idx, IDataHandle ** object) {
+    HRESULT GetHandle(unsigned int idx, BOOL writable, IDataHandle ** object) {
         std::lock_guard<std::mutex> lock(m_mutex);
 
         auto it = m_cache.find(idx);
@@ -26,7 +26,7 @@ public:
         if (it == m_cache.end()) {
             // create object, since it's not in cache
             auto obj = CreateLocalInstance<DataHandle>();
-            obj->Initialize(idx);
+            obj->Initialize(idx, writable);
             m_cache[idx] = obj;
             it = m_cache.find(idx);
         }

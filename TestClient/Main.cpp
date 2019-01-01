@@ -6,7 +6,7 @@
 
 void AccessOneHandle (ISharedMem * mgr, unsigned int idx) {
     CComPtr<IDataHandle> obj;
-    CHECK(mgr->GetHandle(idx, &obj));
+    CHECK(mgr->GetHandle(idx, true, &obj));
     std::cout << "Object retrieved" << std::endl;
 
     const unsigned int pos = 0;
@@ -22,11 +22,11 @@ void AccessOneHandle (ISharedMem * mgr, unsigned int idx) {
 
 void AccessTwoHandles (ISharedMem * mgr, unsigned int idx) {
     CComPtr<IDataHandle> obj1;
-    CHECK(mgr->GetHandle(idx, &obj1));
+    CHECK(mgr->GetHandle(idx, true, &obj1));
     std::cout << "Object #1 retrieved" << std::endl;
 
-    CComPtr<IDataHandle> obj2;
-    CHECK(mgr->GetHandle(idx, &obj2));
+    CComPtr<IDataHandle> obj2; // read-only
+    CHECK(mgr->GetHandle(idx, false, &obj2));
     std::cout << "Object #2 retrieved" << std::endl;
 
     const unsigned int pos = 0;

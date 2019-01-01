@@ -20,9 +20,9 @@ public:
     /*NOT virtual*/ ~DataHandle() {
     }
 
-    void Initialize(unsigned int idx) {
+    void Initialize(unsigned int idx, bool writable) {
         // create shared-mem segment
-        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", idx, 1024));
+        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", writable, idx, 1024));
     }
 
     typedef CComObjectRootEx<CComMultiThreadModel> PARENT;
@@ -84,7 +84,7 @@ public:
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
-        *size = 2*sizeof(unsigned int);
+        *size = 2*sizeof(unsigned int) + sizeof(bool);
         return S_OK;
     }
 
@@ -100,6 +100,7 @@ public:
 
         // serialize shared-mem metadata
         *strm << m_data->segm_idx;
+        *strm << m_data->writable;
         *strm << m_data->size;
 
         // create signal to receive proxy destruction event (will increment ref-count to avoid premature destruction)
@@ -113,11 +114,13 @@ public:
         // de-serialize shared-mem metadata
         unsigned int obj_idx = 0;
         *strm >> obj_idx;
+        bool writable = false;
+        *strm >> writable;
         unsigned int obj_size = 0;
         *strm >> obj_size;
 
         // map shared-mem
-        m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", obj_idx, obj_size));
+        m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", writable, obj_idx, obj_size));
 
         m_signal.Open(obj_idx);
 

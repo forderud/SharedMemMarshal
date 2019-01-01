@@ -35,7 +35,7 @@ struct SharedMem {
         CLIENT,
     };
 
-    SharedMem(MODE _mode, std::string name, unsigned int _segm_idx, unsigned int segm_size) : mode(_mode), segm_idx(_segm_idx), size(segm_size) {
+    SharedMem(MODE _mode, std::string name, bool _writable, unsigned int _segm_idx, unsigned int segm_size) : mode(_mode), writable(_writable), segm_idx(_segm_idx), size(segm_size) {
         if (size != static_cast<unsigned int>(size))
             throw std::runtime_error("SharedMemAlloc: too large buffer");
 
@@ -54,11 +54,11 @@ struct SharedMem {
                 CheckErrorAndThrow("MapViewOfFile failed");
         } else {
             // open existing shared mem segment
-            handle = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, segm_name.c_str());
+            handle = OpenFileMapping(writable ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, FALSE, segm_name.c_str());
             if (!handle)
                 CheckErrorAndThrow("CreateFileMapping failed");
 
-            ptr = static_cast<unsigned char*>(MapViewOfFile(handle, FILE_MAP_ALL_ACCESS, 0, 0, size));
+            ptr = static_cast<unsigned char*>(MapViewOfFile(handle, writable ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, 0, 0, size));
             assert((reinterpret_cast<uintptr_t>(ptr) % 0x1000) == 0); // ptr is at least 4k aligned, since this is the mem. page size (HW limitation)
             if (!ptr)
                 CheckErrorAndThrow("MapViewOfFile failed");
@@ -74,8 +74,9 @@ struct SharedMem {
     }
 
     const MODE         mode;
+    const bool         writable;
     const unsigned int segm_idx;
+    const unsigned int size   = 0;       ///< shared mem size
     HANDLE             handle = nullptr; ///< shared mem segment handle
     unsigned char    * ptr    = nullptr; ///< pointer to start of shared mem segment
-    const unsigned int size   = 0;       ///< shared mem size
 };
