@@ -32,12 +32,15 @@ public:
     }
 
     ULONG InternalRelease() {
-        if (m_data && (m_data->mode == SharedMem::CLIENT) && (m_dwRef == 1)) {
-            // last proxy reference released
-            m_signal.Signal();
+        ULONG ref_cnt = PARENT::InternalRelease();
+
+        if (ref_cnt == 0) {
+            // no more outstanding references
+            if (m_data && (m_data->mode == SharedMem::CLIENT))
+                m_signal.Signal(); // signal to server that proxy is deleted
         }
 
-        return PARENT::InternalRelease();
+        return ref_cnt;
     }
 
     HRESULT STDMETHODCALLTYPE GetSize(/*out*/unsigned int* size) override {
