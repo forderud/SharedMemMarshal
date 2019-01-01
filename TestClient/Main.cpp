@@ -48,6 +48,15 @@ int main() {
     CHECK(mgr.CoCreateInstance(L"TestComponent.DataCollection", nullptr, CLSCTX_LOCAL_SERVER));
     std::cout << "Collection created" << std::endl;
 
+    {
+        // multithreaded testing (triggers simultaneous calls to MarshalInterface)
+        std::thread t1(AccessOneHandle, mgr, 0);
+        std::thread t2(AccessOneHandle, mgr, 0);
+        t1.join();
+        t2.join();
+    }
+
+    // single-threaded testing
     for (size_t i = 0; i < 2; ++i) {
         AccessTwoHandles(mgr, 0);
     }

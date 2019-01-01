@@ -48,6 +48,7 @@ public:
         }
 
         // call AddRef to keep "ptr" alive while the proxy lives
+        std::lock_guard<std::mutex> lock(m_mutex);
         if (!m_ref) {
             m_ref = ptr;
         } else {
@@ -85,19 +86,28 @@ private:
         assert(obj);
 
         // call Release on "ptr"
-        // do this last, since it might trigger deletion of "obj"
         obj->ReleaseReference();
     }
 
     void ReleaseReference () {
         assert(m_ref);
+        bool last_release = false;
 
-        if (m_extra_refs > 0) {
-            // release one reference
-            m_extra_refs--;
-            m_ref.p->Release();
-        } else {
+        {
+            std::lock_guard<std::mutex> lock(m_mutex);
+
+            if (m_extra_refs > 0) {
+                // release one reference
+                m_extra_refs--;
+                m_ref.p->Release();
+            } else {
+                last_release = true;
+            }
+        }
+
+        if (last_release) {
             // release last reference
+            // might trigger deletion, so it cannot be done while holding a lock
             m_ref = nullptr;
         }
     }
@@ -114,8 +124,10 @@ private:
 
     HANDLE            m_event = 0;
     HANDLE            m_wait  = 0; ///< wait callback handle (used by server)
+
     CComPtr<IUnknown> m_ref;       ///< extra ref-count (used by server to indicate ref-count held by proxy)
     int               m_extra_refs = 0;
+    std::mutex        m_mutex;  ///< protect m_ref & m_extra_refs
 #endif
     std::string m_name;
 };
