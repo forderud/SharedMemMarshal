@@ -1,6 +1,5 @@
 #pragma once
 #include <atomic>
-#include <mutex>
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestComponent_h.h"
@@ -45,8 +44,6 @@ public:
     }
 
     HRESULT STDMETHODCALLTYPE GetSize(/*out*/unsigned int* size) override {
-        std::lock_guard<std::mutex> lock(m_mutex);
-
         if (!size)
             return E_INVALIDARG;
 
@@ -55,8 +52,6 @@ public:
     }
 
     HRESULT STDMETHODCALLTYPE GetData(unsigned int idx, /*out*/unsigned char * val) override {
-        std::lock_guard<std::mutex> lock(m_mutex);
-
         if (!val)
             return E_INVALIDARG;
         if (idx >= m_data->size)
@@ -67,8 +62,6 @@ public:
     }
 
     HRESULT STDMETHODCALLTYPE SetData (unsigned int idx, /*in*/unsigned char val) override {
-        std::lock_guard<std::mutex> lock(m_mutex);
-
         if (idx >= m_data->size)
             return E_BOUNDS;
 
@@ -79,8 +72,6 @@ public:
 
     /** IMarshal implementation. Called from server (stub). */
     HRESULT STDMETHODCALLTYPE GetUnmarshalClass(const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags, CLSID* clsid) override {
-        std::lock_guard<std::mutex> lock(m_mutex);
-
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
@@ -90,8 +81,6 @@ public:
 
     /** Indicate the total size of the marshaled object reference. Called from server (stub). */
     HRESULT STDMETHODCALLTYPE GetMarshalSizeMax(const IID& iid, void * /*pv*/, DWORD /*destContext*/, void * /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) override {
-        std::lock_guard<std::mutex> lock(m_mutex);
-
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
@@ -101,8 +90,6 @@ public:
 
     /** Serialize object. Called from server (stub). */
     HRESULT STDMETHODCALLTYPE MarshalInterface(IStream* strm, const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags) override {
-        std::lock_guard<std::mutex> lock(m_mutex);
-
         // verify that comm is between processes on same computer with shared-mem support 
         //if (destContext != MSHCTX_LOCAL)
         //    return E_FAIL;
@@ -123,8 +110,6 @@ public:
 
     /** Deserialize object. Called from client (proxy). */
     HRESULT STDMETHODCALLTYPE UnmarshalInterface(IStream* strm, const IID& iid, void ** ppv) override {
-        std::lock_guard<std::mutex> lock(m_mutex);
-
         // de-serialize shared-mem metadata
         unsigned int obj_idx = 0;
         *strm >> obj_idx;
@@ -159,7 +144,6 @@ public:
 private:
     std::unique_ptr<SharedMem>       m_data;
     SignalHandler                    m_signal;
-    std::mutex                       m_mutex;
 
     static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
 };
