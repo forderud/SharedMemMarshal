@@ -34,6 +34,8 @@ public:
 #ifdef _WIN32
     /** Create event object that is named based on "val" to keep it unique. Called in server. */
     void Create (uint32_t val, IUnknown * ptr) {
+        std::lock_guard<std::mutex> lock(m_mutex);
+
         if (!m_event) {
             m_event = CreateEventEx(NULL/*security*/, EventName(val), 0/*flags*/, SYNCHRONIZE);
             assert(m_event);
@@ -48,7 +50,6 @@ public:
         }
 
         // call AddRef to keep "ptr" alive while the proxy lives
-        std::lock_guard<std::mutex> lock(m_mutex);
         if (!m_ref) {
             m_ref = ptr;
         } else {
