@@ -43,32 +43,14 @@ public:
         return ref_cnt;
     }
 
-    HRESULT STDMETHODCALLTYPE GetSize(/*out*/unsigned int* size) override {
-        if (!size)
+    HRESULT STDMETHODCALLTYPE GetData(/*out*/BYTE ** buffer, /*out*/unsigned int* size) override {
+        if (!buffer || !size)
             return E_INVALIDARG;
 
+        *buffer = m_data->ptr;
         *size = static_cast<unsigned int>(m_data->size);
         return S_OK;
     }
-
-    HRESULT STDMETHODCALLTYPE GetData(unsigned int idx, /*out*/unsigned char * val) override {
-        if (!val)
-            return E_INVALIDARG;
-        if (idx >= m_data->size)
-            return E_BOUNDS;
-
-        *val = m_data->ptr[idx];
-        return S_OK;
-    }
-
-    HRESULT STDMETHODCALLTYPE SetData (unsigned int idx, /*in*/unsigned char val) override {
-        if (idx >= m_data->size)
-            return E_BOUNDS;
-
-        m_data->ptr[idx] = val;
-        return S_OK;
-    }
-
 
     /** IMarshal implementation. Called from server (stub). */
     HRESULT STDMETHODCALLTYPE GetUnmarshalClass(const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags, CLSID* clsid) override {

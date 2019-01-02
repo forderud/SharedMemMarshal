@@ -4,6 +4,25 @@
 #include "../TestComponent/ComSupport.hpp"
 
 
+static BYTE GetValue(IDataHandle & h, unsigned int idx) {
+    BYTE * buffer = nullptr;
+    unsigned int size = 0;
+    CHECK(h.GetData(&buffer, &size));
+    assert(idx < size);
+
+    return buffer[idx];
+}
+
+static void SetValue(IDataHandle & h, unsigned int idx, BYTE val) {
+    BYTE * buffer = nullptr;
+    unsigned int size = 0;
+    CHECK(h.GetData(&buffer, &size));
+    assert(idx < size);
+
+    buffer[idx] = val;
+}
+
+
 void AccessOneHandle (ISharedMem * mgr, unsigned int idx) {
     CComPtr<IDataHandle> obj;
     CHECK(mgr->GetHandle(idx, true, &obj));
@@ -11,11 +30,10 @@ void AccessOneHandle (ISharedMem * mgr, unsigned int idx) {
 
     const unsigned int pos = 0;
     const unsigned char set_val = 42;
-    CHECK(obj->SetData(pos, set_val));
+    SetValue(*obj, pos, set_val);
     std::cout << "SetData called" << std::endl;
 
-    unsigned char get_val = 0;
-    CHECK(obj->GetData(pos, &get_val));
+    unsigned char get_val = GetValue(*obj, pos);
     std::cout << "GetData called" << std::endl;
     assert(get_val == set_val);
 }
@@ -31,11 +49,10 @@ void AccessTwoHandles (ISharedMem * mgr, unsigned int idx) {
 
     const unsigned int pos = 0;
     const unsigned char set_val = 42;
-    CHECK(obj1->SetData(pos, set_val));
+    SetValue(*obj1, pos, set_val);
     std::cout << "SetData called" << std::endl;
 
-    unsigned char get_val = 0;
-    CHECK(obj2->GetData(pos, &get_val));
+    unsigned char get_val = GetValue(*obj2, pos);
     std::cout << "GetData called" << std::endl;
     assert(get_val == set_val);
 }

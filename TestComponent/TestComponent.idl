@@ -5,11 +5,10 @@ import "ocidl.idl";
 [object,
  oleautomation, // use "automation" marshaler (oleaut32.dll)
  uuid(54E049DB-C39C-4025-B1EF-2FC0E5246277),
- helpstring("Interface for exchanging data over shared memory.")]
+ helpstring("Shared memory handle.")]
 interface IDataHandle : IUnknown {
-    HRESULT GetSize ([out,retval] unsigned int * size);
-    HRESULT SetData ([in] unsigned int idx, [in] unsigned char val);
-    HRESULT GetData ([in] unsigned int idx, [out,retval] unsigned char * val);
+    [helpstring("Get shared-mem segment address & size. The data might not be writable. Lifetime is managed by IDataHandle object.")]
+    HRESULT GetData ([out] BYTE ** buffer, [out] unsigned int * size);
 };
 
 
