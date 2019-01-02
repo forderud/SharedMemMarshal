@@ -6,8 +6,8 @@ Must call `AddRef()` in [`IMarshal::MarshalInterface`](https://docs.microsoft.co
 The implementation uses Windows [event objects](https://docs.microsoft.com/nb-no/windows/desktop/Sync/event-objects) as IPC mechanism.
 
 ### Questions
-* Possible to leverage the COM runtime to keep server object alive until all associated proxies have been destroyed?
-* Possible to establish a "strong connection" between proxy & server when implementing IMarshal?
+* How to detect & handle leaking proxy handles if/when a client process crashes?
+* Is it possible to instead leverage the COM runtime to keep server object alive until all associated proxies have been destroyed?
 
 ### References
 * [IMarhal](https://docs.microsoft.com/nb-no/windows/desktop/api/objidl/nn-objidl-imarshal) interface
