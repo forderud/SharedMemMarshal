@@ -18,7 +18,7 @@ public:
     /*NOT virtual*/ ~DataCollection() {
     }
 
-    HRESULT GetHandle(unsigned int idx, BOOL writable, IDataHandle ** object) {
+    HRESULT STDMETHODCALLTYPE GetHandle(unsigned int idx, BOOL writable, IDataHandle ** object) {
         std::lock_guard<std::mutex> lock(m_mutex);
 
         auto it = m_cache.find(idx);
