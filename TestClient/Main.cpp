@@ -92,7 +92,7 @@ int main() {
     ImpersonateUser impersonate;
     //impersonate.Impersonate();
 
-    // create COM object (will live in a separate apartment)
+    // create COM object in a separate process
     CComPtr<ISharedMem> mgr;
     {
         const wchar_t progId[] = L"TestComponent.DataCollection";
