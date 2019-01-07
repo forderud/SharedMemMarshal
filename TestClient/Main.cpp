@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include "../TestComponent/TestComponent_h.h"
+#include "../TestComponent/TestComponent_i.c"
 #include "../TestComponent/ComSupport.hpp"
 
 
@@ -93,8 +94,21 @@ int main() {
 
     // create COM object (will live in a separate apartment)
     CComPtr<ISharedMem> mgr;
-    CHECK(mgr.CoCreateInstance(L"TestComponent.DataCollection", nullptr, CLSCTX_LOCAL_SERVER | CLSCTX_ENABLE_CLOAKING));
-    std::cout << "Collection created" << std::endl;
+    {
+        const wchar_t progId[] = L"TestComponent.DataCollection";
+        DWORD class_context = CLSCTX_LOCAL_SERVER | CLSCTX_ENABLE_CLOAKING;
+#ifdef DEBUG_COM_ACTIVATION
+        // open Event Viewer, "Windows Logs" -> "System" log to see details on failures
+        CLSID clsid = {};
+        CHECK(CLSIDFromProgID(progId, &clsid));
+        CComPtr<IClassFactory> cf;
+        CHECK(CoGetClassObject(clsid, class_context, NULL, IID_IClassFactory, (void**)&cf));
+        CHECK(cf->CreateInstance(nullptr, IID_ISharedMem, (void**)&mgr));
+#else
+        CHECK(mgr.CoCreateInstance(progId, nullptr, class_context));
+#endif
+        std::cout << "Collection created" << std::endl;
+    }
 
     {
         // multithreaded testing (triggers simultaneous calls to MarshalInterface)
