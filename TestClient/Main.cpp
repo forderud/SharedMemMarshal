@@ -8,18 +8,7 @@
 /** RAII class for impersonating a different user. */
 class ImpersonateUser {
 public:
-    ImpersonateUser() {
-    }
-    ~ImpersonateUser() {
-        if (m_user_token) {
-            if (!RevertToSelf()) {
-                auto err = GetLastError();
-                abort();
-            }
-        }
-    }
-
-    void Impersonate(std::wstring username, std::wstring password) {
+    ImpersonateUser(std::wstring username, std::wstring password) {
         const wchar_t domain[] = L""; // default domain
         if (!LogonUser(username.c_str(), domain, password.c_str(), LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, &m_user_token.m_h)) {
             auto err = GetLastError();
@@ -28,6 +17,14 @@ public:
         if (!ImpersonateLoggedOnUser(m_user_token)) {
             auto err = GetLastError();
             abort();
+        }
+    }
+    ~ImpersonateUser() {
+        if (m_user_token) {
+            if (!RevertToSelf()) {
+                auto err = GetLastError();
+                abort();
+            }
         }
     }
 private:
@@ -89,8 +86,7 @@ void AccessTwoHandles (ISharedMem * mgr, unsigned int idx) {
 
 int main() {
     ComInitialize com(COINIT_MULTITHREADED);
-    ImpersonateUser impersonate;
-    //impersonate.Impersonate();
+    //ImpersonateUser impersonate(L"user", L"passwd");
 
     // create COM object in a separate process
     CComPtr<ISharedMem> mgr;
