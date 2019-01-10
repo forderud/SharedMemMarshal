@@ -13,7 +13,7 @@ class ATL_NO_VTABLE DataHandle :
     public IDataHandle,
     public IMarshal {
 public:
-    DataHandle() : m_signal("TestSharedMem_") {
+    DataHandle() : m_signal("Global\\TestSharedMem_") {
         s_counter++;
     }
 
@@ -22,7 +22,7 @@ public:
 
     void Initialize(unsigned int idx, bool writable) {
         // create shared-mem segment
-        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", writable, idx, 1024));
+        m_data.reset(new SharedMem(SharedMem::OWNER, "Global\\TestSharedMem", writable, idx, 1024));
     }
 
     typedef CComObjectRootEx<CComMultiThreadModel> PARENT;
@@ -102,7 +102,7 @@ public:
         *strm >> obj_size;
 
         // map shared-mem
-        m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", writable, obj_idx, obj_size));
+        m_data.reset(new SharedMem(SharedMem::CLIENT, "Global\\TestSharedMem", writable, obj_idx, obj_size));
 
         m_signal.Open(obj_idx);
 
