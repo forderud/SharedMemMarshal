@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <Windows.h>
+#include "Security.hpp"
 
 
 /** Serialize/deserialize an arbitrary POD type. */
@@ -19,17 +20,6 @@ template <class T> IStream& operator>> (IStream& stream, T& data) {
     return stream;
 }
 
-static void CheckErrorAndThrow(const char * error_msg) {
-    DWORD err = GetLastError();
-
-    if (err == ERROR_FILE_NOT_FOUND)
-        throw std::runtime_error("ERROR_FILE_NOT_FOUND");
-    else if (err == ERROR_NOT_ENOUGH_MEMORY)
-        throw std::runtime_error("ERROR_NOT_ENOUGH_MEMORY");
-
-    throw std::runtime_error(error_msg); // default message
-}
-
 
 struct SharedMem {
     enum MODE {
@@ -44,8 +34,9 @@ struct SharedMem {
         std::string segm_name = name + std::to_string(segm_idx);
 
         if (mode == MODE::OWNER) {
+            SecurityEnableAllUsers acl;
             // create shared mem segment
-            handle = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, static_cast<unsigned int>(size), segm_name.c_str());
+            handle = CreateFileMapping(INVALID_HANDLE_VALUE, &acl, PAGE_READWRITE, 0, static_cast<unsigned int>(size), segm_name.c_str());
             if (!handle)
                 CheckErrorAndThrow("CreateFileMapping failed");
 

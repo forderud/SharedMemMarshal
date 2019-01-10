@@ -174,6 +174,7 @@
     <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="DataCollection.hpp" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Security.hpp" />
     <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="SignalHandler.hpp" />
     <ClInclude Include="DataHandle.hpp" />

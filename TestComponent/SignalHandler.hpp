@@ -3,6 +3,7 @@
 #include <mutex>
 #include <string>
 #include <Windows.h>
+#include "Security.hpp"
 
 
 
@@ -40,7 +41,8 @@ public:
         std::lock_guard<std::mutex> lock(m_mutex);
 
         if (!m_event) {
-            m_event = CreateEventEx(NULL/*security*/, EventName(val), 0/*flags*/, SYNCHRONIZE);
+            SecurityEnableAllUsers acl;
+            m_event = CreateEventEx(&acl, EventName(val), 0/*flags*/, SYNCHRONIZE);
             assert(m_event);
 
             assert(!m_wait);
