@@ -1,9 +1,8 @@
 #pragma once
-#include <map>
+#include <mutex>
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestComponent.h"
-#include "DataHandle.hpp"
 
 
 class ATL_NO_VTABLE DataCollection :
@@ -23,12 +22,11 @@ public:
 
         if (!m_obj) {
             // create object on demand
-            auto obj = CreateLocalInstance<DataHandle>();
-            obj->Initialize(writable);
-            m_obj = obj;
+            m_obj.CoCreateInstance(CLSID_DataHandle);
+            m_obj->Initialize(writable);
         }
 
-        CComPtr<DataHandle> copy = m_obj;
+        CComPtr<IDataHandle> copy = m_obj;
         *object = copy.Detach();
         return S_OK;
     }
@@ -40,8 +38,8 @@ public:
     END_COM_MAP()
 
 private:
-    CComPtr<DataHandle> m_obj;
-    std::mutex          m_mutex;
+    CComPtr<IDataHandle> m_obj;
+    std::mutex           m_mutex;
 };
 
 OBJECT_ENTRY_AUTO(CLSID_DataCollection, DataCollection)
