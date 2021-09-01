@@ -40,8 +40,7 @@ public:
         std::lock_guard<std::mutex> lock(m_mutex);
 
         if (!m_event) {
-            SECURITY_ATTRIBUTES * security = nullptr;
-            m_event = CreateEventEx(security, m_name.c_str(), 0/*flags*/, SYNCHRONIZE);
+            m_event = CreateEventEx(nullptr/*security*/, m_name.c_str(), 0/*flags*/, SYNCHRONIZE);
             assert(m_event);
 
             assert(!m_wait);

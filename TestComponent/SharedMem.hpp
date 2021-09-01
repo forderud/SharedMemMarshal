@@ -44,9 +44,8 @@ struct SharedMem {
         std::string segm_name = name;
 
         if (mode == MODE::OWNER) {
-            SECURITY_ATTRIBUTES * security = nullptr;
             // create shared mem segment
-            handle = CreateFileMapping(INVALID_HANDLE_VALUE, security, PAGE_READWRITE, 0, static_cast<unsigned int>(size), segm_name.c_str());
+            handle = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr/*security*/, PAGE_READWRITE, 0, static_cast<unsigned int>(size), segm_name.c_str());
             if (!handle)
                 CheckErrorAndThrow("CreateFileMapping failed");
 
