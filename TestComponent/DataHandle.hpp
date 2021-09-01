@@ -117,6 +117,10 @@ public:
         return S_OK;
     }
 
+    static void LeakCheck() {
+        assert((s_counter == 0) && "DataHandle leak detected.");
+    }
+
     DECLARE_REGISTRY_RESOURCEID(IDR_DataHandle)
 
     BEGIN_COM_MAP(DataHandle)
