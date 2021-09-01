@@ -18,6 +18,7 @@ public:
     }
 
     /*NOT virtual*/ ~DataHandle() {
+        s_counter--;
     }
 
     void Initialize(bool writable) {
