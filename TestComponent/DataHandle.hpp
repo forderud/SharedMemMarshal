@@ -2,7 +2,7 @@
 #include <atomic>
 #include "ComSupport.hpp"
 #include "Resource.h"
-#include "TestComponent_h.h"
+#include "TestComponent.h"
 #include "SharedMem.hpp"
 #include "SignalHandler.hpp"
 

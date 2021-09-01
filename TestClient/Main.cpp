@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../TestComponent/TestComponent_h.h"
+#include "../TestComponent/TestComponent.h"
 #include "../TestComponent/TestComponent_i.c"
 #include "../TestComponent/ComSupport.hpp"
 

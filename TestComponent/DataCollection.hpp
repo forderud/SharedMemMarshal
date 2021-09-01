@@ -2,7 +2,7 @@
 #include <map>
 #include "ComSupport.hpp"
 #include "Resource.h"
-#include "TestComponent_h.h"
+#include "TestComponent.h"
 #include "DataHandle.hpp"
 
 

@@ -1,5 +1,5 @@
 #include "Resource.h"
-#include "TestComponent_h.h"
+#include "TestComponent.h"
 #include "TestComponent_i.c"
 #include "ComSupport.hpp"
 #include "DataHandle.hpp"

@@ -1,7 +1,7 @@
 /x64
 /Win32
 /TestComponent.vcxproj.user
-/TestComponent_h.h
+/TestComponent.h
 /TestComponent_i.c
 /TestComponent_p.c
 /dlldata.c
