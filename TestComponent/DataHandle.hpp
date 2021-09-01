@@ -6,12 +6,6 @@
 #include "SharedMem.hpp"
 #include "SignalHandler.hpp"
 
-/** Windows kernel Namespace to use for events and shared memory. */
-#ifdef ENABLE_GLOBAL_COMMUNICATION
-static const std::string OBJECT_NAMESPACE = "Global\\"; // enable cross-session/user communication
-#else
-static const std::string OBJECT_NAMESPACE = ""; // communicate within session
-#endif
 
 class ATL_NO_VTABLE DataHandle :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
@@ -19,7 +13,7 @@ class ATL_NO_VTABLE DataHandle :
     public IDataHandle,
     public IMarshal {
 public:
-    DataHandle() : m_signal(OBJECT_NAMESPACE+"TestSharedMem_") {
+    DataHandle() : m_signal("TestSharedMem_") {
         s_counter++;
     }
 
@@ -28,7 +22,7 @@ public:
 
     void Initialize(unsigned int idx, bool writable) {
         // create shared-mem segment
-        m_data.reset(new SharedMem(SharedMem::OWNER, OBJECT_NAMESPACE+"TestSharedMem", writable, idx, 1024));
+        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", writable, idx, 1024));
     }
 
     typedef CComObjectRootEx<CComMultiThreadModel> PARENT;
@@ -108,7 +102,7 @@ public:
         *strm >> obj_size;
 
         // map shared-mem
-        m_data.reset(new SharedMem(SharedMem::CLIENT, OBJECT_NAMESPACE+"TestSharedMem", writable, obj_idx, obj_size));
+        m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", writable, obj_idx, obj_size));
 
         m_signal.Open(obj_idx);
 

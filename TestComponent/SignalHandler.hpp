@@ -41,12 +41,7 @@ public:
         std::lock_guard<std::mutex> lock(m_mutex);
 
         if (!m_event) {
-#ifdef ENABLE_GLOBAL_COMMUNICATION
-            SecurityEnableAllUsers acl;
-            SECURITY_ATTRIBUTES * security = &acl;
-#else
             SECURITY_ATTRIBUTES * security = nullptr;
-#endif
             m_event = CreateEventEx(security, EventName(val), 0/*flags*/, SYNCHRONIZE);
             assert(m_event);
 
