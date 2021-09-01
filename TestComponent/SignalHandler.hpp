@@ -33,7 +33,6 @@ public:
         }
     }
 
-#ifdef _WIN32
     /** Create event object that is named based on "val" to keep it unique.
         Called in server for each MarshalInterface, which might occur concurrent. Therefore, must be thread-safe. */
     void Create (IUnknown * ptr) {
@@ -80,10 +79,8 @@ public:
             abort();
         }
     }
-#endif
 
 private:
-#ifdef _WIN32
     /** Called in server by OS thread-pool after proxy have called SetEvent.
         Must be thread-safe, since multiple proxies might signal concurrently. */
     static void CALLBACK SignalCB (void* pv, BOOLEAN /*timedOut*/) {
@@ -124,6 +121,5 @@ private:
     CComPtr<IUnknown> m_ref;       ///< extra ref-count (used by server to indicate ref-count held by proxy)
     int               m_extra_refs = 0;
     std::mutex        m_mutex;  ///< protect m_ref & m_extra_refs
-#endif
-    std::string m_name;
+    std::string       m_name;
 };
