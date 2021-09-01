@@ -12,7 +12,6 @@
     <ClInclude Include="SignalHandler.hpp" />
     <ClInclude Include="DataHandle.hpp" />
     <ClInclude Include="DataCollection.hpp" />
-    <ClInclude Include="Security.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestComponent.idl" />
