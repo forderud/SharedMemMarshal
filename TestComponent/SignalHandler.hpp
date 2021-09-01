@@ -37,12 +37,12 @@ public:
 #ifdef _WIN32
     /** Create event object that is named based on "val" to keep it unique.
         Called in server for each MarshalInterface, which might occur concurrent. Therefore, must be thread-safe. */
-    void Create (uint64_t val, IUnknown * ptr) {
+    void Create (IUnknown * ptr) {
         std::lock_guard<std::mutex> lock(m_mutex);
 
         if (!m_event) {
             SECURITY_ATTRIBUTES * security = nullptr;
-            m_event = CreateEventEx(security, EventName(val), 0/*flags*/, SYNCHRONIZE);
+            m_event = CreateEventEx(security, m_name.c_str(), 0/*flags*/, SYNCHRONIZE);
             assert(m_event);
 
             assert(!m_wait);
@@ -65,9 +65,9 @@ public:
     }
 
     /** Open event object associated with "val". Called in proxy. */
-    void Open (uint64_t val) {
+    void Open () {
         assert(!m_event);
-        m_event = OpenEvent(EVENT_MODIFY_STATE, FALSE, EventName(val));
+        m_event = OpenEvent(EVENT_MODIFY_STATE, FALSE, m_name.c_str());
         assert(m_event);
     }
 
@@ -118,16 +118,6 @@ private:
             // might trigger deletion, so it cannot be done while holding a lock
             m_ref = nullptr;
         }
-    }
-
-    /** Generate a unique name based on "val". */
-    const char* EventName (uint64_t val) {
-        // using sprintf instead of std::to_string to avoid dynamic memory mgmt.
-#pragma warning(push)
-#pragma warning(disable: 4996) // function or variable may be unsafe
-        sprintf(const_cast<char*>(m_name.data()) + m_name.size()-HEX_ENC_LEN, "%I64X", val); // append hex-encoded uint64_t and null-termination
-#pragma warning(pop)
-        return m_name.c_str();
     }
 
     HANDLE            m_event = 0;

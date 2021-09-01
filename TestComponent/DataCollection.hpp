@@ -18,20 +18,17 @@ public:
     /*NOT virtual*/ ~DataCollection() {
     }
 
-    HRESULT STDMETHODCALLTYPE GetHandle(unsigned int idx, BOOL writable, IDataHandle ** object) override {
+    HRESULT STDMETHODCALLTYPE GetHandle(BOOL writable, IDataHandle ** object) override {
         std::lock_guard<std::mutex> lock(m_mutex);
 
-        auto it = m_cache.find(idx);
-
-        if (it == m_cache.end()) {
-            // create object, since it's not in cache
+        if (!m_obj) {
+            // create object on demand
             auto obj = CreateLocalInstance<DataHandle>();
-            obj->Initialize(idx, writable);
-            m_cache[idx] = obj;
-            it = m_cache.find(idx);
+            obj->Initialize(writable);
+            m_obj = obj;
         }
 
-        CComPtr<DataHandle> copy = it->second;
+        CComPtr<DataHandle> copy = m_obj;
         *object = copy.Detach();
         return S_OK;
     }
@@ -43,8 +40,8 @@ public:
     END_COM_MAP()
 
 private:
-    std::map<unsigned int, CComPtr<DataHandle>> m_cache;
-    std::mutex                                  m_mutex;
+    CComPtr<DataHandle> m_obj;
+    std::mutex          m_mutex;
 };
 
 OBJECT_ENTRY_AUTO(CLSID_DataCollection, DataCollection)

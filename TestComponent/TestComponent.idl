@@ -18,7 +18,7 @@ interface IDataHandle : IUnknown {
  helpstring("Interface for exchanging data over shared memory.")]
 interface ISharedMem : IUnknown {
     [helpstring("Get handle to a shared-mem segment. Can be mapped as read-only or read/write.")]
-    HRESULT GetHandle([in] unsigned int idx, [in] BOOL writable, [out, retval] IDataHandle **obj);
+    HRESULT GetHandle([in] BOOL writable, [out, retval] IDataHandle **obj);
 };
 
 

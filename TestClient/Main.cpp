@@ -24,9 +24,9 @@ static void SetValue(IDataHandle & h, unsigned int idx, BYTE val) {
 }
 
 
-void AccessOneHandle (ISharedMem * mgr, unsigned int idx) {
+void AccessOneHandle (ISharedMem * mgr) {
     CComPtr<IDataHandle> obj;
-    CHECK(mgr->GetHandle(idx, true, &obj));
+    CHECK(mgr->GetHandle(true, &obj));
     std::cout << "Object retrieved" << std::endl;
 
     const unsigned int pos = 0;
@@ -39,13 +39,13 @@ void AccessOneHandle (ISharedMem * mgr, unsigned int idx) {
     assert(get_val == set_val);
 }
 
-void AccessTwoHandles (ISharedMem * mgr, unsigned int idx) {
+void AccessTwoHandles (ISharedMem * mgr) {
     CComPtr<IDataHandle> obj1;
-    CHECK(mgr->GetHandle(idx, true, &obj1));
+    CHECK(mgr->GetHandle(true, &obj1));
     std::cout << "Object #1 retrieved" << std::endl;
 
     CComPtr<IDataHandle> obj2; // read-only
-    CHECK(mgr->GetHandle(idx, false, &obj2));
+    CHECK(mgr->GetHandle(false, &obj2));
     std::cout << "Object #2 retrieved" << std::endl;
 
     const unsigned int pos = 0;
@@ -78,14 +78,14 @@ int main() {
 
     {
         // multithreaded testing (triggers simultaneous calls to MarshalInterface)
-        std::thread t1(AccessOneHandle, mgr, 0);
-        std::thread t2(AccessOneHandle, mgr, 0);
+        std::thread t1(AccessOneHandle, mgr);
+        std::thread t2(AccessOneHandle, mgr);
         t1.join();
         t2.join();
     }
 
     // single-threaded testing
     for (size_t i = 0; i < 2; ++i) {
-        AccessTwoHandles(mgr, 0);
+        AccessTwoHandles(mgr);
     }
 }
