@@ -1,7 +1,7 @@
 Sample code for custom COM marshaling with shared memory.
 
-## IPC mechanism
-Must call `AddRef()` in [`IMarshal::MarshalInterface`](https://docs.microsoft.com/nb-no/windows/desktop/api/objidl/nf-objidl-imarshal-marshalinterface) to avoid premature server object destruction before the proxy object is created in the client process. This triggers the need for implementing a IPC mechanism to signal proxy destruction back to the server, so that the server can call `Release()`.
+## Custom COM marshaling details
+Must call `AddRef()` in [`IMarshal::MarshalInterface`](https://docs.microsoft.com/nb-no/windows/desktop/api/objidl/nf-objidl-imarshal-marshalinterface) to avoid premature server object destruction before the proxy object is created in the client process. This triggers the need for implementing a IPC mechanism to signal proxy destruction back to the server, so that the server can later call `Release()` on itself to clean up.
 
 The implementation uses Windows [event objects](https://docs.microsoft.com/nb-no/windows/desktop/Sync/event-objects) as IPC mechanism.
 
