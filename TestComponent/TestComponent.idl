@@ -32,14 +32,6 @@ library TestComponent {
     importlib("stdole2.tlb");
 
     [version(1.0),
-     uuid(B7B84F73-8638-4EE5-A486-2C9455C0CD2B),
-     helpstring("Class for testing shared memory")]
-    coclass DataHandle {
-        [default] interface IDataHandle;
-        interface IMarshal;
-    };
-
-    [version(1.0),
         uuid(D84F768B-55F6-4B3A-AF68-9276C9488696),
         helpstring("Class for testing shared memory")]
     coclass DataHandleProxy {
