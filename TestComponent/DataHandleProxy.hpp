@@ -32,7 +32,7 @@ public:
 
         if (ref_cnt == 0) {
             // no more outstanding references
-            if (m_data && (m_data->mode == SharedMem::CLIENT))
+            if (m_data)
                 m_signal.Signal(); // signal to server that proxy is deleted
         }
 

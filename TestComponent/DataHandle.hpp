@@ -21,24 +21,6 @@ public:
         s_counter--;
     }
 
-    typedef CComObjectRootEx<CComMultiThreadModel> PARENT;
-
-    ULONG InternalAddRef() {
-        return PARENT::InternalAddRef();
-    }
-
-    ULONG InternalRelease() {
-        ULONG ref_cnt = PARENT::InternalRelease();
-
-        if (ref_cnt == 0) {
-            // no more outstanding references
-            if (m_data && (m_data->mode == SharedMem::CLIENT))
-                m_signal.Signal(); // signal to server that proxy is deleted
-        }
-
-        return ref_cnt;
-    }
-
     void Initialize(BOOL writable) {
         // create shared-mem segment
         m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", writable, 1024));

@@ -37,7 +37,7 @@ struct SharedMem {
         CLIENT,
     };
 
-    SharedMem(MODE _mode, std::string name, bool _writable, unsigned int segm_size) : mode(_mode), writable(_writable), size(segm_size) {
+    SharedMem(MODE mode, std::string name, bool _writable, unsigned int segm_size) : writable(_writable), size(segm_size) {
         if (size != static_cast<unsigned int>(size))
             throw std::runtime_error("SharedMemAlloc: too large buffer");
 
@@ -75,7 +75,6 @@ struct SharedMem {
         handle = nullptr;
     }
 
-    const MODE         mode;
     const bool         writable;
     const unsigned int size   = 0;       ///< shared mem size
     HANDLE             handle = nullptr; ///< shared mem segment handle
