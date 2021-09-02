@@ -1,10 +1,9 @@
 #pragma once
 #include "ComSupport.hpp"
 #include "Resource.h"
-#include "TestComponent.h"
+#include "TestServer.h"
 #include "DataHandle.hpp"
 
-extern bool _AtlLeakCheck;
 
 /** Convenience function to create a locally implemented COM instance without the overhead of CoCreateInstance.
 The COM class does not need to be registred for construction to succeed. However, lack of registration can
@@ -41,11 +40,6 @@ public:
         CComPtr<IDataHandle> obj2;
         CHECK(obj1.QueryInterface(&obj2));
         *object = obj2.Detach();
-        return S_OK;
-    }
-
-    HRESULT EnableLeakCheck(BOOL enable) override {
-        _AtlLeakCheck = enable;
         return S_OK;
     }
 

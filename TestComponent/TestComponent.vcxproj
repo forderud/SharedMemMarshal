@@ -93,26 +93,21 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DataCollection.cpp" />
     <ClCompile Include="DataHandleProxy.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="DataHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComSupport.hpp" />
-    <ClInclude Include="DataCollection.hpp" />
     <ClInclude Include="DataHandleProxy.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="SignalHandler.hpp" />
-    <ClInclude Include="DataHandle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestComponent.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AppID.rgs" />
-    <None Include="DataCollection.rgs" />
     <None Include="DataHandleProxy.rgs" />
     <None Include="Module.def" />
   </ItemGroup>

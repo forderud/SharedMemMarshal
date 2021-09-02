@@ -2,14 +2,21 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="DataCollection.cpp" />
+    <ClCompile Include="DataHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="DataCollection.hpp" />
+    <ClInclude Include="DataHandle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestServer.idl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestServer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataCollection.rgs" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 #include <atlbase.h>
 #include "TestServer.h"
 #include "TestServer_i.c"
+#include "TestComponent_i.c"
+#include "DataHandle.hpp"
 
 
 class TestServerModule : public ATL::CAtlExeModuleT<TestServerModule> {
@@ -9,6 +11,7 @@ public:
     }
 
     ~TestServerModule() {
+        DataHandle::LeakCheck();
     }
 
 

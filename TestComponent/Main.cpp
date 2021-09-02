@@ -2,10 +2,8 @@
 #include "TestComponent.h"
 #include "TestComponent_i.c"
 #include "ComSupport.hpp"
-#include "DataHandle.hpp"
 
 
-bool _AtlLeakCheck = false;
 
 class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
 public:
@@ -13,9 +11,6 @@ public:
     }
 
     ~TestComponentModule() {
-        if (_AtlLeakCheck) {
-            DataHandle::LeakCheck();
-        }
     }
 
     DECLARE_LIBID(LIBID_TestComponent)

@@ -100,9 +100,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataCollection.cpp" />
+    <ClCompile Include="DataHandle.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataCollection.hpp" />
+    <ClInclude Include="DataHandle.hpp" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestServer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataCollection.rgs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
