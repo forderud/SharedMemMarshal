@@ -57,13 +57,6 @@ void AccessTwoHandles (ISharedMem * mgr, const unsigned char set_val) {
 int main() {
     ComInitialize com(COINIT_MULTITHREADED);
 
-    {
-        // Activate fast stub rundown after COM server crashes. Reduces the cleanup delay from ~11min to <10sec
-        CComPtr<IGlobalOptions> globalOptions;
-        CHECK(globalOptions.CoCreateInstance(CLSID_GlobalOptions, NULL, CLSCTX_INPROC_SERVER));
-        CHECK(globalOptions->Set(COMGLB_RO_SETTINGS, COMGLB_FAST_RUNDOWN));
-    }
-
     // create COM object in a separate process
     CComPtr<ISharedMem> mgr;
     {
