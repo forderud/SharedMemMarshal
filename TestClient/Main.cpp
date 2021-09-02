@@ -1,6 +1,5 @@
 #include <iostream>
 #include "..\TestServer\TestServer.h"
-#include "TestComponent_i.c"
 #include "ComSupport.hpp"
 
 
