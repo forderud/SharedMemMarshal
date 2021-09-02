@@ -1,15 +1,15 @@
 #include "Resource.h"
-#include "TestComponent.h"
-#include "TestComponent_i.c"
+#include "TestServerProxy.h"
+#include "TestServerProxy_i.c"
 #include "ComSupport.hpp"
 
 
-class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
+class TestServerProxyModule : public ATL::CAtlDllModuleT<TestServerProxyModule> {
 public:
-    DECLARE_LIBID(LIBID_TestComponent)
+    DECLARE_LIBID(LIBID_TestServerProxy)
 };
 
-TestComponentModule _AtlModule;
+TestServerProxyModule _AtlModule;
 
 
 // DLL Entry Point

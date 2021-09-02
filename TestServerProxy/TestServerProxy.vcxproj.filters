@@ -12,13 +12,13 @@
     <ClInclude Include="DataHandleProxy.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="TestComponent.idl" />
+    <Midl Include="TestServerProxy.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Module.def" />
     <None Include="DataHandleProxy.rgs" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="TestComponent.rc" />
+    <ResourceCompile Include="TestServerProxy.rc" />
   </ItemGroup>
 </Project>

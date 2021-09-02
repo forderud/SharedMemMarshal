@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestClient", "TestClient\Te
 		{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46} = {FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestComponent", "TestComponent\TestComponent.vcxproj", "{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestServerProxy", "TestServerProxy\TestServerProxy.vcxproj", "{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestServer", "TestServer\TestServer.vcxproj", "{07CD9931-6B67-48BB-81A3-5BFFDFDB2A41}"
 	ProjectSection(ProjectDependencies) = postProject

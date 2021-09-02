@@ -53,14 +53,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\TestComponent</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\TestServerProxy</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>..\TestComponent</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\TestServerProxy</AdditionalIncludeDirectories>
       <HeaderFileName>%(Filename).h</HeaderFileName>
     </Midl>
     <ResourceCompile>
@@ -79,7 +79,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\TestComponent</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\TestServerProxy</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -88,7 +88,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>..\TestComponent</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\TestServerProxy</AdditionalIncludeDirectories>
       <HeaderFileName>%(Filename).h</HeaderFileName>
     </Midl>
     <ResourceCompile>

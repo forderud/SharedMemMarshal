@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}</ProjectGuid>
-    <RootNamespace>TestComponent</RootNamespace>
+    <RootNamespace>TestServerProxy</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -104,14 +104,14 @@
     <ClInclude Include="SignalHandler.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="TestComponent.idl" />
+    <Midl Include="TestServerProxy.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataHandleProxy.rgs" />
     <None Include="Module.def" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="TestComponent.rc" />
+    <ResourceCompile Include="TestServerProxy.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

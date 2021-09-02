@@ -12,8 +12,8 @@ interface IDataHandle : IUnknown {
 
 [version(1.0),
  uuid(8E42F33F-E5E3-46B4-8B39-0A03DCF338CC),
- helpstring("TestComponent module")]
-library TestComponent {
+ helpstring("TestServerProxy module")]
+library TestServerProxy {
     importlib("stdole2.tlb");
 
     [version(1.0),

@@ -1,6 +1,6 @@
 import "oaidl.idl";
 import "ocidl.idl";
-import "TestComponent.idl";
+import "TestServerProxy.idl";
 
 [object,
 oleautomation, // use "automation" marshaler (oleaut32.dll)

@@ -1,7 +1,7 @@
 #include <atlbase.h>
 #include "TestServer.h"
 #include "TestServer_i.c"
-#include "TestComponent_i.c"
+#include "TestServerProxy_i.c"
 #include "DataHandle.hpp"
 
 
