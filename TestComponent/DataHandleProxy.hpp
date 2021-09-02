@@ -7,13 +7,14 @@
 #include "SignalHandler.hpp"
 
 
+/** Client-side proxy class for the DataHandle class. */
 class ATL_NO_VTABLE DataHandleProxy :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<DataHandleProxy, &CLSID_DataHandleProxy>,
     public IDataHandle,
     public IMarshal {
 public:
-    DataHandleProxy() : m_signal("TestSharedMem_") {
+    DataHandleProxy() : m_signal("TestServer_SharedMem") {
         s_counter++;
     }
 

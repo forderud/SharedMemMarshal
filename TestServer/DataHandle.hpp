@@ -13,7 +13,7 @@ class ATL_NO_VTABLE DataHandle :
     public IDataHandle,
     public IMarshal {
 public:
-    DataHandle() : m_signal("TestSharedMem_") {
+    DataHandle() : m_signal("TestServer_SharedMem") {
         s_counter++;
 
         // log object count to Visual Studio "Output" window
