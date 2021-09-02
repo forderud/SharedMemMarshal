@@ -34,7 +34,7 @@ public:
         m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", writable, 1024));
     }
 
-    HRESULT STDMETHODCALLTYPE GetData(/*out*/BYTE ** buffer, /*out*/unsigned int* size) override {
+    HRESULT GetData(/*out*/BYTE ** buffer, /*out*/unsigned int* size) override {
         if (!buffer || !size)
             return E_INVALIDARG;
 
@@ -44,7 +44,7 @@ public:
     }
 
     /** IMarshal implementation. Called from server (stub). */
-    HRESULT STDMETHODCALLTYPE GetUnmarshalClass(const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags, CLSID* clsid) override {
+    HRESULT GetUnmarshalClass(const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags, CLSID* clsid) override {
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
@@ -53,7 +53,7 @@ public:
     }
 
     /** Indicate the total size of the marshaled object reference. Called from server (stub). */
-    HRESULT STDMETHODCALLTYPE GetMarshalSizeMax(const IID& iid, void * /*pv*/, DWORD /*destContext*/, void * /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) override {
+    HRESULT GetMarshalSizeMax(const IID& iid, void * /*pv*/, DWORD /*destContext*/, void * /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) override {
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
@@ -62,7 +62,7 @@ public:
     }
 
     /** Serialize object. Called from server (stub). */
-    HRESULT STDMETHODCALLTYPE MarshalInterface(IStream* strm, const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags) override {
+    HRESULT MarshalInterface(IStream* strm, const IID& iid, void * pv, DWORD destContext, void * reserved, DWORD mshlFlags) override {
         // verify that comm is between processes on same computer with shared-mem support 
         //if (destContext != MSHCTX_LOCAL)
         //    return E_FAIL;
@@ -82,17 +82,17 @@ public:
     }
 
     /** Deserialize object. Called from client (proxy). */
-    HRESULT STDMETHODCALLTYPE UnmarshalInterface(IStream* strm, const IID& iid, void ** ppv) override {
+    HRESULT UnmarshalInterface(IStream* strm, const IID& iid, void ** ppv) override {
         abort(); // should never be called
     }
 
     /** Destroys a marshaled data packet. Have never been observed called. */
-    HRESULT STDMETHODCALLTYPE ReleaseMarshalData(IStream * /*strm*/) override {
+    HRESULT ReleaseMarshalData(IStream * /*strm*/) override {
         return S_OK;
     }
 
     /** Releases all connections to an object. Have never been observed called.  */
-    HRESULT STDMETHODCALLTYPE DisconnectObject(DWORD /*reserved*/) override {
+    HRESULT DisconnectObject(DWORD /*reserved*/) override {
         return S_OK;
     }
 

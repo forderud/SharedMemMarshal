@@ -39,7 +39,7 @@ public:
         return ref_cnt;
     }
 
-    HRESULT STDMETHODCALLTYPE GetData(/*out*/BYTE** buffer, /*out*/unsigned int* size) override {
+    HRESULT GetData(/*out*/BYTE** buffer, /*out*/unsigned int* size) override {
         if (!buffer || !size)
             return E_INVALIDARG;
 
@@ -49,22 +49,22 @@ public:
     }
 
     /** IMarshal implementation. Called from server (stub). */
-    HRESULT STDMETHODCALLTYPE GetUnmarshalClass(const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags, CLSID* clsid) override {
+    HRESULT GetUnmarshalClass(const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags, CLSID* clsid) override {
         abort(); // should never be called
     }
 
     /** Indicate the total size of the marshaled object reference. Called from server (stub). */
-    HRESULT STDMETHODCALLTYPE GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) override {
+    HRESULT GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) override {
         abort(); // should never be called
     }
 
     /** Serialize object. Called from server (stub). */
-    HRESULT STDMETHODCALLTYPE MarshalInterface(IStream* strm, const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags) override {
+    HRESULT MarshalInterface(IStream* strm, const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags) override {
         abort(); // should never be called
     }
 
     /** Deserialize object. Called from client (proxy). */
-    HRESULT STDMETHODCALLTYPE UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) override {
+    HRESULT UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) override {
         // de-serialize shared-mem metadata
         bool writable = false;
         *strm >> writable;
@@ -80,12 +80,12 @@ public:
     }
 
     /** Destroys a marshaled data packet. Have never been observed called. */
-    HRESULT STDMETHODCALLTYPE ReleaseMarshalData(IStream* /*strm*/) override {
+    HRESULT ReleaseMarshalData(IStream* /*strm*/) override {
         return S_OK;
     }
 
     /** Releases all connections to an object. Have never been observed called.  */
-    HRESULT STDMETHODCALLTYPE DisconnectObject(DWORD /*reserved*/) override {
+    HRESULT DisconnectObject(DWORD /*reserved*/) override {
         return S_OK;
     }
 

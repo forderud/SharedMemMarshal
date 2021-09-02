@@ -32,7 +32,7 @@ public:
     /*NOT virtual*/ ~DataCollection() {
     }
 
-    HRESULT STDMETHODCALLTYPE GetHandle(BOOL writable, IDataHandle ** object) override {
+    HRESULT GetHandle(BOOL writable, IDataHandle ** object) override {
         // create object
         auto obj1 = CreateLocalInstance<DataHandle>();
         obj1->Initialize(writable);
@@ -44,7 +44,7 @@ public:
         return S_OK;
     }
 
-    HRESULT STDMETHODCALLTYPE EnableLeakCheck(BOOL enable) override {
+    HRESULT EnableLeakCheck(BOOL enable) override {
         _AtlLeakCheck = enable;
         return S_OK;
     }
