@@ -5,10 +5,16 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestClient", "TestClient\TestClient.vcxproj", "{F44E3F95-AF10-4C06-A246-4292278771AB}"
 	ProjectSection(ProjectDependencies) = postProject
+		{07CD9931-6B67-48BB-81A3-5BFFDFDB2A41} = {07CD9931-6B67-48BB-81A3-5BFFDFDB2A41}
 		{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46} = {FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestComponent", "TestComponent\TestComponent.vcxproj", "{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestServer", "TestServer\TestServer.vcxproj", "{07CD9931-6B67-48BB-81A3-5BFFDFDB2A41}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46} = {FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +30,10 @@ Global
 		{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}.Debug|x64.Build.0 = Debug|x64
 		{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}.Release|x64.ActiveCfg = Release|x64
 		{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}.Release|x64.Build.0 = Release|x64
+		{07CD9931-6B67-48BB-81A3-5BFFDFDB2A41}.Debug|x64.ActiveCfg = Debug|x64
+		{07CD9931-6B67-48BB-81A3-5BFFDFDB2A41}.Debug|x64.Build.0 = Debug|x64
+		{07CD9931-6B67-48BB-81A3-5BFFDFDB2A41}.Release|x64.ActiveCfg = Release|x64
+		{07CD9931-6B67-48BB-81A3-5BFFDFDB2A41}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

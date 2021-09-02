@@ -1,0 +1,11 @@
+import "oaidl.idl";
+import "ocidl.idl";
+import "TestComponent.idl";
+
+
+[version(1.0),
+uuid(ECC2EB22-C8CB-4034-993C-158F68FCD39E),
+helpstring("TestServer module")]
+library TestServer {
+    importlib("stdole2.tlb");
+};
