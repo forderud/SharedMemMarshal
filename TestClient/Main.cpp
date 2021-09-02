@@ -23,44 +23,35 @@ private:
     bool m_initialized; ///< must uninitialize in dtor
 };
 
-
-static BYTE GetValue(IDataHandle & h, unsigned int idx) {
-    BYTE * buffer = nullptr;
-    unsigned int size = 0;
-    CHECK(h.GetData(&buffer, &size));
-    assert(idx < size);
-
-    return buffer[idx];
-}
-
-static void SetValue(IDataHandle & h, unsigned int idx, BYTE val) {
-    BYTE * buffer = nullptr;
-    unsigned int size = 0;
-    CHECK(h.GetData(&buffer, &size));
-    assert(idx < size);
-
-    buffer[idx] = val;
-}
-
-
-void AccessTwoHandles (ISharedMem * mgr, unsigned char set_val) {
+void AccessTwoHandles (ISharedMem * mgr, const unsigned char set_val) {
     CComPtr<IDataHandle> obj1;
-    CHECK(mgr->GetHandle(true, &obj1));
-    std::cout << "Object #1 retrieved" << std::endl;
+    CHECK(mgr->GetHandle(true, &obj1)); // writable
 
-    CComPtr<IDataHandle> obj2; // read-only
-    CHECK(mgr->GetHandle(false, &obj2));
-    std::cout << "Object #2 retrieved" << std::endl;
+    CComPtr<IDataHandle> obj2;
+    CHECK(mgr->GetHandle(false, &obj2)); // read-only
 
-    // set mem value in first shared-mem segment
-    const unsigned int pos = 0;
-    SetValue(*obj1, pos, set_val);
-    std::cout << "SetData called" << std::endl;
+    const unsigned int idx = 0;
+    {
+        // set mem value in first shared-mem segment
+        BYTE* buffer = nullptr;
+        unsigned int size = 0;
+        CHECK(obj1->GetData(&buffer, &size));
+        assert(idx < size);
 
-    // verify that the same value also appear in the second shared-mem segment at a different mem. address
-    unsigned char get_val = GetValue(*obj2, pos);
-    std::cout << "GetData called" << std::endl;
-    assert(get_val == set_val);
+        buffer[idx] = set_val;
+
+        std::cout << "Value " << (int)set_val << " stored to first IDataHandle.\n";
+    }
+    {
+        // verify that the same value also appear in the second shared-mem segment at a different mem. address
+        BYTE* buffer = nullptr;
+        unsigned int size = 0;
+        CHECK(obj2->GetData(&buffer, &size));
+        assert(idx < size);
+        assert(buffer[idx] == set_val);
+
+        std::cout << "Value " << (int)buffer[idx] << " read from second IDataHandle.\n";
+    }
 }
 
 int main() {
@@ -82,6 +73,6 @@ int main() {
 
     // test shared-mem access
     for (size_t i = 0; i < 2; ++i) {
-        AccessTwoHandles(mgr, (BYTE)(41 + i));
+        AccessTwoHandles(mgr, (BYTE)(41 + 13*i));
     }
 }
