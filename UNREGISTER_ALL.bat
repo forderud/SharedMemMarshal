@@ -6,8 +6,8 @@ echo NOTICE: Script MUST be run as Administrator.
 setlocal enableextensions
 cd /d "%~dp0"
 
+:: TestComponent typelib
 reg delete "HKCR\TypeLib\{8E42F33F-E5E3-46B4-8B39-0A03DCF338CC}"   /f 2> NUL
-reg delete "HKCR\AppID\{CDD196FE-70ED-46F4-BED7-57615CB78F9B}"     /f 2> NUL
 
 :: remove interfaces
 reg delete "HKCR\Interface\{54E049DB-C39C-4025-B1EF-2FC0E5246277}" /f 2> NUL

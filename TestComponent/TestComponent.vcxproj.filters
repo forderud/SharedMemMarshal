@@ -16,7 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Module.def" />
-    <None Include="AppID.rgs" />
     <None Include="DataHandleProxy.rgs" />
   </ItemGroup>
   <ItemGroup>

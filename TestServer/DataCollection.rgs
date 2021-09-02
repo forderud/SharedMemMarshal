@@ -15,7 +15,6 @@ HKCR
 		{
 			ProgID = s 'TestServer.DataCollection.1'
 			VersionIndependentProgID = s 'TestServer.DataCollection'
-			val AppID = s '%APPID%'
 			LocalServer32 = s '%MODULE%'
 			{
 				val ThreadingModel = s 'Both'

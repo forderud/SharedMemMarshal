@@ -107,7 +107,6 @@
     <Midl Include="TestComponent.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AppID.rgs" />
     <None Include="DataHandleProxy.rgs" />
     <None Include="Module.def" />
   </ItemGroup>
