@@ -43,7 +43,7 @@ static void SetValue(IDataHandle & h, unsigned int idx, BYTE val) {
 }
 
 
-void AccessTwoHandles (ISharedMem * mgr) {
+void AccessTwoHandles (ISharedMem * mgr, unsigned char set_val) {
     CComPtr<IDataHandle> obj1;
     CHECK(mgr->GetHandle(true, &obj1));
     std::cout << "Object #1 retrieved" << std::endl;
@@ -52,11 +52,12 @@ void AccessTwoHandles (ISharedMem * mgr) {
     CHECK(mgr->GetHandle(false, &obj2));
     std::cout << "Object #2 retrieved" << std::endl;
 
+    // set mem value in first shared-mem segment
     const unsigned int pos = 0;
-    const unsigned char set_val = 42;
     SetValue(*obj1, pos, set_val);
     std::cout << "SetData called" << std::endl;
 
+    // verify that the same value also appear in the second shared-mem segment at a different mem. address
     unsigned char get_val = GetValue(*obj2, pos);
     std::cout << "GetData called" << std::endl;
     assert(get_val == set_val);
@@ -82,6 +83,6 @@ int main() {
 
     // test shared-mem access
     for (size_t i = 0; i < 2; ++i) {
-        AccessTwoHandles(mgr);
+        AccessTwoHandles(mgr, (BYTE)(41 + i));
     }
 }
