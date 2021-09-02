@@ -44,7 +44,7 @@ public:
             return E_INVALIDARG;
 
         *buffer = m_data->ptr;
-        *size = static_cast<unsigned int>(m_data->size);
+        *size = m_data->size;
         return S_OK;
     }
 
