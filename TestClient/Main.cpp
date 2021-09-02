@@ -1,5 +1,5 @@
 #include <iostream>
-#include "TestComponent.h"
+#include "..\TestServer\TestServer.h"
 #include "TestComponent_i.c"
 #include "ComSupport.hpp"
 
@@ -67,9 +67,8 @@ int main() {
     // create COM object in a separate process
     CComPtr<ISharedMem> mgr;
     {
-        CHECK(mgr.CoCreateInstance(L"TestComponent.DataCollection", nullptr, CLSCTX_LOCAL_SERVER)); // force-run in separate process
-        mgr->EnableLeakCheck(true);
-        std::cout << "TestComponent.DataCollection created." << std::endl;
+        CHECK(mgr.CoCreateInstance(L"TestServer.DataCollection")); // will run in separate TestServer.exe
+        std::cout << "TestServer.DataCollection created." << std::endl;
     }
 
     // test shared-mem access

@@ -1,0 +1,34 @@
+import "oaidl.idl";
+import "ocidl.idl";
+import "TestComponent.idl";
+
+[object,
+oleautomation, // use "automation" marshaler (oleaut32.dll)
+uuid(7D278258-3B05-45D3-AD60-CF65497B56B6),
+helpstring("Interface for exchanging data over shared memory.")]
+interface ISharedMem : IUnknown {
+    [helpstring("Get handle to a shared-mem segment. Can be mapped as read-only or read/write.")]
+    HRESULT GetHandle([in] BOOL writable, [out, retval] IDataHandle** obj);
+};
+
+[version(1.0),
+uuid(ECC2EB22-C8CB-4034-993C-158F68FCD39E),
+helpstring("TestServer module")]
+library TestServer {
+    importlib("stdole2.tlb");
+
+    [version(1.0),
+        uuid(B7B84F73-8638-4EE5-A486-2C9455C0CD2B),
+        helpstring("Class for testing shared memory")]
+    coclass DataHandle {
+        [default] interface IDataHandle;
+        interface IMarshal;
+    };
+
+    [version(1.0),
+        uuid(C8767698-8297-4BE1-904E-FC25034851D2),
+        helpstring("Class for testing shared memory")]
+    coclass DataCollection {
+        [default] interface ISharedMem;
+    };
+};

@@ -2,8 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="DataHandle.cpp" />
-    <ClCompile Include="DataCollection.cpp" />
     <ClCompile Include="DataHandleProxy.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -11,8 +9,6 @@
     <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="SignalHandler.hpp" />
-    <ClInclude Include="DataHandle.hpp" />
-    <ClInclude Include="DataCollection.hpp" />
     <ClInclude Include="DataHandleProxy.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -20,8 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Module.def" />
-    <None Include="AppID.rgs" />
-    <None Include="DataCollection.rgs" />
     <None Include="DataHandleProxy.rgs" />
   </ItemGroup>
   <ItemGroup>

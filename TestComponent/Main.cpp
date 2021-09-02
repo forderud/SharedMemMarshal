@@ -2,10 +2,8 @@
 #include "TestComponent.h"
 #include "TestComponent_i.c"
 #include "ComSupport.hpp"
-#include "DataHandle.hpp"
 
 
-bool _AtlLeakCheck = false;
 
 class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
 public:
@@ -13,13 +11,9 @@ public:
     }
 
     ~TestComponentModule() {
-        if (_AtlLeakCheck) {
-            DataHandle::LeakCheck();
-        }
     }
 
     DECLARE_LIBID(LIBID_TestComponent)
-    DECLARE_REGISTRY_APPID_RESOURCEID(IDR_AppID, "{CDD196FE-70ED-46F4-BED7-57615CB78F9B}")
 };
 
 TestComponentModule _AtlModule;

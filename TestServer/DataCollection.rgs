@@ -1,0 +1,26 @@
+HKCR
+{
+	TestServer.DataCollection.1 = s 'DataCollection Object'
+	{
+		CLSID = s '{C8767698-8297-4BE1-904E-FC25034851D2}'
+	}
+	TestServer.DataCollection = s 'DataCollection Object'
+	{		
+		CLSID = s '{C8767698-8297-4BE1-904E-FC25034851D2}'
+		CurVer = s 'TestServer.DataCollection.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C8767698-8297-4BE1-904E-FC25034851D2} = s 'DataCollection Object'
+		{
+			ProgID = s 'TestServer.DataCollection.1'
+			VersionIndependentProgID = s 'TestServer.DataCollection'
+			LocalServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			TypeLib = s '{ECC2EB22-C8CB-4034-993C-158F68FCD39E}'
+			Version = s '1.0'
+		}
+	}
+}
