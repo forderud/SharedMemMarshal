@@ -1,5 +1,4 @@
 #pragma once
-#include <mutex>
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestComponent.h"
@@ -33,17 +32,14 @@ public:
     }
 
     HRESULT STDMETHODCALLTYPE GetHandle(BOOL writable, IDataHandle ** object) override {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        // create object
+        auto obj1 = CreateLocalInstance<DataHandle>();
+        obj1->Initialize(writable);
 
-        if (!m_obj) {
-            // create object on demand
-            auto obj = CreateLocalInstance<DataHandle>();
-            obj->Initialize(writable);
-            CHECK(obj.QueryInterface(&m_obj));
-        }
-
-        CComPtr<IDataHandle> copy = m_obj;
-        *object = copy.Detach();
+        // cast to IDataHandle and return to caller
+        CComPtr<IDataHandle> obj2;
+        CHECK(obj1.QueryInterface(&obj2));
+        *object = obj2.Detach();
         return S_OK;
     }
 
@@ -52,10 +48,6 @@ public:
     BEGIN_COM_MAP(DataCollection)
         COM_INTERFACE_ENTRY(ISharedMem)
     END_COM_MAP()
-
-private:
-    CComPtr<IDataHandle> m_obj;
-    std::mutex           m_mutex;
 };
 
 OBJECT_ENTRY_AUTO(CLSID_DataCollection, DataCollection)
