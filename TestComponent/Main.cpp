@@ -4,14 +4,12 @@
 #include "ComSupport.hpp"
 
 
-
 class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
 public:
     DECLARE_LIBID(LIBID_TestComponent)
 };
 
 TestComponentModule _AtlModule;
-
 
 
 // DLL Entry Point
