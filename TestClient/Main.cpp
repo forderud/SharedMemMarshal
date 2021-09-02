@@ -23,7 +23,7 @@ private:
     bool m_initialized; ///< must uninitialize in dtor
 };
 
-void AccessTwoHandles (ISharedMem * mgr, const unsigned char set_val) {
+void AccessTwoHandles (IHandleMgr* mgr, const unsigned char set_val) {
     CComPtr<IDataHandle> obj1;
     CHECK(mgr->GetHandle(true, &obj1)); // writable
 
@@ -58,7 +58,7 @@ int main() {
     ComInitialize com(COINIT_MULTITHREADED);
 
     // create COM object in a separate process
-    CComPtr<ISharedMem> mgr;
+    CComPtr<IHandleMgr> mgr;
     {
         CHECK(mgr.CoCreateInstance(L"TestServer.DataCollection")); // will run in separate TestServer.exe
         std::cout << "TestServer.DataCollection created." << std::endl;

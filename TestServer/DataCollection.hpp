@@ -22,7 +22,7 @@ static CComPtr<T> CreateLocalInstance() {
 class ATL_NO_VTABLE DataCollection :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<DataCollection, &CLSID_DataCollection>,
-    public ISharedMem
+    public IHandleMgr
 {
 public:
     DataCollection(){
@@ -56,7 +56,7 @@ public:
     DECLARE_REGISTRY_RESOURCEID(IDR_DataCollection)
 
     BEGIN_COM_MAP(DataCollection)
-        COM_INTERFACE_ENTRY(ISharedMem)
+        COM_INTERFACE_ENTRY(IHandleMgr)
     END_COM_MAP()
 
 private:

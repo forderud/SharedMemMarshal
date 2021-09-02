@@ -5,8 +5,8 @@ import "TestComponent.idl";
 [object,
 oleautomation, // use "automation" marshaler (oleaut32.dll)
 uuid(7D278258-3B05-45D3-AD60-CF65497B56B6),
-helpstring("Interface for exchanging data over shared memory.")]
-interface ISharedMem : IUnknown {
+helpstring("Interface for accessing shared-memory segment handles.")]
+interface IHandleMgr : IUnknown {
     [helpstring("Get handle to a shared-mem segment. Can be mapped as read-only or read/write.")]
     HRESULT GetHandle([in] BOOL writable, [out, retval] IDataHandle** obj);
 };
@@ -29,6 +29,6 @@ library TestServer {
         uuid(C8767698-8297-4BE1-904E-FC25034851D2),
         helpstring("Class for testing shared memory")]
     coclass DataCollection {
-        [default] interface ISharedMem;
+        [default] interface IHandleMgr;
     };
 };
