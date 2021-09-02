@@ -25,7 +25,9 @@ Test to prove that `DataHandle` leaks are _not_ cleaned up:
 
 ### Thoughs on a possible solution
 
-Any ideas are most welcome.
+Vague thoughts on how to work around this problem:
+* Determine client process ID (PID) when `MarshalInterface` is called in the server. Open a handle to the client process and call `RegisterWaitForSingleObject` to receive a notification when the client process terminates. **Problem**: Don't know how to determine the client PID from MarshalInterface.
+* Create some kind of ref-counted relationship from `DataHandleProxy` back to `DataHandle` that uses regular COM marshaling. Leverage this relationship to control the `DataHandle` lifetime. **PROBLEM**: Don't know how to establish a relationship back from to the server from `UnmarshalInterface`.
 
 
 ## References
