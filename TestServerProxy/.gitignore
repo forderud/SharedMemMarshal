@@ -1,8 +1,8 @@
 /x64
 /Win32
-/TestComponent.vcxproj.user
-/TestComponent.h
-/TestComponent_i.c
-/TestComponent_p.c
+/TestServerProxy.vcxproj.user
+/TestServerProxy.h
+/TestServerProxy_i.c
+/TestServerProxy_p.c
 /dlldata.c
-/TestComponent.aps
+/TestServerProxy.aps
