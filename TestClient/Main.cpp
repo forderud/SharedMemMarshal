@@ -1,7 +1,7 @@
 #include <iostream>
-#include "../TestComponent/TestComponent.h"
-#include "../TestComponent/TestComponent_i.c"
-#include "../TestComponent/ComSupport.hpp"
+#include "TestComponent.h"
+#include "TestComponent_i.c"
+#include "ComSupport.hpp"
 
 
 /** RAII class for COM initialization. */
