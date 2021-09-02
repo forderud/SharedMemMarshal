@@ -60,8 +60,8 @@ int main() {
     // create COM object in a separate process
     CComPtr<IHandleMgr> mgr;
     {
-        CHECK(mgr.CoCreateInstance(L"TestServer.DataCollection")); // will run in separate TestServer.exe
-        std::cout << "TestServer.DataCollection created." << std::endl;
+        CHECK(mgr.CoCreateInstance(L"TestServer.HandleMgr")); // will run in separate TestServer.exe
+        std::cout << "TestServer.HandleMgr created." << std::endl;
     }
 
     // test shared-mem access

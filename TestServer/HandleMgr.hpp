@@ -19,25 +19,25 @@ static CComPtr<T> CreateLocalInstance() {
 }
 
 
-class ATL_NO_VTABLE DataCollection :
+class ATL_NO_VTABLE HandleMgr :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
-    public CComCoClass<DataCollection, &CLSID_DataCollection>,
+    public CComCoClass<HandleMgr, &CLSID_HandleMgr>,
     public IHandleMgr
 {
 public:
-    DataCollection(){
+    HandleMgr(){
         s_counter++;
 
         // log object count to Visual Studio "Output" window
-        auto msg = std::string("DataCollection ctor. (") + std::to_string(s_counter) + " objects).\n";
+        auto msg = std::string("HandleMgr ctor. (") + std::to_string(s_counter) + " objects).\n";
         OutputDebugString(msg.c_str());
     }
 
-    /*NOT virtual*/ ~DataCollection() {
+    /*NOT virtual*/ ~HandleMgr() {
         s_counter--;
 
         // log object count to Visual Studio "Output" window
-        auto msg = std::string("DataCollection dtor. (") + std::to_string(s_counter) + " objects).\n";
+        auto msg = std::string("HandleMgr dtor. (") + std::to_string(s_counter) + " objects).\n";
         OutputDebugString(msg.c_str());
     }
 
@@ -53,9 +53,9 @@ public:
         return S_OK;
     }
 
-    DECLARE_REGISTRY_RESOURCEID(IDR_DataCollection)
+    DECLARE_REGISTRY_RESOURCEID(IDR_HandleMgr)
 
-    BEGIN_COM_MAP(DataCollection)
+    BEGIN_COM_MAP(HandleMgr)
         COM_INTERFACE_ENTRY(IHandleMgr)
     END_COM_MAP()
 
@@ -63,4 +63,4 @@ private:
     static std::atomic<unsigned int> s_counter; ///< object instance counter
 };
 
-OBJECT_ENTRY_AUTO(CLSID_DataCollection, DataCollection)
+OBJECT_ENTRY_AUTO(CLSID_HandleMgr, HandleMgr)

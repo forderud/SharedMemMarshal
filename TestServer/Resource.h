@@ -1,1 +1,1 @@
-#define IDR_DataCollection              109
+#define IDR_HandleMgr              109

@@ -2,13 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="DataCollection.cpp" />
     <ClCompile Include="DataHandle.cpp" />
+    <ClCompile Include="HandleMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="DataCollection.hpp" />
     <ClInclude Include="DataHandle.hpp" />
+    <ClInclude Include="HandleMgr.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestServer.idl" />
@@ -17,6 +17,6 @@
     <ResourceCompile Include="TestServer.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataCollection.rgs" />
+    <None Include="HandleMgr.rgs" />
   </ItemGroup>
 </Project>

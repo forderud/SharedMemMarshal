@@ -9,12 +9,12 @@ The implementation uses Windows [event objects](https://docs.microsoft.com/nb-no
 
 Associated StackOverflow question: https://stackoverflow.com/questions/69010789/how-to-leverage-dcom-garbage-collector-with-custom-marshaling-imarshal
 
-A client process that leaks COM references due to bugs or a crash will lead to leaking stubs in the server for the `DataHandle` class that implements `IMarhal`. These leaks are not cleaned up by the DCOM garbage collector. Leaking `DataCollection` class references on the other hand are cleaned up automatically. It would be nice of the COM runtime could somwehow also clean up for classes implementing IMarhal.
+A client process that leaks COM references due to bugs or a crash will lead to leaking stubs in the server for the `DataHandle` class that implements `IMarhal`. These leaks are not cleaned up by the DCOM garbage collector. Leaking `HandleMgr` class references on the other hand are cleaned up automatically. It would be nice of the COM runtime could somwehow also clean up for classes implementing IMarhal.
 
 ## Steps to reproduce the problem
 
-Test to prove that `DataCollection` leaks are automatically cleaned up:
-1. Add `mgr.p->AddRef();` somwhere in `int main()` to provoke a `DataCollection` reference leak.
+Test to prove that `HandleMgr` leaks are automatically cleaned up:
+1. Add `mgr.p->AddRef();` somwhere in `int main()` to provoke a `HandleMgr` reference leak.
 2. Build solution and start TestClient.exe in debug mode.
 3. Observe that TestServer.exe is started and terminates a few seconds _after_ TestClient.exe terminates.
 

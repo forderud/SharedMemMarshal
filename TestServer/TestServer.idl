@@ -28,7 +28,7 @@ library TestServer {
     [version(1.0),
         uuid(C8767698-8297-4BE1-904E-FC25034851D2),
         helpstring("Class for testing shared memory")]
-    coclass DataCollection {
+    coclass HandleMgr {
         [default] interface IHandleMgr;
     };
 };
