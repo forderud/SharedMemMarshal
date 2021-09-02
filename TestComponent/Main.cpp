@@ -4,7 +4,6 @@
 #include "ComSupport.hpp"
 #include "DataHandle.hpp"
 #include "DataHandleProxy.hpp"
-#include <psapi.h>
 
 
 class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
