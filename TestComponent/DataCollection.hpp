@@ -38,8 +38,8 @@ public:
         if (!m_obj) {
             // create object on demand
             auto obj = CreateLocalInstance<DataHandle>();
+            obj->Initialize(writable);
             CHECK(obj.QueryInterface(&m_obj));
-            m_obj->Initialize(writable);
         }
 
         CComPtr<IDataHandle> copy = m_obj;

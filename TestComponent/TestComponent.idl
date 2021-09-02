@@ -9,8 +9,6 @@ import "ocidl.idl";
 interface IDataHandle : IUnknown {
     [helpstring("Get shared-mem segment address & size. The data might not be writable. Lifetime is managed by IDataHandle object.")]
     HRESULT GetData ([out] BYTE ** buffer, [out] unsigned int * size);
-
-    HRESULT Initialize([in] BOOL writable);
 };
 
 

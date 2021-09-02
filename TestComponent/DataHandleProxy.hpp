@@ -39,12 +39,6 @@ public:
         return ref_cnt;
     }
 
-    HRESULT STDMETHODCALLTYPE Initialize(BOOL writable) override {
-        // create shared-mem segment
-        m_data.reset(new SharedMem(SharedMem::OWNER, "TestSharedMem", writable, 1024));
-        return S_OK;
-    }
-
     HRESULT STDMETHODCALLTYPE GetData(/*out*/BYTE** buffer, /*out*/unsigned int* size) override {
         if (!buffer || !size)
             return E_INVALIDARG;
