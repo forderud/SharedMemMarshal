@@ -18,14 +18,6 @@ library TestServer {
     importlib("stdole2.tlb");
 
     [version(1.0),
-        uuid(B7B84F73-8638-4EE5-A486-2C9455C0CD2B),
-        helpstring("Class for testing shared memory")]
-    coclass DataHandle {
-        [default] interface IDataHandle;
-        interface IMarshal;
-    };
-
-    [version(1.0),
         uuid(C8767698-8297-4BE1-904E-FC25034851D2),
         helpstring("Class for testing shared memory")]
     coclass HandleMgr {
