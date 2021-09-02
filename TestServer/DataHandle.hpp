@@ -105,5 +105,5 @@ private:
     std::unique_ptr<SharedMem>       m_data;
     SignalHandler                    m_signal;
 
-    static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
+    static std::atomic<unsigned int> s_counter; ///< object instance counter
 };

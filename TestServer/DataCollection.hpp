@@ -26,9 +26,19 @@ class ATL_NO_VTABLE DataCollection :
 {
 public:
     DataCollection(){
+        s_counter++;
+
+        // log object count to Visual Studio "Output" window
+        auto msg = std::string("DataCollection ctor. (") + std::to_string(s_counter) + " objects).\n";
+        OutputDebugString(msg.c_str());
     }
 
     /*NOT virtual*/ ~DataCollection() {
+        s_counter--;
+
+        // log object count to Visual Studio "Output" window
+        auto msg = std::string("DataCollection dtor. (") + std::to_string(s_counter) + " objects).\n";
+        OutputDebugString(msg.c_str());
     }
 
     HRESULT GetHandle(BOOL writable, IDataHandle ** object) override {
@@ -48,6 +58,9 @@ public:
     BEGIN_COM_MAP(DataCollection)
         COM_INTERFACE_ENTRY(ISharedMem)
     END_COM_MAP()
+
+private:
+    static std::atomic<unsigned int> s_counter; ///< object instance counter
 };
 
 OBJECT_ENTRY_AUTO(CLSID_DataCollection, DataCollection)
