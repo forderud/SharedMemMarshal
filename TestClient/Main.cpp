@@ -23,12 +23,12 @@ private:
     bool m_initialized; ///< must uninitialize in dtor
 };
 
-void AccessTwoHandles (IHandleMgr* mgr, const unsigned char set_val) {
+void AccessTwoHandles (IHandleMgr& mgr, const unsigned char set_val) {
     CComPtr<IDataHandle> obj1;
-    CHECK(mgr->GetHandle(true, &obj1)); // writable
+    CHECK(mgr.GetHandle(true, &obj1)); // writable
 
     CComPtr<IDataHandle> obj2;
-    CHECK(mgr->GetHandle(false, &obj2)); // read-only
+    CHECK(mgr.GetHandle(false, &obj2)); // read-only
 
     const unsigned int idx = 0;
     {
@@ -66,6 +66,6 @@ int main() {
 
     // test shared-mem access
     for (size_t i = 0; i < 2; ++i) {
-        AccessTwoHandles(mgr, (BYTE)(41 + 13*i));
+        AccessTwoHandles(*mgr, (BYTE)(41 + 13*i));
     }
 }
