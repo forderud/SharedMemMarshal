@@ -76,9 +76,8 @@ int main() {
     // create COM object in a separate process
     CComPtr<ISharedMem> mgr;
     {
-        DWORD class_context = CLSCTX_LOCAL_SERVER; // force-run in separate process
-        CHECK(mgr.CoCreateInstance(L"TestComponent.DataCollection", nullptr, class_context));
-        std::cout << "Collection created" << std::endl;
+        CHECK(mgr.CoCreateInstance(L"TestComponent.DataCollection", nullptr, CLSCTX_LOCAL_SERVER)); // force-run in separate process
+        std::cout << "TestComponent.DataCollection created." << std::endl;
     }
 
     // test shared-mem access
