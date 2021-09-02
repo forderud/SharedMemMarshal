@@ -14,7 +14,7 @@ A client process that leaks COM references due to bugs or a crash will lead to l
 ## Steps to reproduce the problem
 
 Test to prove that `HandleMgr` leaks are automatically cleaned up:
-1. Add `mgr.p->AddRef();` somwhere in `int main()` to provoke a `HandleMgr` reference leak.
+1. Add `mgr.p->AddRef()` to the TestClient `int main()` function to provoke a `HandleMgr` reference leak.
 2. Build solution and start TestClient.exe in debug mode.
 3. Observe that TestServer.exe is started and terminates a few seconds _after_ TestClient.exe terminates.
 
