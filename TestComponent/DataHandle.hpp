@@ -15,10 +15,18 @@ class ATL_NO_VTABLE DataHandle :
 public:
     DataHandle() : m_signal("TestSharedMem_") {
         s_counter++;
+
+        // log object count to Visual Studio "Output" window
+        auto msg = std::string("DataHandle ctor. (") + std::to_string(s_counter) + " objects).\n";
+        OutputDebugString(msg.c_str());
     }
 
     /*NOT virtual*/ ~DataHandle() {
         s_counter--;
+
+        // log object count to Visual Studio "Output" window
+        auto msg = std::string("DataHandle dtor. (") + std::to_string(s_counter) + " objects).\n";
+        OutputDebugString(msg.c_str());
     }
 
     void Initialize(BOOL writable) {
