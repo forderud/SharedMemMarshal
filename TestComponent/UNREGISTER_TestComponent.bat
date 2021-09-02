@@ -18,9 +18,6 @@ reg delete "HKCR\TestComponent.DataCollection"                     /f 2> NUL
 reg delete "HKCR\TestComponent.DataCollection.1"                   /f 2> NUL
 reg delete "HKCR\CLSID\{C8767698-8297-4BE1-904E-FC25034851D2}"     /f 2> NUL
 
-:: remove DataHandle class
-reg delete "HKCR\CLSID\{B7B84F73-8638-4EE5-A486-2C9455C0CD2B}"     /f 2> NUL
-
 :: remove DataHandleProxy class
 reg delete "HKCR\CLSID\{D84F768B-55F6-4B3A-AF68-9276C9488696}"     /f 2> NUL
 

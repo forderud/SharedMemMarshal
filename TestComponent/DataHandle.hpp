@@ -9,7 +9,7 @@
 
 class ATL_NO_VTABLE DataHandle :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
-    public CComCoClass<DataHandle, &CLSID_DataHandle>,
+    public CComCoClass<DataHandle>, // no registry entries
     public IDataHandle,
     public IMarshal {
 public:
@@ -111,8 +111,6 @@ public:
         assert((s_counter == 0) && "DataHandle leak detected.");
     }
 
-    DECLARE_REGISTRY_RESOURCEID(IDR_DataHandle)
-
     BEGIN_COM_MAP(DataHandle)
         COM_INTERFACE_ENTRY(IDataHandle)
         COM_INTERFACE_ENTRY(IMarshal)
@@ -124,5 +122,3 @@ private:
 
     static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
 };
-
-OBJECT_ENTRY_AUTO(CLSID_DataHandle, DataHandle)

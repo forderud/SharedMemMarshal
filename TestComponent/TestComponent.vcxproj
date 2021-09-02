@@ -115,7 +115,6 @@
     <None Include="DataCollection.rgs" />
     <None Include="DataHandleProxy.rgs" />
     <None Include="Module.def" />
-    <None Include="DataHandle.rgs" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestComponent.rc" />
