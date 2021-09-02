@@ -4,25 +4,6 @@
 #include "ComSupport.hpp"
 
 
-/** RAII class for COM initialization. */
-class ComInitialize {
-public:
-    ComInitialize(COINIT apartment /*= COINIT_MULTITHREADED*/) : m_initialized(false) {
-        // REF: https://msdn.microsoft.com/en-us/library/windows/desktop/ms695279.aspx
-        HRESULT hr = CoInitializeEx(NULL, apartment);
-        if (SUCCEEDED(hr))
-            m_initialized = true;
-    }
-
-    ~ComInitialize() {
-        if (m_initialized)
-            CoUninitialize();
-    }
-
-private:
-    bool m_initialized; ///< must uninitialize in dtor
-};
-
 void AccessTwoHandles (IHandleMgr& mgr, const unsigned char set_val) {
     CComPtr<IDataHandle> obj1;
     CHECK(mgr.GetHandle(true, &obj1)); // writable
@@ -55,17 +36,23 @@ void AccessTwoHandles (IHandleMgr& mgr, const unsigned char set_val) {
 }
 
 int main() {
-    ComInitialize com(COINIT_MULTITHREADED);
+    // Initialize COM.
+    CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
-    // create COM object in a separate process
-    CComPtr<IHandleMgr> mgr;
     {
-        CHECK(mgr.CoCreateInstance(L"TestServer.HandleMgr")); // will run in separate TestServer.exe
+        // create COM object in a separate TestServer.exe process
+        CComPtr<IHandleMgr> mgr;
+        CHECK(mgr.CoCreateInstance(L"TestServer.HandleMgr"));
         std::cout << "TestServer.HandleMgr created." << std::endl;
+
+        // Test shared-mem access.
+        for (size_t i = 0; i < 2; ++i) {
+            AccessTwoHandles(*mgr, (BYTE)(41 + 13 * i));
+        }
     }
 
-    // test shared-mem access
-    for (size_t i = 0; i < 2; ++i) {
-        AccessTwoHandles(*mgr, (BYTE)(41 + 13*i));
-    }
+    // Unload COM.
+    // Triggers automatic garbage collection of leaking COM object references in TestServer,
+    // except for classes implementing IMarshal.
+    CoUninitialize();
 }
