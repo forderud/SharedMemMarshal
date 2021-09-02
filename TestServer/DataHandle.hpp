@@ -96,10 +96,6 @@ public:
         return S_OK;
     }
 
-    static void LeakCheck() {
-        assert((s_counter == 0) && "DataHandle leak detected.");
-    }
-
     BEGIN_COM_MAP(DataHandle)
         COM_INTERFACE_ENTRY(IDataHandle)
         COM_INTERFACE_ENTRY(IMarshal)

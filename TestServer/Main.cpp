@@ -7,14 +7,6 @@
 
 class TestServerModule : public ATL::CAtlExeModuleT<TestServerModule> {
 public:
-    TestServerModule() {
-    }
-
-    ~TestServerModule() {
-        DataHandle::LeakCheck();
-    }
-
-
     DECLARE_LIBID(LIBID_TestServer)
 };
 
