@@ -3,7 +3,6 @@
 #include "TestComponent_i.c"
 #include "ComSupport.hpp"
 #include "DataHandle.hpp"
-#include "DataHandleProxy.hpp"
 
 
 bool _AtlLeakCheck = false;
@@ -16,7 +15,6 @@ public:
     ~TestComponentModule() {
         if (_AtlLeakCheck) {
             DataHandle::LeakCheck();
-            DataHandleProxy::LeakCheck();
         }
     }
 

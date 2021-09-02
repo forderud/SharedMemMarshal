@@ -89,10 +89,6 @@ public:
         return S_OK;
     }
 
-    static void LeakCheck() {
-        assert((s_counter == 0) && "DataHandleProxy leak detected.");
-    }
-
     DECLARE_REGISTRY_RESOURCEID(IDR_DataHandleProxy)
 
     BEGIN_COM_MAP(DataHandleProxy)
