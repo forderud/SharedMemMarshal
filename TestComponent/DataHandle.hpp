@@ -59,7 +59,7 @@ public:
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
-        *clsid = GetObjectCLSID(); // class will unmarshal itself
+        *clsid = CLSID_DataHandleProxy; // use DataHandleProxy class for unmarshaling
         return S_OK;
     }
 
@@ -94,18 +94,7 @@ public:
 
     /** Deserialize object. Called from client (proxy). */
     HRESULT STDMETHODCALLTYPE UnmarshalInterface(IStream* strm, const IID& iid, void ** ppv) override {
-        // de-serialize shared-mem metadata
-        bool writable = false;
-        *strm >> writable;
-        unsigned int obj_size = 0;
-        *strm >> obj_size;
-
-        // map shared-mem
-        m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", writable, obj_size));
-
-        m_signal.Open();
-
-        return QueryInterface(iid, ppv);
+        abort(); // should never be called
     }
 
     /** Destroys a marshaled data packet. Have never been observed called. */

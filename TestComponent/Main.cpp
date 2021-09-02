@@ -3,6 +3,7 @@
 #include "TestComponent_i.c"
 #include "ComSupport.hpp"
 #include "DataHandle.hpp"
+#include "DataHandleProxy.hpp"
 #include <psapi.h>
 
 
@@ -13,6 +14,7 @@ public:
 
     ~TestComponentModule() {
         DataHandle::LeakCheck();
+        DataHandleProxy::LeakCheck();
     }
 
     DECLARE_LIBID(LIBID_TestComponent)

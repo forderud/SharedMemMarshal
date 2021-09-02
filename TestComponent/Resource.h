@@ -3,4 +3,5 @@
 
 #define IDR_AppID                       106
 #define IDR_DataHandle                  107
-#define IDR_DataCollection              108
+#define IDR_DataHandleProxy             108
+#define IDR_DataCollection              109

@@ -40,6 +40,14 @@ library TestComponent {
     };
 
     [version(1.0),
+        uuid(D84F768B-55F6-4B3A-AF68-9276C9488696),
+        helpstring("Class for testing shared memory")]
+    coclass DataHandleProxy {
+        [default] interface IDataHandle;
+        interface IMarshal;
+    };
+
+    [version(1.0),
      uuid(C8767698-8297-4BE1-904E-FC25034851D2),
      helpstring("Class for testing shared memory")]
     coclass DataCollection {

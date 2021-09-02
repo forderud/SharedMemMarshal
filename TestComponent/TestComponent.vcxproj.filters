@@ -4,6 +4,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DataHandle.cpp" />
     <ClCompile Include="DataCollection.cpp" />
+    <ClCompile Include="DataHandleProxy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
@@ -12,6 +13,7 @@
     <ClInclude Include="SignalHandler.hpp" />
     <ClInclude Include="DataHandle.hpp" />
     <ClInclude Include="DataCollection.hpp" />
+    <ClInclude Include="DataHandleProxy.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestComponent.idl" />
@@ -21,6 +23,7 @@
     <None Include="AppID.rgs" />
     <None Include="DataHandle.rgs" />
     <None Include="DataCollection.rgs" />
+    <None Include="DataHandleProxy.rgs" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestComponent.rc" />
