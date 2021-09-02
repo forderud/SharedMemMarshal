@@ -68,7 +68,7 @@ public:
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
-        *size = 2*sizeof(unsigned int) + sizeof(bool);
+        *size = sizeof(m_data->writable) + sizeof(m_data->size);
         return S_OK;
     }
 
