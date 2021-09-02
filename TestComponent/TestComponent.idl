@@ -19,6 +19,8 @@ interface IDataHandle : IUnknown {
 interface ISharedMem : IUnknown {
     [helpstring("Get handle to a shared-mem segment. Can be mapped as read-only or read/write.")]
     HRESULT GetHandle([in] BOOL writable, [out, retval] IDataHandle **obj);
+
+    HRESULT EnableLeakCheck([in] BOOL enable);
 };
 
 

@@ -68,6 +68,7 @@ int main() {
     CComPtr<ISharedMem> mgr;
     {
         CHECK(mgr.CoCreateInstance(L"TestComponent.DataCollection", nullptr, CLSCTX_LOCAL_SERVER)); // force-run in separate process
+        mgr->EnableLeakCheck(true);
         std::cout << "TestComponent.DataCollection created." << std::endl;
     }
 

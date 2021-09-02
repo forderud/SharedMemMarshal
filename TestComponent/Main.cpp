@@ -6,14 +6,18 @@
 #include "DataHandleProxy.hpp"
 
 
+bool _AtlLeakCheck = false;
+
 class TestComponentModule : public ATL::CAtlDllModuleT<TestComponentModule> {
 public:
     TestComponentModule() {
     }
 
     ~TestComponentModule() {
-        DataHandle::LeakCheck();
-        DataHandleProxy::LeakCheck();
+        if (_AtlLeakCheck) {
+            DataHandle::LeakCheck();
+            DataHandleProxy::LeakCheck();
+        }
     }
 
     DECLARE_LIBID(LIBID_TestComponent)
