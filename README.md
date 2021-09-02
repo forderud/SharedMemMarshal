@@ -11,7 +11,7 @@ Associated StackOverflow question: https://stackoverflow.com/questions/69010789/
 
 A client process that leaks COM references due to bugs or a crash will lead to leaking stubs in the server for the `DataHandle` class that implements `IMarhal`. These leaks are not cleaned up by the DCOM garbage collector. Leaking `HandleMgr` class references on the other hand are cleaned up automatically. It would be nice of the COM runtime could somwehow also clean up for classes implementing IMarhal.
 
-## Steps to reproduce the problem
+### Steps to reproduce the problem
 
 Test to prove that `HandleMgr` leaks are automatically cleaned up:
 1. Add `mgr.p->AddRef()` to the TestClient `int main()` function to provoke a `HandleMgr` reference leak.
@@ -23,7 +23,11 @@ Test to prove that `DataHandle` leaks are _not_ cleaned up:
 2. Build solution and start TestClient.exe in debug mode.
 3. Observe that TestServer.exe is started and continues to live also _after_ TestClient.exe terminates.
 
+### Thoughs on a possible solution
 
-### References
+Any ideas are most welcome.
+
+
+## References
 * [IMarhal](https://docs.microsoft.com/nb-no/windows/desktop/api/objidl/nn-objidl-imarshal) interface
 * Inside COM+: [Will That Be Custom or Standard Marshaling?](https://thrysoee.dk/InsideCOM+/ch14c.htm) - uses event objects to synchronize destruction from proxy to server.
