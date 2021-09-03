@@ -55,8 +55,7 @@ public:
         *strm >> obj_size;
 
         // deserialize RefOwner reference to control server lifetime
-        HRESULT hr = CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server));
-        assert(SUCCEEDED(hr));
+        CHECK(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));
 
         // map shared-mem
         m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", writable, obj_size));
