@@ -101,7 +101,6 @@
     <ClInclude Include="DataHandleProxy.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SharedMem.hpp" />
-    <ClInclude Include="SignalHandler.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestServerProxy.idl" />

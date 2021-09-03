@@ -1,10 +1,10 @@
 #pragma once
 #include <atomic>
+#include <memory>
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestServerProxy.h"
 #include "SharedMem.hpp"
-#include "SignalHandler.hpp"
 
 
 /** Client-side proxy class for the DataHandle class. */
@@ -14,30 +14,12 @@ class ATL_NO_VTABLE DataHandleProxy :
     public IDataHandle,
     public IMarshal {
 public:
-    DataHandleProxy() : m_signal("TestServer_SharedMem") {
+    DataHandleProxy() {
         s_counter++;
     }
 
     /*NOT virtual*/ ~DataHandleProxy() {
         s_counter--;
-    }
-
-    typedef CComObjectRootEx<CComMultiThreadModel> PARENT;
-
-    ULONG InternalAddRef() {
-        return PARENT::InternalAddRef();
-    }
-
-    ULONG InternalRelease() {
-        ULONG ref_cnt = PARENT::InternalRelease();
-
-        if (ref_cnt == 0) {
-            // no more outstanding references
-            if (m_data)
-                m_signal.Signal(); // signal to server that proxy is deleted
-        }
-
-        return ref_cnt;
     }
 
     HRESULT GetData(/*out*/BYTE** buffer, /*out*/unsigned int* size) override {
@@ -72,10 +54,12 @@ public:
         unsigned int obj_size = 0;
         *strm >> obj_size;
 
+        // deserialize RefOwner reference to control server lifetime
+        HRESULT hr = CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server));
+        assert(SUCCEEDED(hr));
+
         // map shared-mem
         m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", writable, obj_size));
-
-        m_signal.Open();
 
         return QueryInterface(iid, ppv);
     }
@@ -99,7 +83,7 @@ public:
 
 private:
     std::unique_ptr<SharedMem>       m_data;
-    SignalHandler                    m_signal;
+    CComPtr<IUnknown>                m_server;  ///< DataHandle server reference (controls lifetime)
 
     static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
 };

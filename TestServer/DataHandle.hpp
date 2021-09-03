@@ -1,10 +1,11 @@
 #pragma once
 #include <atomic>
+#include <memory>
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestServer.h"
 #include "SharedMem.hpp"
-#include "SignalHandler.hpp"
+#include "RefOwner.hpp"
 
 
 class ATL_NO_VTABLE DataHandle :
@@ -13,12 +14,13 @@ class ATL_NO_VTABLE DataHandle :
     public IDataHandle,
     public IMarshal {
 public:
-    DataHandle() : m_signal("TestServer_SharedMem") {
+    DataHandle() {
         s_counter++;
 
         // log object count to Visual Studio "Output" window
         auto msg = std::string("DataHandle ctor. (") + std::to_string(s_counter) + " objects).\n";
         OutputDebugString(msg.c_str());
+
     }
 
     /*NOT virtual*/ ~DataHandle() {
@@ -57,7 +59,8 @@ public:
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
-        *size = sizeof(m_data->writable) + sizeof(m_data->size);
+        constexpr ULONG OBJ_MARSHAL_SIZE = 68;
+        *size = sizeof(m_data->writable) + sizeof(m_data->size) + OBJ_MARSHAL_SIZE;
         return S_OK;
     }
 
@@ -75,8 +78,10 @@ public:
         *strm << m_data->writable;
         *strm << m_data->size;
 
-        // create signal to receive proxy destruction event (will increment ref-count to avoid premature destruction)
-        m_signal.Create(GetUnknown());
+        // serialize reference to a RefOwner object to manage references to this object from the proxy
+        auto ref_owner = CreateLocalInstance<RefOwner>();
+        ref_owner->SetObject(static_cast<IDataHandle*>(this));
+        CHECK(CoMarshalInterface(strm, IID_IUnknown, ref_owner, MSHCTX_LOCAL, NULL, MSHLFLAGS_NORMAL));
 
         return S_OK;
     }
@@ -103,7 +108,5 @@ public:
 
 private:
     std::unique_ptr<SharedMem>       m_data;
-    SignalHandler                    m_signal;
-
     static std::atomic<unsigned int> s_counter; ///< object instance counter
 };

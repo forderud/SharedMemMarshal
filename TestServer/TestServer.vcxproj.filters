@@ -9,6 +9,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="DataHandle.hpp" />
     <ClInclude Include="HandleMgr.hpp" />
+    <ClInclude Include="RefOwner.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestServer.idl" />
