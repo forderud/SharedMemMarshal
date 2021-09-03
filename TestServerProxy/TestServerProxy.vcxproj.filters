@@ -8,7 +8,6 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="SharedMem.hpp" />
-    <ClInclude Include="SignalHandler.hpp" />
     <ClInclude Include="DataHandleProxy.hpp" />
   </ItemGroup>
   <ItemGroup>

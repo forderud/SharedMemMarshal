@@ -107,6 +107,7 @@
   <ItemGroup>
     <ClInclude Include="HandleMgr.hpp" />
     <ClInclude Include="DataHandle.hpp" />
+    <ClInclude Include="RefOwner.hpp" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
