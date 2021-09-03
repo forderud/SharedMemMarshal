@@ -59,8 +59,8 @@ public:
         assert(iid == IID_IDataHandle);
         assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
-        constexpr ULONG OBJ_MARSHAL_SIZE = 68;
-        *size = sizeof(m_data->writable) + sizeof(m_data->size) + OBJ_MARSHAL_SIZE;
+        constexpr ULONG OBJREF_STANDARD_SIZE = 68; // sizeof(OBJREF) with flags=OBJREF_STANDARD and empty resolver address
+        *size = sizeof(m_data->writable) + sizeof(m_data->size) + OBJREF_STANDARD_SIZE;
         return S_OK;
     }
 
