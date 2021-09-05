@@ -1,5 +1,4 @@
 #pragma once
-#include <atomic>
 #include <memory>
 #include "ComSupport.hpp"
 #include "Resource.h"
@@ -48,8 +47,6 @@ public:
 private:
     std::unique_ptr<SharedMem>       m_data;
     CComPtr<IUnknown>                m_server;  ///< DataHandle server reference (controls lifetime)
-
-    static std::atomic<unsigned int> s_counter; ///< object instance counter (non-decreasing)
 };
 
 OBJECT_ENTRY_AUTO(CLSID_DataHandleProxy, DataHandleProxy)

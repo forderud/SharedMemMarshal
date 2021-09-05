@@ -2,24 +2,10 @@
 #include "RefOwner.hpp"
 
 
-std::atomic<unsigned int> DataHandle::s_counter{ 0 };
-
-
 DataHandle::DataHandle() {
-    s_counter++;
-
-    // log object count to Visual Studio "Output" window
-    auto msg = std::string("DataHandle ctor. (") + std::to_string(s_counter) + " objects).\n";
-    OutputDebugString(msg.c_str());
-
 }
 
 DataHandle::~DataHandle() {
-    s_counter--;
-
-    // log object count to Visual Studio "Output" window
-    auto msg = std::string("DataHandle dtor. (") + std::to_string(s_counter) + " objects).\n";
-    OutputDebugString(msg.c_str());
 }
 
 void DataHandle::Initialize(BOOL writable) {

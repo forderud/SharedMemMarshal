@@ -1,5 +1,4 @@
 #pragma once
-#include <atomic>
 #include <memory>
 #include "ComSupport.hpp"
 #include "TestServer.h"
@@ -45,5 +44,4 @@ public:
 
 private:
     std::unique_ptr<SharedMem>       m_data;
-    static std::atomic<unsigned int> s_counter; ///< object instance counter
 };

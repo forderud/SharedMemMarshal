@@ -21,9 +21,6 @@ public:
     BEGIN_COM_MAP(HandleMgr)
         COM_INTERFACE_ENTRY(IHandleMgr)
     END_COM_MAP()
-
-private:
-    static std::atomic<unsigned int> s_counter; ///< object instance counter
 };
 
 OBJECT_ENTRY_AUTO(CLSID_HandleMgr, HandleMgr)

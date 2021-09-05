@@ -1,13 +1,10 @@
 #include "DataHandleProxy.hpp"
 
-std::atomic<unsigned int> DataHandleProxy::s_counter{ 0 };
 
 DataHandleProxy::DataHandleProxy() {
-    s_counter++;
 }
 
 DataHandleProxy::~DataHandleProxy() {
-    s_counter--;
 }
 
 HRESULT DataHandleProxy::GetData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
