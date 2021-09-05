@@ -2,7 +2,6 @@
 #include <atomic>
 #include <memory>
 #include "ComSupport.hpp"
-#include "Resource.h"
 #include "TestServer.h"
 #include "SharedMem.hpp"
 
