@@ -30,19 +30,13 @@ public:
     HRESULT MarshalInterface(IStream* strm, const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags) override;
 
     /** Deserialize object. Called from client (proxy). */
-    HRESULT UnmarshalInterface(IStream* strm, const IID& iid, void ** ppv) override {
-        abort(); // should never be called
-    }
+    HRESULT UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) override;
 
     /** Destroys a marshaled data packet. Have never been observed called. */
-    HRESULT ReleaseMarshalData(IStream * /*strm*/) override {
-        return S_OK;
-    }
+    HRESULT ReleaseMarshalData(IStream* /*strm*/) override;
 
     /** Releases all connections to an object. Have never been observed called.  */
-    HRESULT DisconnectObject(DWORD /*reserved*/) override {
-        return S_OK;
-    }
+    HRESULT DisconnectObject(DWORD /*reserved*/) override;
 
     BEGIN_COM_MAP(DataHandle)
         COM_INTERFACE_ENTRY(IDataHandle)

@@ -76,3 +76,18 @@ HRESULT DataHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DW
 
     return S_OK;
 }
+
+/** Deserialize object. Called from client (proxy). */
+HRESULT DataHandle::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
+    abort(); // should never be called
+}
+
+/** Destroys a marshaled data packet. Have never been observed called. */
+HRESULT DataHandle::ReleaseMarshalData(IStream* /*strm*/) {
+    return S_OK;
+}
+
+/** Releases all connections to an object. Have never been observed called.  */
+HRESULT DataHandle::DisconnectObject(DWORD /*reserved*/) {
+    return S_OK;
+}
