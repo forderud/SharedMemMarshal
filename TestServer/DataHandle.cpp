@@ -58,7 +58,7 @@ HRESULT DataHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DW
     // serialize reference to a RefOwner object to manage references to this object from the proxy
     auto ref_owner = CreateLocalInstance<RefOwner>();
     ref_owner->SetObject(static_cast<IDataHandle*>(this));
-    CHECK(CoMarshalInterface(strm, IID_IUnknown, ref_owner, MSHCTX_LOCAL, NULL, MSHLFLAGS_NORMAL));
+    CHECK(CoMarshalInterface(strm, IID_IUnknown, ref_owner, MSHCTX_LOCAL, NULL, mshlFlags));
 
     return S_OK;
 }
