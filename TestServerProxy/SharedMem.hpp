@@ -75,6 +75,24 @@ struct SharedMem {
         handle = nullptr;
     }
 
+    void Serialize(IStream& strm) {
+        // serialize metadata
+        strm << writable;
+        strm << size;
+    }
+
+    static std::unique_ptr<SharedMem> DeSerialize(std::string name, IStream& strm) {
+        // de-serialize shared-mem metadata
+        bool writable = false;
+        strm >> writable;
+        unsigned int obj_size = 0;
+        strm >> obj_size;
+
+
+        // map shared-mem
+        return std::make_unique<SharedMem>(SharedMem::CLIENT, name, writable, obj_size);
+    }
+
     const bool         writable;
     const unsigned int size   = 0;       ///< shared mem size
     HANDLE             handle = nullptr; ///< shared mem segment handle

@@ -33,17 +33,11 @@ HRESULT DataHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* p
 
 /** Deserialize object. Called from client (proxy). */
 HRESULT DataHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
-    // de-serialize shared-mem metadata
-    bool writable = false;
-    *strm >> writable;
-    unsigned int obj_size = 0;
-    *strm >> obj_size;
+    // map shared-mem
+    m_data = SharedMem::DeSerialize("TestSharedMem", *strm);
 
     // deserialize RefOwner reference to control server lifetime
     CHECK(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));
-
-    // map shared-mem
-    m_data.reset(new SharedMem(SharedMem::CLIENT, "TestSharedMem", writable, obj_size));
 
     return QueryInterface(iid, ppv);
 }
