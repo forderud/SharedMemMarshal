@@ -49,5 +49,5 @@ HRESULT DataHandleProxy::ReleaseMarshalData(IStream* /*strm*/) {
 
 /** Releases all connections to an object. Have never been observed called.  */
 HRESULT DataHandleProxy::DisconnectObject(DWORD /*reserved*/) {
-    return S_OK;
+    return E_UNEXPECTED;
 }

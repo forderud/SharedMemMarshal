@@ -74,5 +74,5 @@ HRESULT DataHandle::ReleaseMarshalData(IStream* /*strm*/) {
 
 /** Releases all connections to an object. Have never been observed called.  */
 HRESULT DataHandle::DisconnectObject(DWORD /*reserved*/) {
-    return S_OK;
+    return E_UNEXPECTED;
 }
