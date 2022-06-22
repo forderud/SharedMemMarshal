@@ -97,4 +97,6 @@ struct SharedMem {
     const unsigned int size   = 0;       ///< shared mem size
     HANDLE             handle = nullptr; ///< shared mem segment handle
     unsigned char    * ptr    = nullptr; ///< pointer to start of shared mem segment
+
+    static const size_t MARSHAL_SIZE = sizeof(writable) + sizeof(size);
 };

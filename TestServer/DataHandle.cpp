@@ -68,7 +68,13 @@ HRESULT DataHandle::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv
 }
 
 /** Destroys a marshaled data packet. Have never been observed called. */
-HRESULT DataHandle::ReleaseMarshalData(IStream* /*strm*/) {
+HRESULT DataHandle::ReleaseMarshalData(IStream* strm) {
+    // skip over shared-mem metadata
+    CHECK(strm->Seek({ SharedMem::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
+
+    // release RefOwner ref-count
+    CHECK(CoReleaseMarshalData(strm));
+
     return S_OK;
 }
 
