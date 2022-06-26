@@ -57,7 +57,7 @@ HRESULT DataHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DW
     // serialize reference to a RefOwner object to manage references to this object from the proxy
     auto ref_owner = CreateLocalInstance<RefOwner>();
     ref_owner->SetObject(static_cast<IDataHandle*>(this));
-    CHECK(CoMarshalInterface(strm, IID_IUnknown, ref_owner, MSHCTX_LOCAL, NULL, mshlFlags));
+    RETURN_IF_FAILED(CoMarshalInterface(strm, IID_IUnknown, ref_owner, MSHCTX_LOCAL, NULL, mshlFlags));
 
     return S_OK;
 }
@@ -70,10 +70,10 @@ HRESULT DataHandle::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv
 /** Destroys a marshaled data packet. Have never been observed called. */
 HRESULT DataHandle::ReleaseMarshalData(IStream* strm) {
     // skip over shared-mem metadata
-    CHECK(strm->Seek({ SharedMem::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
+    RETURN_IF_FAILED(strm->Seek({ SharedMem::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
 
     // release RefOwner ref-count
-    CHECK(CoReleaseMarshalData(strm));
+    RETURN_IF_FAILED(CoReleaseMarshalData(strm));
 
     return S_OK;
 }

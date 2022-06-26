@@ -37,7 +37,7 @@ HRESULT DataHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void*
     m_data = SharedMem::DeSerialize("TestSharedMem", *strm);
 
     // deserialize RefOwner reference to control server lifetime
-    CHECK(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));
+    RETURN_IF_FAILED(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));
 
     return QueryInterface(iid, ppv);
 }
@@ -45,10 +45,10 @@ HRESULT DataHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void*
 /** Destroys a marshaled data packet. Have never been observed called. */
 HRESULT DataHandleProxy::ReleaseMarshalData(IStream* strm) {
     // skip over shared-mem metadata
-    CHECK(strm->Seek({ SharedMem::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
+    RETURN_IF_FAILED(strm->Seek({ SharedMem::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
 
     // release RefOwner ref-count
-    CHECK(CoReleaseMarshalData(strm));
+    RETURN_IF_FAILED(CoReleaseMarshalData(strm));
 
     return S_OK;
 }
