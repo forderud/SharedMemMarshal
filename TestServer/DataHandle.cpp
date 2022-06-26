@@ -52,7 +52,7 @@ HRESULT DataHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DW
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     // serialize shared-mem metadata
-    m_data->Serialize(*strm);
+    RETURN_IF_FAILED(m_data->Serialize(*strm));
 
     // serialize reference to a RefOwner object to manage references to this object from the proxy
     auto ref_owner = CreateLocalInstance<RefOwner>();

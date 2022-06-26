@@ -15,12 +15,12 @@ static void CheckErrorAndThrow(const char* error_msg) {
 }
 
 /** Serialize/deserialize an arbitrary POD type. */
-template <class T> IStream& operator<< (IStream& stream, const T& data) {
+template <class T> HRESULT operator<< (IStream& stream, const T& data) {
     unsigned long bytes_written = 0;
-    CHECK(stream.Write(&data, sizeof(data), &bytes_written));
+    RETURN_IF_FAILED(stream.Write(&data, sizeof(data), &bytes_written));
     if (bytes_written != sizeof(data))
-        throw std::runtime_error("Truncated IStream write");
-    return stream;
+        return E_FAIL;
+    return S_OK;
 }
 template <class T> IStream& operator>> (IStream& stream, T& data) {
     unsigned long bytes_read = 0;
@@ -75,10 +75,11 @@ struct SharedMem {
         handle = nullptr;
     }
 
-    void Serialize(IStream& strm) {
+    HRESULT Serialize(IStream& strm) {
         // serialize metadata
-        strm << writable;
-        strm << size;
+        RETURN_IF_FAILED(strm << writable);
+        RETURN_IF_FAILED(strm << size);
+        return S_OK;
     }
 
     static std::unique_ptr<SharedMem> DeSerialize(std::string name, IStream& strm) {
