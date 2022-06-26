@@ -34,7 +34,7 @@ HRESULT DataHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* p
 /** Deserialize object. Called from client (proxy). */
 HRESULT DataHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
     // map shared-mem
-    m_data = SharedMem::DeSerialize("TestSharedMem", *strm);
+    RETURN_IF_FAILED(SharedMem::DeSerialize("TestSharedMem", *strm, m_data));
 
     // deserialize RefOwner reference to control server lifetime
     RETURN_IF_FAILED(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));

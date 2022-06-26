@@ -22,12 +22,12 @@ template <class T> HRESULT operator<< (IStream& stream, const T& data) {
         return E_FAIL;
     return S_OK;
 }
-template <class T> IStream& operator>> (IStream& stream, T& data) {
+template <class T> HRESULT operator>> (IStream& stream, T& data) {
     unsigned long bytes_read = 0;
-    CHECK(stream.Read(&data, sizeof(data), &bytes_read));
+    RETURN_IF_FAILED(stream.Read(&data, sizeof(data), &bytes_read));
     if (bytes_read != sizeof(data))
-        throw std::runtime_error("Truncated IStream read");
-    return stream;
+        return E_FAIL;
+    return S_OK;
 }
 
 
@@ -82,16 +82,16 @@ struct SharedMem {
         return S_OK;
     }
 
-    static std::unique_ptr<SharedMem> DeSerialize(std::string name, IStream& strm) {
+    static HRESULT DeSerialize(std::string name, IStream& strm, std::unique_ptr<SharedMem> & sm) {
         // de-serialize shared-mem metadata
         bool writable = false;
-        strm >> writable;
+        RETURN_IF_FAILED(strm >> writable);
         unsigned int obj_size = 0;
-        strm >> obj_size;
-
+        RETURN_IF_FAILED(strm >> obj_size);
 
         // map shared-mem
-        return std::make_unique<SharedMem>(SharedMem::CLIENT, name, writable, obj_size);
+        sm = std::make_unique<SharedMem>(SharedMem::CLIENT, name, writable, obj_size);
+        return S_OK;
     }
 
     const bool         writable;
