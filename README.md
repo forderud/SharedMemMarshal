@@ -1,4 +1,4 @@
-Sample code for custom COM marshaling with shared memory.
+Sample code for custom COM marshaling with shared memory. This pattern **can be used to avoid copying overhead** when passing large amount of data between COM objects in different processes.
 
 ## DCOM garbage collector limitation
 Associated StackOverflow question: https://stackoverflow.com/questions/69010789/how-to-leverage-dcom-garbage-collector-with-custom-marshaling-imarshal (answered)
