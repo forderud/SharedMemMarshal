@@ -10,7 +10,7 @@ DataHandle::~DataHandle() {
 
 void DataHandle::Initialize(BOOL writable) {
     // create shared-mem segment
-    m_data.reset(new SharedMem(SharedMem::OWNER, L"TestSharedMem", writable, 1024));
+    m_data.reset(new SharedMem(SharedMem::OWNER, L"SharedMemMarshal.DataHandle", writable, 1024*1024));
 }
 
 HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
