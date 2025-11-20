@@ -19,6 +19,7 @@ reg delete "HKCR\CLSID\{C8767698-8297-4BE1-904E-FC25034851D2}"     /f 2> NUL
 
 :: remove DataHandleProxy class
 reg delete "HKCR\CLSID\{D84F768B-55F6-4B3A-AF68-9276C9488696}"     /f 2> NUL
+reg delete "HKCR\CLSID\{9A7D97EB-1491-438E-B88C-234390D727F2}"     /f 2> NUL
 
 :: TestServer typelib
 reg delete "HKCR\TypeLib\{ECC2EB22-C8CB-4034-993C-158F68FCD39E}"   /f 2> NUL

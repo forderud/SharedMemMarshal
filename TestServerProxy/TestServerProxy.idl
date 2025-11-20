@@ -172,6 +172,14 @@ library TestServerProxy {
     importlib("stdole2.tlb");
 
     [version(1.0),
+        uuid(9A7D97EB-1491-438E-B88C-234390D727F2),
+        helpstring("Class for testing shared memory")]
+        coclass ImageHandleProxy {
+        [default] interface IImageHandle;
+        interface IMarshal;
+    };
+
+    [version(1.0),
         uuid(D84F768B-55F6-4B3A-AF68-9276C9488696),
         helpstring("Class for testing shared memory")]
     coclass DataHandleProxy {

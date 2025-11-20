@@ -94,11 +94,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataHandleProxy.cpp" />
+    <ClCompile Include="ImageHandleProxy.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="DataHandleProxy.hpp" />
+    <ClInclude Include="ImageHandleProxy.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SharedMem.hpp" />
   </ItemGroup>
@@ -107,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DataHandleProxy.rgs" />
+    <None Include="ImageHandleProxy.rgs" />
     <None Include="Module.def" />
   </ItemGroup>
   <ItemGroup>
