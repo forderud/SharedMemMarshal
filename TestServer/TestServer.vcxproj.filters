@@ -4,12 +4,14 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="DataHandle.cpp" />
     <ClCompile Include="HandleMgr.cpp" />
+    <ClCompile Include="ImageHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="DataHandle.hpp" />
     <ClInclude Include="HandleMgr.hpp" />
     <ClInclude Include="RefOwner.hpp" />
+    <ClInclude Include="ImageHandle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestServer.idl" />

@@ -102,11 +102,13 @@
   <ItemGroup>
     <ClCompile Include="HandleMgr.cpp" />
     <ClCompile Include="DataHandle.cpp" />
+    <ClCompile Include="ImageHandle.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HandleMgr.hpp" />
     <ClInclude Include="DataHandle.hpp" />
+    <ClInclude Include="ImageHandle.hpp" />
     <ClInclude Include="RefOwner.hpp" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
