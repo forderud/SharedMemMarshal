@@ -15,7 +15,7 @@ void AccessTwoHandles (IHandleMgr& mgr, const unsigned char set_val) {
         // set mem value in first shared-mem segment
         BYTE* buffer = nullptr;
         unsigned int size = 0;
-        CHECK(obj1->GetData(&buffer, &size));
+        CHECK(obj1->GetRawData(&buffer, &size));
         assert(idx < size);
 
         buffer[idx] = set_val;
@@ -26,7 +26,7 @@ void AccessTwoHandles (IHandleMgr& mgr, const unsigned char set_val) {
         // verify that the same value also appear in the second shared-mem segment at a different mem. address
         BYTE* buffer = nullptr;
         unsigned int size = 0;
-        CHECK(obj2->GetData(&buffer, &size));
+        CHECK(obj2->GetRawData(&buffer, &size));
         assert(idx < size);
         assert(buffer[idx] == set_val);
 

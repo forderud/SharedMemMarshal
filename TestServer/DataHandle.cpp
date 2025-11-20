@@ -13,7 +13,7 @@ void DataHandle::Initialize(BOOL writable) {
     m_data.reset(new SharedMem(SharedMem::OWNER, L"TestSharedMem", writable, 1024));
 }
 
-HRESULT DataHandle::GetData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
+HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
     if (!buffer || !size)
         return E_INVALIDARG;
 

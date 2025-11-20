@@ -162,7 +162,7 @@ interface IImage2dFrame : IUnknown {
  helpstring("Shared memory handle.")]
 interface IDataHandle : IUnknown {
     [helpstring("Get shared-mem segment address & size. The data might not be writable. Lifetime is managed by IDataHandle object.")]
-    HRESULT GetData ([out] BYTE ** buffer, [out] unsigned int * size);
+    HRESULT GetRawData ([out] BYTE ** buffer, [out] unsigned int * size);
 };
 
 [version(1.0),
