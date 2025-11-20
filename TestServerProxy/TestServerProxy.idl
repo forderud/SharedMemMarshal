@@ -147,10 +147,10 @@ cpp_quote("")
 
 [object,
 oleautomation, // use "automation" marshaler (oleaut32.dll)
-uuid(7E4EE0C8-D64D-4C14-9818-3276F4BF925E),
+uuid(3CBD54F2-C9A5-4E64-A582-B7D6AD14CE3D),
 helpstring("Interface for controlling lifetime of 2D image data.")]
-interface IImage2dFrame : IUnknown {
-    [helpstring("Get frame data (const). Lifetime controlled by parent IImage2dFrame object.\n"
+interface IImageHandle : IUnknown {
+    [helpstring("Get frame data (const). Lifetime controlled by parent IImageHandle object.\n"
         "The operation is usually considered cheap with a zero-copy implementation with some exceptions.")]
         HRESULT GetData([out, retval] Image2d* data);
 };

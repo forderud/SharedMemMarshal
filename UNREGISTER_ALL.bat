@@ -10,6 +10,7 @@ cd /d "%~dp0"
 reg delete "HKCR\TypeLib\{8E42F33F-E5E3-46B4-8B39-0A03DCF338CC}"   /f 2> NUL
 
 :: remove interfaces
+reg delete "HKCR\Interface\{3CBD54F2-C9A5-4E64-A582-B7D6AD14CE3D}" /f 2> NUL
 reg delete "HKCR\Interface\{54E049DB-C39C-4025-B1EF-2FC0E5246277}" /f 2> NUL
 reg delete "HKCR\Interface\{7D278258-3B05-45D3-AD60-CF65497B56B6}" /f 2> NUL
 
