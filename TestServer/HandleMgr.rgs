@@ -1,20 +1,9 @@
 HKCR
 {
-	TestServer.HandleMgr.1 = s 'HandleMgr Object'
-	{
-		CLSID = s '{C8767698-8297-4BE1-904E-FC25034851D2}'
-	}
-	TestServer.HandleMgr = s 'HandleMgr Object'
-	{		
-		CLSID = s '{C8767698-8297-4BE1-904E-FC25034851D2}'
-		CurVer = s 'TestServer.HandleMgr.1'
-	}
 	NoRemove CLSID
 	{
 		ForceRemove {C8767698-8297-4BE1-904E-FC25034851D2} = s 'HandleMgr Object'
 		{
-			ProgID = s 'TestServer.HandleMgr.1'
-			VersionIndependentProgID = s 'TestServer.HandleMgr'
 			LocalServer32 = s '%MODULE%'
 			{
 				val ThreadingModel = s 'Both'

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "..\TestServer\TestServer.h"
+#include "..\TestServer\TestServer_i.c"
 #include "ComSupport.hpp"
 
 
@@ -41,7 +42,7 @@ int main() {
     {
         // create COM object in a separate TestServer.exe process
         CComPtr<IHandleMgr> mgr;
-        CHECK(mgr.CoCreateInstance(L"TestServer.HandleMgr"));
+        CHECK(mgr.CoCreateInstance(CLSID_HandleMgr));
         std::cout << "TestServer.HandleMgr created." << std::endl;
 
         // Test shared-mem access.

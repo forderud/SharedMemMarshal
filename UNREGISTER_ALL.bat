@@ -14,8 +14,6 @@ reg delete "HKCR\Interface\{54E049DB-C39C-4025-B1EF-2FC0E5246277}" /f 2> NUL
 reg delete "HKCR\Interface\{7D278258-3B05-45D3-AD60-CF65497B56B6}" /f 2> NUL
 
 :: remove HandleMgr class
-reg delete "HKCR\TestServer.HandleMgr"                             /f 2> NUL
-reg delete "HKCR\TestServer.HandleMgr.1"                           /f 2> NUL
 reg delete "HKCR\CLSID\{C8767698-8297-4BE1-904E-FC25034851D2}"     /f 2> NUL
 
 :: remove DataHandleProxy class
