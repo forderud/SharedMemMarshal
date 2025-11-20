@@ -13,27 +13,27 @@ void ImageHandle::Initialize(BOOL writable) {
     m_data.reset(new SharedMem(SharedMem::OWNER, L"SharedMemMarshal.ImageHandle", writable, 1024*1024));
 }
 
-HRESULT ImageHandle::GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
-    if (!buffer || !size)
+HRESULT ImageHandle::GetData(/*out*/Image2d* data) {
+    if (!data)
         return E_INVALIDARG;
 
-    *buffer = m_data->ptr;
-    *size = m_data->size;
+    abort();
+    // TODO: Add implementation
     return S_OK;
 }
 
 /** IMarshal implementation. Called from server (stub). */
 HRESULT ImageHandle::GetUnmarshalClass(const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags, CLSID* clsid) {
-    assert(iid == IID_IDataHandle);
+    assert(iid == IID_IImageHandle);
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
-    *clsid = CLSID_DataHandleProxy; // use DataHandleProxy class for unmarshaling
+    *clsid = CLSID_ImageHandleProxy; // use ImageHandleProxy class for unmarshaling
     return S_OK;
 }
 
 /** Indicate the total size of the marshaled object reference. Called from server (stub). */
 HRESULT ImageHandle::GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) {
-    assert(iid == IID_IDataHandle);
+    assert(iid == IID_IImageHandle);
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     constexpr ULONG OBJREF_STANDARD_SIZE = 68; // sizeof(OBJREF) with flags=OBJREF_STANDARD and empty resolver address
@@ -47,7 +47,7 @@ HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, D
     //if (destContext != MSHCTX_LOCAL)
     //    return E_FAIL;
 
-    assert(iid == IID_IDataHandle);
+    assert(iid == IID_IImageHandle);
     assert(pv == this); pv;             // class marshals itself
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
@@ -56,7 +56,7 @@ HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, D
 
     // serialize reference to a RefOwner object to manage references to this object from the proxy
     auto ref_owner = CreateLocalInstance<RefOwner>();
-    ref_owner->SetObject(static_cast<IDataHandle*>(this));
+    ref_owner->SetObject(static_cast<IImageHandle*>(this));
     RETURN_IF_FAILED(CoMarshalInterface(strm, IID_IUnknown, ref_owner, MSHCTX_LOCAL, NULL, mshlFlags));
 
     return S_OK;

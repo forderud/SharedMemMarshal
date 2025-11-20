@@ -8,7 +8,7 @@
 class ATL_NO_VTABLE ImageHandle :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<ImageHandle>, // no registry entries
-    public IDataHandle,
+    public IImageHandle,
     public IMarshal {
 public:
     ImageHandle();
@@ -17,7 +17,7 @@ public:
 
     void Initialize(BOOL writable);
 
-    HRESULT GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) override;
+    HRESULT GetData(/*out*/Image2d* data) override;
 
     /** IMarshal implementation. Called from server (stub). */
     HRESULT GetUnmarshalClass(const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags, CLSID* clsid) override;
@@ -38,10 +38,11 @@ public:
     HRESULT DisconnectObject(DWORD /*reserved*/) override;
 
     BEGIN_COM_MAP(ImageHandle)
-        COM_INTERFACE_ENTRY(IDataHandle)
+        COM_INTERFACE_ENTRY(IImageHandle)
         COM_INTERFACE_ENTRY(IMarshal)
     END_COM_MAP()
 
 private:
-    std::unique_ptr<SharedMem>       m_data;
+    std::unique_ptr<SharedMem>        m_data;
+    //std::unique_ptr<MarshalImage2d> m_frame;
 };
