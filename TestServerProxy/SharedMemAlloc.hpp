@@ -39,7 +39,7 @@ struct SharedMemAlloc {
         CLIENT,
     };
 
-    SharedMemAlloc(MODE mode, std::wstring name, bool _writable, unsigned int segm_size);
+    SharedMemAlloc(MODE mode, bool _writable, unsigned int segm_size);
 
     ~SharedMemAlloc();
 

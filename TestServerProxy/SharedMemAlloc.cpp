@@ -1,10 +1,10 @@
 #include "SharedMemAlloc.hpp"
 
-SharedMemAlloc::SharedMemAlloc(MODE mode, std::wstring name, bool _writable, unsigned int segm_size) : writable(_writable), size(segm_size) {
+SharedMemAlloc::SharedMemAlloc(MODE mode, bool _writable, unsigned int segm_size) : writable(_writable), size(segm_size) {
     if (size != static_cast<unsigned int>(size))
         throw std::runtime_error("SharedMemAlloc: too large buffer");
 
-    std::wstring segm_name = name;
+    std::wstring segm_name = L"SharedMemMarshal.Segment";
 
     if (mode == MODE::OWNER) {
         // create shared mem segment

@@ -40,7 +40,7 @@ HRESULT DataHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void*
     RETURN_IF_FAILED(*strm >> obj_size);
 
     // map shared-mem
-    m_data = std::make_unique<SharedMemAlloc>(SharedMemAlloc::CLIENT, L"SharedMemMarshal.DataHandle", writable, obj_size);
+    m_data = std::make_unique<SharedMemAlloc>(SharedMemAlloc::CLIENT, writable, obj_size);
 
     // deserialize RefOwner reference to control server lifetime
     RETURN_IF_FAILED(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));

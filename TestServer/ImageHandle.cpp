@@ -10,7 +10,7 @@ ImageHandle::~ImageHandle() {
 
 void ImageHandle::Initialize(BOOL writable) {
     // create shared-mem segment
-    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, L"SharedMemMarshal.ImageHandle", writable, 1024*1024));
+    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, writable, 1024*1024));
 }
 
 HRESULT ImageHandle::GetData(/*out*/Image2d* data) {
