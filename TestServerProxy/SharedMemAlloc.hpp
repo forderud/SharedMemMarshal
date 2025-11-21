@@ -75,13 +75,6 @@ struct SharedMem {
         handle = nullptr;
     }
 
-    HRESULT Serialize(IStream& strm) {
-        // serialize metadata
-        RETURN_IF_FAILED(strm << writable);
-        RETURN_IF_FAILED(strm << size);
-        return S_OK;
-    }
-
     const bool         writable;
     const unsigned int size   = 0;       ///< shared mem size
 private:
