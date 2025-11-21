@@ -25,31 +25,33 @@ SAFEARRAY* CreateWeakSafeArray(std::array<BYTE, N>& buffer, USHORT extra_flags) 
     return sa_obj;
 }
 
-void VerifyThat_FADF_AUTO_NeitherClearsNorDeletesData() {
-    std::array<BYTE, 8> buffer = { 0, 1, 2, 3, 4, 5, 6, 7 };
+void VerifyThat_FADF_AUTO_NeitherDeletesDataNorDescriptor() {
+    std::array<BYTE, 8> buffer = { 0, 1, 2, 3, 4, 5, 6, 7 }; // buffer[i] = i
 
-    SAFEARRAY* sa_old = nullptr;
+    SAFEARRAY* sa_ptr = nullptr;
     {
         // create an array
         CComSafeArray<BYTE> arr;
         arr.Attach(CreateWeakSafeArray(buffer, FADF_AUTO)); // tag data NOT to be cleared nor deleted at destruction
 
-        sa_old = arr.m_psa;
-        // SafeArrayDestroy in "arr" dtor does not delete data
+        sa_ptr = arr.m_psa;
+        // SafeArrayDestroy in "arr" dtor does not delete data nor descriptor
     }
+    // sa_ptr is still valid
 
     // verify that array is NOT cleared and still accessible
-    assert(sa_old->cDims == 1);
-    assert(sa_old->cbElements == 1u);
+    assert(sa_ptr->cDims == 1);
+    assert(sa_ptr->cbElements == 1u);
     for (size_t i = 0; i < buffer.size(); ++i)
-        assert(reinterpret_cast<BYTE*>(sa_old->pvData)[i] == buffer[i]);
+        assert(reinterpret_cast<BYTE*>(sa_ptr->pvData)[i] == i);
 
-    // manually delete SAFEARRAY descriptor
-    HRESULT hr = SafeArrayDestroyDescriptor(sa_old);
+    // SafeArrayDestroy does not delete the SAFEARRAY descriptor when FADF_AUTO is set.
+    // It therfore needs to be manually deleted with SafeArrayDestroyDescriptor.
+    HRESULT hr = SafeArrayDestroyDescriptor(sa_ptr);
     assert(SUCCEEDED(hr));
 }
 
 
 int main() {
-    VerifyThat_FADF_AUTO_NeitherClearsNorDeletesData();
+    VerifyThat_FADF_AUTO_NeitherDeletesDataNorDescriptor();
 }
