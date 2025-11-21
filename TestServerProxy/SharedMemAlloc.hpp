@@ -82,18 +82,6 @@ struct SharedMem {
         return S_OK;
     }
 
-    static HRESULT DeSerialize(std::wstring name, IStream& strm, std::unique_ptr<SharedMem> & sm) {
-        // de-serialize shared-mem metadata
-        bool writable = false;
-        RETURN_IF_FAILED(strm >> writable);
-        unsigned int obj_size = 0;
-        RETURN_IF_FAILED(strm >> obj_size);
-
-        // map shared-mem
-        sm = std::make_unique<SharedMem>(SharedMem::CLIENT, name, writable, obj_size);
-        return S_OK;
-    }
-
     const bool         writable;
     const unsigned int size   = 0;       ///< shared mem size
 private:

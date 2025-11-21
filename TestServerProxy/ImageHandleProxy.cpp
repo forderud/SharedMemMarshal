@@ -33,8 +33,14 @@ HRESULT ImageHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* 
 
 /** Deserialize object. Called from client (proxy). */
 HRESULT ImageHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
+    // de-serialize shared-mem metadata
+    bool writable = false;
+    RETURN_IF_FAILED(*strm >> writable);
+    unsigned int obj_size = 0;
+    RETURN_IF_FAILED(*strm >> obj_size);
+
     // map shared-mem
-    RETURN_IF_FAILED(SharedMem::DeSerialize(L"SharedMemMarshal.ImageHandle", *strm, m_data));
+    m_data = std::make_unique<SharedMem>(SharedMem::CLIENT, L"SharedMemMarshal.ImageHandle", writable, obj_size);
 
     // deserialize RefOwner reference to control server lifetime
     RETURN_IF_FAILED(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));
