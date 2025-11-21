@@ -96,6 +96,7 @@
     <ClCompile Include="DataHandleProxy.cpp" />
     <ClCompile Include="ImageHandleProxy.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SharedMemAlloc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComSupport.hpp" />
