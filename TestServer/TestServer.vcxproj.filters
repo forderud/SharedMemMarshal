@@ -5,6 +5,7 @@
     <ClCompile Include="DataHandle.cpp" />
     <ClCompile Include="HandleMgr.cpp" />
     <ClCompile Include="ImageHandle.cpp" />
+    <ClCompile Include="..\TestServerProxy\SharedMemAlloc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
@@ -12,6 +13,7 @@
     <ClInclude Include="HandleMgr.hpp" />
     <ClInclude Include="RefOwner.hpp" />
     <ClInclude Include="ImageHandle.hpp" />
+    <ClInclude Include="..\TestServerProxy\SharedMemAlloc.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestServer.idl" />
