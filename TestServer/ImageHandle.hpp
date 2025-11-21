@@ -43,6 +43,6 @@ public:
     END_COM_MAP()
 
 private:
-    std::unique_ptr<SharedMem>        m_data;
+    std::unique_ptr<SharedMemAlloc>   m_data;
     //std::unique_ptr<MarshalImage2d> m_frame;
 };

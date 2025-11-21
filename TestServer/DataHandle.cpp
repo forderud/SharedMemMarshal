@@ -10,7 +10,7 @@ DataHandle::~DataHandle() {
 
 void DataHandle::Initialize(BOOL writable) {
     // create shared-mem segment
-    m_data.reset(new SharedMem(SharedMem::OWNER, L"SharedMemMarshal.DataHandle", writable, 1024*1024));
+    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, L"SharedMemMarshal.DataHandle", writable, 1024*1024));
 }
 
 HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
@@ -71,7 +71,7 @@ HRESULT DataHandle::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv
 /** Destroys a marshaled data packet. Have never been observed called. */
 HRESULT DataHandle::ReleaseMarshalData(IStream* strm) {
     // skip over shared-mem metadata
-    RETURN_IF_FAILED(strm->Seek({ SharedMem::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
+    RETURN_IF_FAILED(strm->Seek({ SharedMemAlloc::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
 
     // release RefOwner ref-count
     RETURN_IF_FAILED(CoReleaseMarshalData(strm));

@@ -33,15 +33,15 @@ template <class T> HRESULT operator>> (IStream& stream, T& data) {
 }
 
 
-struct SharedMem {
+struct SharedMemAlloc {
     enum MODE {
         OWNER,
         CLIENT,
     };
 
-    SharedMem(MODE mode, std::wstring name, bool _writable, unsigned int segm_size);
+    SharedMemAlloc(MODE mode, std::wstring name, bool _writable, unsigned int segm_size);
 
-    ~SharedMem();
+    ~SharedMemAlloc();
 
     const bool         writable;
     const unsigned int size   = 0;       ///< shared mem size

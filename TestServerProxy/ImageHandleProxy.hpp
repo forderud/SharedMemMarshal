@@ -45,8 +45,8 @@ public:
     END_COM_MAP()
 
 private:
-    std::unique_ptr<SharedMem>       m_data;
-    CComPtr<IUnknown>                m_server;  ///< DataHandle server reference (controls lifetime)
+    std::unique_ptr<SharedMemAlloc> m_data;
+    CComPtr<IUnknown>               m_server;  ///< DataHandle server reference (controls lifetime)
 };
 
 OBJECT_ENTRY_AUTO(CLSID_ImageHandleProxy, ImageHandleProxy)
