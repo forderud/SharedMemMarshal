@@ -2,7 +2,7 @@
 #include <memory>
 #include "ComSupport.hpp"
 #include "TestServer.h"
-#include "SharedMem.hpp"
+#include "SharedMemAlloc.hpp"
 
 
 class ATL_NO_VTABLE DataHandle :

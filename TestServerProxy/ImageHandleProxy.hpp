@@ -3,7 +3,7 @@
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestServerProxy.h"
-#include "SharedMem.hpp"
+#include "SharedMemAlloc.hpp"
 
 
 /** Client-side proxy class for the ImageHandle class. */
