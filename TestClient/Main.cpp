@@ -6,10 +6,10 @@
 
 void AccessTwoHandles (IHandleMgr& mgr, const unsigned char set_val) {
     CComPtr<IDataHandle> obj1;
-    CHECK(mgr.GetHandle(true, &obj1)); // writable
+    CHECK(mgr.GetHandle(&obj1));
 
     CComPtr<IDataHandle> obj2;
-    CHECK(mgr.GetHandle(false, &obj2)); // read-only
+    CHECK(mgr.GetHandle(&obj2));
 
     const unsigned int idx = 0;
     {

@@ -14,7 +14,7 @@ public:
 
     /*NOT virtual*/ ~HandleMgr();
 
-    HRESULT GetHandle(BOOL writable, IDataHandle** object) override;
+    HRESULT GetHandle(IDataHandle** object) override;
 
     DECLARE_REGISTRY_RESOURCEID(IDR_HandleMgr)
 

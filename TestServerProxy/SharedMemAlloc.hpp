@@ -39,16 +39,15 @@ struct SharedMemAlloc {
         CLIENT,
     };
 
-    SharedMemAlloc(MODE mode, bool _writable, unsigned int segm_size);
+    SharedMemAlloc(MODE mode, unsigned int segm_size);
 
     ~SharedMemAlloc();
 
-    const bool         writable;
     const unsigned int size   = 0;       ///< shared mem size
 private:
     HANDLE             handle = nullptr; ///< shared mem segment handle
 public:
     unsigned char    * ptr    = nullptr; ///< pointer to start of shared mem segment
 
-    static const size_t MARSHAL_SIZE = sizeof(writable) + sizeof(size);
+    static const size_t MARSHAL_SIZE = sizeof(size);
 };

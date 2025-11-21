@@ -8,10 +8,10 @@ HandleMgr::HandleMgr() {
 HandleMgr::~HandleMgr() {
 }
 
-HRESULT HandleMgr::GetHandle(BOOL writable, IDataHandle** object) {
+HRESULT HandleMgr::GetHandle(IDataHandle** object) {
     // create object
     auto obj1 = CreateLocalInstance<DataHandle>();
-    obj1->Initialize(writable);
+    obj1->Initialize();
 
     // cast to IDataHandle and return to caller
     CComPtr<IDataHandle> obj2;

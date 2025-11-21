@@ -15,7 +15,7 @@ public:
 
     /*NOT virtual*/ ~DataHandle();
 
-    void Initialize(BOOL writable);
+    void Initialize();
 
     HRESULT GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) override;
 

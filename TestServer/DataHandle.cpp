@@ -8,9 +8,9 @@ DataHandle::DataHandle() {
 DataHandle::~DataHandle() {
 }
 
-void DataHandle::Initialize(BOOL writable) {
+void DataHandle::Initialize() {
     // create shared-mem segment
-    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, writable, 1024*1024));
+    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, 1024*1024));
 }
 
 HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
@@ -52,7 +52,6 @@ HRESULT DataHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DW
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     // serialize shared-mem metadata
-    RETURN_IF_FAILED(*strm << m_data->writable);
     RETURN_IF_FAILED(*strm << m_data->size);
 
     // serialize reference to a RefOwner object to manage references to this object from the proxy

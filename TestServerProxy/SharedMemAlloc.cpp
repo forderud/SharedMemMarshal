@@ -1,6 +1,6 @@
 #include "SharedMemAlloc.hpp"
 
-SharedMemAlloc::SharedMemAlloc(MODE mode, bool _writable, unsigned int segm_size) : writable(_writable), size(segm_size) {
+SharedMemAlloc::SharedMemAlloc(MODE mode, unsigned int segm_size) : size(segm_size) {
     if (size != static_cast<unsigned int>(size))
         throw std::runtime_error("SharedMemAlloc: too large buffer");
 
@@ -20,6 +20,7 @@ SharedMemAlloc::SharedMemAlloc(MODE mode, bool _writable, unsigned int segm_size
     }
     else {
         // open existing shared mem segment
+        bool writable = true;
         handle = OpenFileMappingW(writable ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, FALSE, segm_name.c_str());
         if (!handle)
             CheckErrorAndThrow("CreateFileMapping failed");

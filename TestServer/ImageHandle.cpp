@@ -8,9 +8,9 @@ ImageHandle::ImageHandle() {
 ImageHandle::~ImageHandle() {
 }
 
-void ImageHandle::Initialize(BOOL writable) {
+void ImageHandle::Initialize() {
     // create shared-mem segment
-    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, writable, 1024*1024));
+    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, 1024*1024));
 }
 
 HRESULT ImageHandle::GetData(/*out*/Image2d* data) {
@@ -52,7 +52,6 @@ HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, D
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     // serialize shared-mem metadata
-    RETURN_IF_FAILED(*strm << m_data->writable);
     RETURN_IF_FAILED(*strm << m_data->size);
 
     // serialize reference to a RefOwner object to manage references to this object from the proxy

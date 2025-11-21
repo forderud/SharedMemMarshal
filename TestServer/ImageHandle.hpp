@@ -15,7 +15,7 @@ public:
 
     /*NOT virtual*/ ~ImageHandle();
 
-    void Initialize(BOOL writable);
+    void Initialize();
 
     HRESULT GetData(/*out*/Image2d* data) override;
 
