@@ -1,14 +1,14 @@
 #include "SharedMemAlloc.hpp"
 
 SharedMemAlloc::SharedMemAlloc(MODE mode, size_t segm_size) : size(segm_size) {
-    if (size != static_cast<unsigned int>(size))
-        throw std::runtime_error("SharedMemAlloc: too large buffer");
-
     std::wstring segm_name = L"SharedMemMarshal.Segment";
 
     if (mode == MODE::OWNER) {
+        const DWORD maxSizeHi = (size >> 32) & 0xFFFFFFFF;
+        const DWORD maxSizeLo = size & 0xFFFFFFFF;
+
         // create shared mem segment
-        handle = CreateFileMappingW(INVALID_HANDLE_VALUE, nullptr/*security*/, PAGE_READWRITE, 0, static_cast<unsigned int>(size), segm_name.c_str());
+        handle = CreateFileMappingW(INVALID_HANDLE_VALUE, nullptr/*security*/, PAGE_READWRITE, maxSizeHi, maxSizeLo, segm_name.c_str());
         if (!handle)
             CheckErrorAndThrow("CreateFileMapping failed");
 
