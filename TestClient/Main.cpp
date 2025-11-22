@@ -4,8 +4,8 @@
 #include "ComSupport.hpp"
 
 
-void AccessSharedMem (IHandleMgr& mgr) {
-    CComPtr<IImageHandle> img;
+void AccessImageData(IHandleMgr& mgr) {
+    CComPtr<IImageHandle> img; // controls image-data lifetime
     CHECK(mgr.GetImageHandle(&img));
 
     Image2d frame;
@@ -35,7 +35,7 @@ int main() {
         CHECK(mgr.CoCreateInstance(CLSID_HandleMgr));
         std::cout << "TestServer.HandleMgr created." << std::endl;
 
-        AccessSharedMem(*mgr);
+        AccessImageData(*mgr);
     }
 
     // Unload COM.
