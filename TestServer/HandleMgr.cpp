@@ -1,5 +1,6 @@
 #include "HandleMgr.hpp"
 #include "DataHandle.hpp"
+#include "ImageHandle.hpp"
 
 
 HandleMgr::HandleMgr() {
@@ -15,6 +16,18 @@ HRESULT HandleMgr::GetDataHandle(IDataHandle** object) {
 
     // cast to IDataHandle and return to caller
     CComPtr<IDataHandle> obj2;
+    CHECK(obj1.QueryInterface(&obj2));
+    *object = obj2.Detach();
+    return S_OK;
+}
+
+HRESULT HandleMgr::GetImageHandle(IImageHandle** object) {
+    // create object
+    auto obj1 = CreateLocalInstance<ImageHandle>();
+    obj1->Initialize();
+
+    // cast to IImageHandle and return to caller
+    CComPtr<IImageHandle> obj2;
     CHECK(obj1.QueryInterface(&obj2));
     *object = obj2.Detach();
     return S_OK;

@@ -16,6 +16,8 @@ public:
 
     HRESULT GetDataHandle(IDataHandle** object) override;
 
+    HRESULT GetImageHandle(IImageHandle** object) override;
+
     DECLARE_REGISTRY_RESOURCEID(IDR_HandleMgr)
 
     BEGIN_COM_MAP(HandleMgr)
