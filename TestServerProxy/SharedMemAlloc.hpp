@@ -43,8 +43,8 @@ struct SharedMemAlloc {
 
     ~SharedMemAlloc();
 
-    const size_t       size   = 0;       ///< shared mem size
 private:
+    const size_t       size   = 0;       ///< shared mem size
     HANDLE             handle = nullptr; ///< shared mem segment handle
 public:
     unsigned char    * ptr    = nullptr; ///< pointer to start of shared mem segment

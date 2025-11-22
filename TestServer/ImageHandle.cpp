@@ -11,10 +11,11 @@ ImageHandle::~ImageHandle() {
 
 void ImageHandle::Initialize() {
     // create shared-mem segment
-    m_alloc.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, 1024));
+    size_t size = 1024;
+    m_alloc.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, size));
 
     //initialize data
-    for (size_t i = 0; i < m_alloc->size; i++)
+    for (size_t i = 0; i < size; i++)
         m_alloc->ptr[i] = (i & 0xFF);
 }
 
@@ -57,7 +58,8 @@ HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, D
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     // serialize shared-mem metadata
-    RETURN_IF_FAILED(*strm << m_alloc->size);
+    size_t dummy = 0;
+    RETURN_IF_FAILED(*strm << dummy);
 
     // serialize reference to a RefOwner object to manage references to this object from the proxy
     auto ref_owner = CreateLocalInstance<RefOwner>();

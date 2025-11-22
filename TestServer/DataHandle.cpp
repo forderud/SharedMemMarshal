@@ -10,10 +10,11 @@ DataHandle::~DataHandle() {
 
 void DataHandle::Initialize() {
     // create shared-mem segment
-    m_alloc.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, 1024));
+    size_t size = 1024;
+    m_alloc.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, size));
 
     //initialize data
-    for (size_t i = 0; i < m_alloc->size; i++)
+    for (size_t i = 0; i < size; i++)
         m_alloc->ptr[i] = (i & 0xFF);
 }
 

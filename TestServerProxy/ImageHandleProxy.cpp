@@ -35,8 +35,8 @@ HRESULT ImageHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* 
 /** Deserialize object. Called from client (proxy). */
 HRESULT ImageHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
     // de-serialize shared-mem metadata
-    size_t obj_size = 0;
-    RETURN_IF_FAILED(*strm >> obj_size);
+    size_t dummy = 0;
+    RETURN_IF_FAILED(*strm >> dummy);
 
     // map shared-mem
     m_alloc = std::make_unique<SharedMemAlloc>(SharedMemAlloc::CLIENT, /*map all*/0);
