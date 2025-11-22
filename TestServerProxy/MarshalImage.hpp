@@ -39,6 +39,8 @@ struct MarshalImage : Image2d {
         RETURN_IF_FAILED(*strm << pix_size);
         RETURN_IF_FAILED(*strm << dims);
         RETURN_IF_FAILED(*strm << m_img_offset);
+        // Don't serialize the image-data, since it might be large.
+        // Instead, configure zero-copy exchange through a shared-memory segment.
         return S_OK;
     }
 
@@ -52,9 +54,10 @@ struct MarshalImage : Image2d {
         CHECK(*strm >> dims);
         size_t img_offset = 0;
         CHECK(*strm >> img_offset);
+
         auto frame = std::make_unique<MarshalImage>(time, pix_size, dims, false);
 
-        // access image data from shared memory
+        // use already allocated image data from shared memory
         frame->m_img_offset = img_offset;
         frame->data->pvData = SharedMem::GetPointer(img_offset);
         frame->data->rgsabound[0] = { frame->size(), 0 };
