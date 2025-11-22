@@ -25,6 +25,11 @@ void AccessSharedMem (IHandleMgr& mgr) {
     {
         CComPtr<IImageHandle> img;
         CHECK(mgr.GetImageHandle(&img));
+
+        Image2d frame;
+        CHECK(img->GetData(&frame));
+
+        printf("Frame time=%f\n", frame.time);
     }
 }
 
