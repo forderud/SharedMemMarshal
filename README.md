@@ -1,10 +1,10 @@
 Sample code for custom COM marshaling with shared memory. This pattern can be used for **zero-copy passing of large buffers between processes**. The implementation is _transparent_, meaning that clients doesn't notice that the COM buffers reside in shared memory.
 
-## DCOM garbage collector limitation
+### DCOM garbage collector limitation
 Associated StackOverflow question: https://stackoverflow.com/questions/69010789/how-to-leverage-dcom-garbage-collector-with-custom-marshaling-imarshal (answered)
 
 The DCOM garbage collector usually cleans up leaking stub references after client processes terminate. This automatic garbage collection is unfortunately not available for classes implementing IMarshal. This limitation can be worked around by introducing an extra COM object for maintaining references from the client-side proxy back to the server. This is implemented using a tiny `RefOwner` class that is marshalled using `CoMarshalInterface`/`CoUnmarshalInterface` from the server to the proxy.
 
-## References
+### References
 * [IMarhal](https://learn.microsoft.com/en-us/windows/win32/api/objidl/nn-objidl-imarshal) interface
 * Inside COM+: [Will That Be Custom or Standard Marshaling?](https://thrysoee.dk/InsideCOM+/ch14c.htm) - uses event objects to synchronize destruction from proxy to server.
