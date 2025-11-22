@@ -11,7 +11,7 @@ HRESULT DataHandleProxy::GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) {
     if (!buffer || !size)
         return E_INVALIDARG;
 
-    *buffer = m_alloc->ptr + m_data.offset;
+    *buffer = m_alloc->m_ptr + m_data.offset;
     *size = m_data.size;
     return S_OK;
 }

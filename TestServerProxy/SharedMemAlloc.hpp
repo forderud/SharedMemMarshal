@@ -33,8 +33,8 @@ struct SharedMem {
     ~SharedMem();
 
 private:
-    const size_t       size   = 0;       ///< shared mem size
-    HANDLE             handle = nullptr; ///< shared mem segment handle
+    const size_t       m_size   = 0;       ///< shared mem size
+    HANDLE             m_handle = nullptr; ///< shared mem segment handle
 public:
-    unsigned char    * ptr    = nullptr; ///< pointer to start of shared mem segment
+    unsigned char    * m_ptr    = nullptr; ///< pointer to start of shared mem segment
 };
