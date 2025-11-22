@@ -25,6 +25,20 @@ template <class T> HRESULT operator>> (IStream& stream, T& data) {
 
 
 struct SharedMem {
+    /** Client-size pointer resolution. */
+    static BYTE* GetPointer(size_t offset);
+
+    /** Owner-size allocation, free & offset calculation. */
+    static BYTE* Allocate(size_t size);
+
+    static void Free(BYTE* ptr);
+
+    static size_t GetOffset(BYTE* ptr) {
+        assert(m_segment);
+        return ptr - m_segment->m_ptr;
+    }
+
+private:
     enum MODE {
         OWNER,
         CLIENT,
@@ -35,19 +49,6 @@ struct SharedMem {
         size_t size = 0;
     };
 
-    /** Client-size pointer resolution. */
-    static BYTE* GetPointer(size_t offset);
-
-    /** Owner-size allocation & free. */
-    static BYTE* Allocate(size_t size);
-    static void Free(BYTE* ptr);
-
-    static size_t GetOffset(BYTE* ptr) {
-        assert(m_segment);
-        return ptr - m_segment->m_ptr;
-    }
-
-private:
     struct Segment {
         Segment(MODE mode, size_t segm_size);
         ~Segment();
