@@ -11,8 +11,7 @@ HRESULT ImageHandleProxy::GetData(/*out*/Image2d* data) {
     if (!data)
         return E_INVALIDARG;
 
-    abort();
-    //TODO: Add implementation
+    *data = Image2d(m_data, false); // shallow copy
     return S_OK;
 }
 
