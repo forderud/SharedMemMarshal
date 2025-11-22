@@ -16,6 +16,9 @@ void DataHandle::Initialize() {
     //initialize data
     for (size_t i = 0; i < size; i++)
         m_alloc->ptr[i] = (i & 0xFF);
+
+    m_data.offset = 0;
+    m_data.size = size;
 }
 
 HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) {
