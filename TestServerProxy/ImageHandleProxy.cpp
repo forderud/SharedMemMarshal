@@ -33,7 +33,9 @@ HRESULT ImageHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* 
 /** Deserialize object. Called from client (proxy). */
 HRESULT ImageHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
     // de-serialize shared-mem metadata
-    m_image.reset(new MarshalImage);
+    //TODO: Switch to actual values
+    USHORT dims[] = { 128, 64 };
+    m_image.reset(new MarshalImage(3.14, 1, dims));
     m_image->DeSerialize(strm);
 
     // deserialize RefOwner reference to control server lifetime

@@ -5,6 +5,12 @@ struct MarshalImage : Image2d {
         return sizeof(time) + sizeof(pix_size) + sizeof(dims) + sizeof(img_offset) + sizeof(img_size);
     }
 
+    MarshalImage(double time, unsigned char ps, USHORT dims[2]) : Image2d(time, pix_size, dims, /*allocate*/false) {
+    }
+
+    ~MarshalImage() {
+    }
+
     HRESULT Serialize(IStream* strm) {
         // serialize metadata
         RETURN_IF_FAILED(*strm << time);
