@@ -17,7 +17,7 @@ void DataHandle::Initialize() {
         m_data->ptr[i] = (i & 0xFF);
 }
 
-HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
+HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) {
     if (!buffer || !size)
         return E_INVALIDARG;
 

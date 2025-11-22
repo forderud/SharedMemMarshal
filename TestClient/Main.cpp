@@ -11,7 +11,7 @@ void AccessSharedMem (IHandleMgr& mgr) {
     // Get pointer to shared-mem segment.
     // The segment is mapped read-only. Write attempts will therefore trigger "Access violation writing location".
     BYTE* buffer = nullptr;
-    unsigned int size = 0;
+    size_t size = 0;
     CHECK(obj->GetRawData(&buffer, &size));
 
     

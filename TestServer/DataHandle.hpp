@@ -17,7 +17,7 @@ public:
 
     void Initialize();
 
-    HRESULT GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) override;
+    HRESULT GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) override;
 
     /** IMarshal implementation. Called from server (stub). */
     HRESULT GetUnmarshalClass(const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags, CLSID* clsid) override;

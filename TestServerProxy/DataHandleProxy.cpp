@@ -7,7 +7,7 @@ DataHandleProxy::DataHandleProxy() {
 DataHandleProxy::~DataHandleProxy() {
 }
 
-HRESULT DataHandleProxy::GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {
+HRESULT DataHandleProxy::GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) {
     if (!buffer || !size)
         return E_INVALIDARG;
 
