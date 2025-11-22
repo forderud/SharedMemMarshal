@@ -34,8 +34,8 @@ struct SharedMem {
     static void Free(BYTE* ptr);
 
     static size_t GetOffset(BYTE* ptr) {
-        assert(m_segment);
-        return ptr - m_segment->m_ptr;
+        assert(s_segment);
+        return ptr - s_segment->m_ptr;
     }
 
 private:
@@ -62,7 +62,7 @@ private:
         ~Inspector();
     };
 
-    static std::unique_ptr<Segment> m_segment;
-    static std::vector<Allocation>  m_allocations;
+    static std::unique_ptr<Segment> s_segment;
+    static std::vector<Allocation>  s_allocations;
     static Inspector                s_inspector;
 };

@@ -12,12 +12,12 @@ static void CheckErrorAndThrow(const char* error_msg) {
     throw std::runtime_error(error_msg); // default message
 }
 
-std::unique_ptr<SharedMem::Segment> SharedMem::m_segment;
-std::vector<SharedMem::Allocation>  SharedMem::m_allocations;
+std::unique_ptr<SharedMem::Segment> SharedMem::s_segment;
+std::vector<SharedMem::Allocation>  SharedMem::s_allocations;
 
 SharedMem::Inspector::~Inspector() {
     // memory leak check
-    assert(SharedMem::m_allocations.empty());
+    assert(SharedMem::s_allocations.empty());
 };
 
 SharedMem::Segment::Segment(MODE mode, size_t segm_size) : m_size(segm_size) {
@@ -61,32 +61,32 @@ SharedMem::Segment::~Segment() {
 }
 
 BYTE* SharedMem::Allocate(size_t size) {
-    if (!m_segment)
-        m_segment.reset(new Segment(OWNER, 128*1024*1024)); // 128MB segment size
+    if (!s_segment)
+        s_segment.reset(new Segment(OWNER, 128*1024*1024)); // 128MB segment size
 
     // add new allocation after the last one
     size_t offset = 0;
-    if (m_allocations.size() > 0) {
-        auto& last_alloc = m_allocations.back();
+    if (s_allocations.size() > 0) {
+        auto& last_alloc = s_allocations.back();
         offset = last_alloc.offset + last_alloc.size;
     }
 
     Allocation new_alloc{ offset, size };
-    m_allocations.push_back(new_alloc);
-    return m_segment->m_ptr + new_alloc.offset;
+    s_allocations.push_back(new_alloc);
+    return s_segment->m_ptr + new_alloc.offset;
 }
 
 void SharedMem::Free(BYTE* ptr) {
-    size_t offset = ptr - m_segment->m_ptr;
+    size_t offset = ptr - s_segment->m_ptr;
 
-    for (auto it = m_allocations.begin(); it != m_allocations.end(); it++) {
+    for (auto it = s_allocations.begin(); it != s_allocations.end(); it++) {
         if (offset != it->offset)
             continue;
 
-        m_allocations.erase(it);
+        s_allocations.erase(it);
 
-        if (m_allocations.empty())
-            m_segment.reset(); // close shared-mem segment
+        if (s_allocations.empty())
+            s_segment.reset(); // close shared-mem segment
         
         return;
     }
@@ -95,8 +95,8 @@ void SharedMem::Free(BYTE* ptr) {
 }
 
 BYTE* SharedMem::GetPointer(size_t offset) {
-    if (!m_segment)
-        m_segment.reset(new Segment(CLIENT, /*map all*/0));
+    if (!s_segment)
+        s_segment.reset(new Segment(CLIENT, /*map all*/0));
 
-    return m_segment->m_ptr + offset;
+    return s_segment->m_ptr + offset;
 }
