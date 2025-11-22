@@ -52,7 +52,14 @@ struct MarshalImage : Image2d {
         CHECK(*strm >> dims);
         size_t img_offset = 0;
         CHECK(*strm >> img_offset);
-        return std::make_unique<MarshalImage>(time, pix_size, dims, false);
+        auto frame = std::make_unique<MarshalImage>(time, pix_size, dims, false);
+
+        // access image data from shared memory
+        frame->m_img_offset = img_offset;
+        frame->data->pvData = SharedMem::GetPointer(img_offset);
+        frame->data->rgsabound[0] = { frame->size(), 0 };
+
+        return frame;
     }
 
     size_t m_img_offset = 0; // shared-mem segment offset
