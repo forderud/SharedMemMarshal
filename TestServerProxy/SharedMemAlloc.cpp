@@ -1,6 +1,6 @@
 #include "SharedMemAlloc.hpp"
 
-SharedMemAlloc::SharedMemAlloc(MODE mode, unsigned int segm_size) : size(segm_size) {
+SharedMemAlloc::SharedMemAlloc(MODE mode, size_t segm_size) : size(segm_size) {
     if (size != static_cast<unsigned int>(size))
         throw std::runtime_error("SharedMemAlloc: too large buffer");
 

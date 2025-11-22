@@ -39,11 +39,11 @@ struct SharedMemAlloc {
         CLIENT,
     };
 
-    SharedMemAlloc(MODE mode, unsigned int segm_size);
+    SharedMemAlloc(MODE mode, size_t segm_size);
 
     ~SharedMemAlloc();
 
-    const unsigned int size   = 0;       ///< shared mem size
+    const size_t       size   = 0;       ///< shared mem size
 private:
     HANDLE             handle = nullptr; ///< shared mem segment handle
 public:
