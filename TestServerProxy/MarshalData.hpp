@@ -1,7 +1,9 @@
 #pragma once
 
 struct MarshalData {
-    static const size_t MARSHAL_SIZE = sizeof(size_t) + sizeof(size_t); // offset + size
+    static constexpr unsigned int MarshalSize() {
+        return sizeof(offset) + sizeof(size);
+    }
 
     HRESULT Serialize(IStream* strm) {
         // serialize metadata

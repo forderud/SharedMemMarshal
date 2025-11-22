@@ -45,7 +45,7 @@ HRESULT DataHandle::GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*dest
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     constexpr ULONG OBJREF_STANDARD_SIZE = 68; // sizeof(OBJREF) with flags=OBJREF_STANDARD and empty resolver address
-    *size = MarshalData::MARSHAL_SIZE + OBJREF_STANDARD_SIZE;
+    *size = MarshalData::MarshalSize() + OBJREF_STANDARD_SIZE;
     return S_OK;
 }
 
@@ -78,7 +78,7 @@ HRESULT DataHandle::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv
 /** Destroys a marshaled data packet. Have never been observed called. */
 HRESULT DataHandle::ReleaseMarshalData(IStream* strm) {
     // skip over shared-mem metadata
-    RETURN_IF_FAILED(strm->Seek({ MarshalData::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
+    RETURN_IF_FAILED(strm->Seek({ MarshalData::MarshalSize(), 0}, STREAM_SEEK_CUR, nullptr));
 
     // release RefOwner ref-count
     RETURN_IF_FAILED(CoReleaseMarshalData(strm));
