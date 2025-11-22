@@ -1,5 +1,4 @@
 #include "ImageHandleProxy.hpp"
-#include "MarshalImage.hpp"
 
 
 ImageHandleProxy::ImageHandleProxy() {
@@ -35,8 +34,7 @@ HRESULT ImageHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* 
 /** Deserialize object. Called from client (proxy). */
 HRESULT ImageHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
     // de-serialize shared-mem metadata
-    size_t dummy = 0;
-    RETURN_IF_FAILED(*strm >> dummy);
+    m_data.DeSerialize(strm);
 
     // map shared-mem
     m_alloc = std::make_unique<SharedMemAlloc>(SharedMemAlloc::CLIENT, /*map all*/0);
@@ -50,7 +48,7 @@ HRESULT ImageHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void
 /** Destroys a marshaled data packet. Have never been observed called. */
 HRESULT ImageHandleProxy::ReleaseMarshalData(IStream* strm) {
     // skip over shared-mem metadata
-    RETURN_IF_FAILED(strm->Seek({ MarshalImage::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
+    RETURN_IF_FAILED(strm->Seek({ MarshalImage::MarshalSize(), 0 }, STREAM_SEEK_CUR, nullptr));
 
     // release RefOwner ref-count
     RETURN_IF_FAILED(CoReleaseMarshalData(strm));

@@ -4,6 +4,7 @@
 #include "Resource.h"
 #include "TestServerProxy.h"
 #include "SharedMemAlloc.hpp"
+#include "MarshalImage.hpp"
 
 
 /** Client-side proxy class for the ImageHandle class. */
@@ -46,6 +47,7 @@ public:
 
 private:
     std::unique_ptr<SharedMemAlloc> m_alloc;
+    MarshalImage                    m_data;
     CComPtr<IUnknown>               m_server;  ///< DataHandle server reference (controls lifetime)
 };
 

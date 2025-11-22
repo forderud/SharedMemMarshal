@@ -3,6 +3,7 @@
 #include "ComSupport.hpp"
 #include "TestServer.h"
 #include "SharedMemAlloc.hpp"
+#include "MarshalImage.hpp"
 
 
 class ATL_NO_VTABLE ImageHandle :
@@ -44,5 +45,5 @@ public:
 
 private:
     std::unique_ptr<SharedMemAlloc>   m_alloc;
-    //std::unique_ptr<MarshalImage2d> m_frame;
+    MarshalImage                      m_data;
 };
