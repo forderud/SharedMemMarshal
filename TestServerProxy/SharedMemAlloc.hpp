@@ -58,6 +58,11 @@ private:
         unsigned char* m_ptr = nullptr; ///< pointer to start of shared mem segment
     };
 
+    struct Inspector {
+        ~Inspector();
+    };
+
     static std::unique_ptr<Segment> m_segment;
     static std::vector<Allocation>  m_allocations;
+    static Inspector                s_inspector;
 };

@@ -15,6 +15,10 @@ static void CheckErrorAndThrow(const char* error_msg) {
 std::unique_ptr<SharedMem::Segment> SharedMem::m_segment;
 std::vector<SharedMem::Allocation>  SharedMem::m_allocations;
 
+SharedMem::Inspector::~Inspector() {
+    // memory leak check
+    assert(SharedMem::m_allocations.empty());
+};
 
 SharedMem::Segment::Segment(MODE mode, size_t segm_size) : m_size(segm_size) {
     std::wstring segm_name = L"SharedMemMarshal.Segment";
