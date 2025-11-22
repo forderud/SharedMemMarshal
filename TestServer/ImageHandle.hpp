@@ -45,5 +45,5 @@ public:
 
 private:
     BYTE*        m_allocData = nullptr;
-    MarshalImage m_data;
+    std::unique_ptr<MarshalImage> m_image;
 };

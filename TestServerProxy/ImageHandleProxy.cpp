@@ -11,7 +11,7 @@ HRESULT ImageHandleProxy::GetData(/*out*/Image2d* data) {
     if (!data)
         return E_INVALIDARG;
 
-    *data = Image2d(m_data, false); // shallow copy
+    *data = Image2d(*m_image, false); // shallow copy
     return S_OK;
 }
 
@@ -33,7 +33,8 @@ HRESULT ImageHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* 
 /** Deserialize object. Called from client (proxy). */
 HRESULT ImageHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
     // de-serialize shared-mem metadata
-    m_data.DeSerialize(strm);
+    m_image.reset(new MarshalImage);
+    m_image->DeSerialize(strm);
 
     // deserialize RefOwner reference to control server lifetime
     RETURN_IF_FAILED(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));

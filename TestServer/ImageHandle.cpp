@@ -20,13 +20,16 @@ void ImageHandle::Initialize() {
     //initialize data
     for (size_t i = 0; i < size; i++)
         m_allocData[i] = (i & 0xFF);
+
+    m_image.reset(new MarshalImage);
+    //TODO: Initiaize m_image->data
 }
 
 HRESULT ImageHandle::GetData(/*out*/Image2d* data) {
     if (!data)
         return E_INVALIDARG;
 
-    *data = Image2d(m_data, false); // shallow copy
+    *data = Image2d(*m_image, false); // shallow copy
     return S_OK;
 }
 
@@ -60,7 +63,7 @@ HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, D
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     // serialize shared-mem metadata
-    m_data.Serialize(strm);
+    m_image->Serialize(strm);
 
     // serialize reference to a RefOwner object to manage references to this object from the proxy
     auto ref_owner = CreateLocalInstance<RefOwner>();

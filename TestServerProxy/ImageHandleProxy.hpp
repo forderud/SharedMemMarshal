@@ -46,8 +46,8 @@ public:
     END_COM_MAP()
 
 private:
-    MarshalImage               m_data;
-    CComPtr<IUnknown>          m_server;  ///< DataHandle server reference (controls lifetime)
+    std::unique_ptr<MarshalImage> m_image;
+    CComPtr<IUnknown>             m_server;  ///< DataHandle server reference (controls lifetime)
 };
 
 OBJECT_ENTRY_AUTO(CLSID_ImageHandleProxy, ImageHandleProxy)
