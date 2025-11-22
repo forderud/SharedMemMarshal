@@ -52,10 +52,50 @@ SharedMem::Segment::~Segment() {
     m_handle = nullptr;
 }
 
-SharedMem::SharedMem(MODE mode, size_t segm_size) {
-    m_segment.reset(new Segment(mode, segm_size));
+SharedMem::SharedMem() {
 }
 
 SharedMem::~SharedMem() {
-    m_segment.reset();
+    //assert(!m_segment);
+}
+
+BYTE* SharedMem::Allocate(size_t size) {
+    if (!m_segment)
+        m_segment.reset(new Segment(OWNER, 128*1024*1024)); // 128MB segment size
+
+    // add new allocation after the last one
+    size_t offset = 0;
+    if (m_allocations.size() > 0) {
+        auto& last_alloc = m_allocations.back();
+        offset = last_alloc.offset + last_alloc.size;
+    }
+
+    Allocation new_alloc{ offset, size };
+    m_allocations.push_back(new_alloc);
+    return m_segment->m_ptr + new_alloc.offset;
+}
+
+void SharedMem::Free(BYTE* ptr) {
+    size_t offset = ptr - m_segment->m_ptr;
+
+    for (auto it = m_allocations.begin(); it != m_allocations.end(); it++) {
+        if (offset != it->offset)
+            continue;
+
+        m_allocations.erase(it);
+
+        if (m_allocations.empty())
+            m_segment.reset(); // close shared-mem segment
+        
+        return;
+    }
+   
+    throw std::runtime_error("Unknonw allocation");
+}
+
+BYTE* SharedMem::GetPointer(size_t offset) {
+    if (!m_segment)
+        m_segment.reset(new Segment(CLIENT, /*map all*/0));
+
+    return m_segment->m_ptr + offset;
 }

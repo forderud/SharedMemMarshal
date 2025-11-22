@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <stdexcept>
+#include <vector>
 #include <Windows.h>
 
 
@@ -29,13 +30,24 @@ struct SharedMem {
         CLIENT,
     };
 
-    SharedMem(MODE mode, size_t segm_size);
+    struct Allocation {
+        size_t offset = 0;
+        size_t size = 0;
+    };
 
+    SharedMem();
     ~SharedMem();
 
-    BYTE* GetPointer() {
+    /** Client-size pointer resolution. */
+    BYTE* GetPointer(size_t offset);
+
+    /** Owner-size allocation & free. */
+    BYTE* Allocate(size_t size);
+    void Free(BYTE* ptr);
+
+    size_t GetOffset(BYTE* ptr) {
         assert(m_segment);
-        return m_segment->m_ptr;
+        return ptr - m_segment->m_ptr;
     }
 
 private:
@@ -49,4 +61,5 @@ private:
     };
 
     std::unique_ptr<Segment> m_segment;
+    std::vector<Allocation>  m_allocations;
 };

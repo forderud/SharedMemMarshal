@@ -6,26 +6,32 @@ DataHandle::DataHandle() {
 }
 
 DataHandle::~DataHandle() {
+    if (m_alloc) {
+        m_alloc->Free(m_allocData);
+        m_alloc.reset();
+    }
 }
 
 void DataHandle::Initialize() {
     // create shared-mem segment
     size_t size = 1024;
-    m_alloc.reset(new SharedMem(SharedMem::OWNER, size));
+    m_alloc.reset(new SharedMem());
+    m_allocData = m_alloc->Allocate(size);
+
+    m_data.offset = m_alloc->GetOffset(m_allocData);
+    m_data.size = size;
 
     //initialize data
     for (size_t i = 0; i < size; i++)
-        m_alloc->GetPointer()[i] = (i & 0xFF);
+        m_allocData[i] = (i & 0xFF);
 
-    m_data.offset = 0;
-    m_data.size = size;
 }
 
 HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) {
     if (!buffer || !size)
         return E_INVALIDARG;
 
-    *buffer = m_alloc->GetPointer() + m_data.offset;
+    *buffer = m_allocData;
     *size = m_data.size;
     return S_OK;
 }
