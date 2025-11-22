@@ -5,20 +5,26 @@
 
 
 void AccessSharedMem (IHandleMgr& mgr) {
-    CComPtr<IDataHandle> obj;
-    CHECK(mgr.GetDataHandle(&obj));
+    {
+        CComPtr<IDataHandle> obj;
+        CHECK(mgr.GetDataHandle(&obj));
 
-    // Get pointer to shared-mem segment.
-    // The segment is mapped read-only. Write attempts will therefore trigger "Access violation writing location".
-    BYTE* buffer = nullptr;
-    size_t size = 0;
-    CHECK(obj->GetRawData(&buffer, &size));
+        // Get pointer to shared-mem segment.
+        // The segment is mapped read-only. Write attempts will therefore trigger "Access violation writing location".
+        BYTE* buffer = nullptr;
+        size_t size = 0;
+        CHECK(obj->GetRawData(&buffer, &size));
 
-    
-    std::cout << "Checking shared-mem buffer content..." << std::endl;
-    for (size_t i = 0; i < size; i++) {
-        if (buffer[i] != (i & 0xFF))
-            throw std::runtime_error("incorrect buffer content");
+
+        std::cout << "Checking shared-mem buffer content..." << std::endl;
+        for (size_t i = 0; i < size; i++) {
+            if (buffer[i] != (i & 0xFF))
+                throw std::runtime_error("incorrect buffer content");
+        }
+    }
+    {
+        CComPtr<IImageHandle> img;
+        CHECK(mgr.GetImageHandle(&img));
     }
 }
 
