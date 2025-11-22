@@ -35,9 +35,6 @@ HRESULT ImageHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void
     // de-serialize shared-mem metadata
     m_data.DeSerialize(strm);
 
-    // map shared-mem
-    m_alloc = std::make_unique<SharedMem>();
-
     // deserialize RefOwner reference to control server lifetime
     RETURN_IF_FAILED(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));
 

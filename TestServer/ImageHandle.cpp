@@ -6,17 +6,16 @@ ImageHandle::ImageHandle() {
 }
 
 ImageHandle::~ImageHandle() {
-    if (m_alloc) {
-        m_alloc->Free(m_allocData);
-        m_alloc.reset();
+    if (m_allocData) {
+        SharedMem::Free(m_allocData);
+        m_allocData = nullptr;
     }
 }
 
 void ImageHandle::Initialize() {
     // create shared-mem segment
     size_t size = 1024;
-    m_alloc.reset(new SharedMem());
-    m_allocData = m_alloc->Allocate(size);
+    m_allocData = SharedMem::Allocate(size);
 
     //initialize data
     for (size_t i = 0; i < size; i++)

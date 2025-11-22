@@ -44,7 +44,6 @@ public:
     END_COM_MAP()
 
 private:
-    std::unique_ptr<SharedMem> m_alloc;
-    BYTE*                      m_allocData = nullptr;
-    MarshalData                m_data;
+    BYTE*       m_allocData = nullptr;
+    MarshalData m_data;
 };

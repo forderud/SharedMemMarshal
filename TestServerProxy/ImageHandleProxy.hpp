@@ -46,7 +46,6 @@ public:
     END_COM_MAP()
 
 private:
-    std::unique_ptr<SharedMem> m_alloc;
     MarshalImage               m_data;
     CComPtr<IUnknown>          m_server;  ///< DataHandle server reference (controls lifetime)
 };

@@ -12,6 +12,10 @@ static void CheckErrorAndThrow(const char* error_msg) {
     throw std::runtime_error(error_msg); // default message
 }
 
+std::unique_ptr<SharedMem::Segment> SharedMem::m_segment;
+std::vector<SharedMem::Allocation>  SharedMem::m_allocations;
+
+
 SharedMem::Segment::Segment(MODE mode, size_t segm_size) : m_size(segm_size) {
     std::wstring segm_name = L"SharedMemMarshal.Segment";
 
@@ -50,13 +54,6 @@ SharedMem::Segment::~Segment() {
 
     CloseHandle(m_handle);
     m_handle = nullptr;
-}
-
-SharedMem::SharedMem() {
-}
-
-SharedMem::~SharedMem() {
-    assert(m_allocations.empty());
 }
 
 BYTE* SharedMem::Allocate(size_t size) {

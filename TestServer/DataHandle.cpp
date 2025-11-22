@@ -6,19 +6,18 @@ DataHandle::DataHandle() {
 }
 
 DataHandle::~DataHandle() {
-    if (m_alloc) {
-        m_alloc->Free(m_allocData);
-        m_alloc.reset();
+    if (m_allocData) {
+        SharedMem::Free(m_allocData);
+        m_allocData = nullptr;
     }
 }
 
 void DataHandle::Initialize() {
     // create shared-mem segment
     size_t size = 1024;
-    m_alloc.reset(new SharedMem());
-    m_allocData = m_alloc->Allocate(size);
+    m_allocData = SharedMem::Allocate(size);
 
-    m_data.offset = m_alloc->GetOffset(m_allocData);
+    m_data.offset = SharedMem::GetOffset(m_allocData);
     m_data.size = size;
 
     //initialize data

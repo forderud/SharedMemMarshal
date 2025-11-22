@@ -35,17 +35,14 @@ struct SharedMem {
         size_t size = 0;
     };
 
-    SharedMem();
-    ~SharedMem();
-
     /** Client-size pointer resolution. */
-    BYTE* GetPointer(size_t offset);
+    static BYTE* GetPointer(size_t offset);
 
     /** Owner-size allocation & free. */
-    BYTE* Allocate(size_t size);
-    void Free(BYTE* ptr);
+    static BYTE* Allocate(size_t size);
+    static void Free(BYTE* ptr);
 
-    size_t GetOffset(BYTE* ptr) {
+    static size_t GetOffset(BYTE* ptr) {
         assert(m_segment);
         return ptr - m_segment->m_ptr;
     }
@@ -60,6 +57,6 @@ private:
         unsigned char* m_ptr = nullptr; ///< pointer to start of shared mem segment
     };
 
-    std::unique_ptr<Segment> m_segment;
-    std::vector<Allocation>  m_allocations;
+    static std::unique_ptr<Segment> m_segment;
+    static std::vector<Allocation>  m_allocations;
 };
