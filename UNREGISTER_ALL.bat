@@ -16,7 +16,7 @@ reg delete "HKCR\Interface\{7D278258-3B05-45D3-AD60-CF65497B56B6}" /f 2> NUL
 :: remove HandleMgr class
 reg delete "HKCR\CLSID\{C8767698-8297-4BE1-904E-FC25034851D2}"     /f 2> NUL
 
-:: remove DataHandleProxy class
+:: remove ImageHandleProxy class
 reg delete "HKCR\CLSID\{9A7D97EB-1491-438E-B88C-234390D727F2}"     /f 2> NUL
 
 :: TestServer typelib
