@@ -8,7 +8,7 @@ uuid(7D278258-3B05-45D3-AD60-CF65497B56B6),
 helpstring("Interface for accessing shared-memory segment handles.")]
 interface IHandleMgr : IUnknown {
     [helpstring("Get handle to a shared-mem segment.")]
-    HRESULT GetHandle([out, retval] IDataHandle** obj);
+    HRESULT GetDataHandle([out, retval] IDataHandle** obj);
 };
 
 [version(1.0),

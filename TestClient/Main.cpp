@@ -6,7 +6,7 @@
 
 void AccessSharedMem (IHandleMgr& mgr) {
     CComPtr<IDataHandle> obj;
-    CHECK(mgr.GetHandle(&obj));
+    CHECK(mgr.GetDataHandle(&obj));
 
     // Get pointer to shared-mem segment.
     // The segment is mapped read-only. Write attempts will therefore trigger "Access violation writing location".

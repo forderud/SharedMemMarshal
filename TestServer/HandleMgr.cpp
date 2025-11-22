@@ -8,7 +8,7 @@ HandleMgr::HandleMgr() {
 HandleMgr::~HandleMgr() {
 }
 
-HRESULT HandleMgr::GetHandle(IDataHandle** object) {
+HRESULT HandleMgr::GetDataHandle(IDataHandle** object) {
     // create object
     auto obj1 = CreateLocalInstance<DataHandle>();
     obj1->Initialize();
