@@ -45,7 +45,7 @@ public:
     END_COM_MAP()
 
 private:
-    std::unique_ptr<SharedMemAlloc> m_data;
+    std::unique_ptr<SharedMemAlloc> m_alloc;
     CComPtr<IUnknown>               m_server;  ///< DataHandle server reference (controls lifetime)
 };
 

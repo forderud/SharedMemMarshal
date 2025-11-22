@@ -12,8 +12,8 @@ HRESULT DataHandleProxy::GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) {
     if (!buffer || !size)
         return E_INVALIDARG;
 
-    *buffer = m_data->ptr;
-    *size = m_data->size;
+    *buffer = m_alloc->ptr;
+    *size = m_alloc->size;
     return S_OK;
 }
 
@@ -39,7 +39,7 @@ HRESULT DataHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void*
     RETURN_IF_FAILED(*strm >> obj_size);
 
     // map shared-mem
-    m_data = std::make_unique<SharedMemAlloc>(SharedMemAlloc::CLIENT, obj_size);
+    m_alloc = std::make_unique<SharedMemAlloc>(SharedMemAlloc::CLIENT, obj_size);
 
     // deserialize RefOwner reference to control server lifetime
     RETURN_IF_FAILED(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));
