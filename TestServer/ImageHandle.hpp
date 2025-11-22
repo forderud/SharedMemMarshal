@@ -44,6 +44,5 @@ public:
     END_COM_MAP()
 
 private:
-    BYTE*        m_allocData = nullptr;
     std::unique_ptr<MarshalImage> m_image;
 };

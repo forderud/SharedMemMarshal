@@ -6,10 +6,6 @@ ImageHandle::ImageHandle() {
 }
 
 ImageHandle::~ImageHandle() {
-    if (m_allocData) {
-        SharedMem::Free(m_allocData);
-        m_allocData = nullptr;
-    }
 }
 
 void ImageHandle::Initialize() {
