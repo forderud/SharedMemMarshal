@@ -157,15 +157,6 @@ interface IImageHandle : IUnknown {
 };
 
 
-[object,
- oleautomation, // use "automation" marshaler (oleaut32.dll)
- uuid(54E049DB-C39C-4025-B1EF-2FC0E5246277),
- helpstring("Shared memory handle.")]
-interface IDataHandle : IUnknown {
-    [helpstring("Get shared-mem segment address & size. The data might not be writable. Lifetime is managed by IDataHandle object.")]
-    HRESULT GetRawData ([out] BYTE ** buffer, [out] ULONGLONG* size);
-};
-
 [version(1.0),
  uuid(8E42F33F-E5E3-46B4-8B39-0A03DCF338CC),
  helpstring("TestServerProxy module")]
@@ -177,14 +168,6 @@ library TestServerProxy {
         helpstring("Class for testing shared memory")]
         coclass ImageHandleProxy {
         [default] interface IImageHandle;
-        interface IMarshal;
-    };
-
-    [version(1.0),
-        uuid(D84F768B-55F6-4B3A-AF68-9276C9488696),
-        helpstring("Class for testing shared memory")]
-    coclass DataHandleProxy {
-        [default] interface IDataHandle;
         interface IMarshal;
     };
 };

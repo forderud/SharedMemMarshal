@@ -93,16 +93,13 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DataHandleProxy.cpp" />
     <ClCompile Include="ImageHandleProxy.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SharedMemAlloc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComSupport.hpp" />
-    <ClInclude Include="DataHandleProxy.hpp" />
     <ClInclude Include="ImageHandleProxy.hpp" />
-    <ClInclude Include="MarshalData.hpp" />
     <ClInclude Include="MarshalImage.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SharedMemAlloc.hpp" />
@@ -111,7 +108,6 @@
     <Midl Include="TestServerProxy.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataHandleProxy.rgs" />
     <None Include="ImageHandleProxy.rgs" />
     <None Include="Module.def" />
   </ItemGroup>

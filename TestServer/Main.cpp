@@ -2,7 +2,7 @@
 #include "TestServer.h"
 #include "TestServer_i.c"
 #include "TestServerProxy_i.c"
-#include "DataHandle.hpp"
+#include "ComSupport.hpp"
 
 
 class TestServerModule : public ATL::CAtlExeModuleT<TestServerModule> {

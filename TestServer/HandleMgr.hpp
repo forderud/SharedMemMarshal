@@ -14,8 +14,6 @@ public:
 
     /*NOT virtual*/ ~HandleMgr();
 
-    HRESULT GetDataHandle(IDataHandle** object) override;
-
     HRESULT GetImageHandle(IImageHandle** object) override;
 
     DECLARE_REGISTRY_RESOURCEID(IDR_HandleMgr)
