@@ -4,34 +4,21 @@
 #include "ComSupport.hpp"
 
 
-void AccessTwoHandles (IHandleMgr& mgr, const unsigned char set_val) {
-    CComPtr<IDataHandle> obj1;
-    CHECK(mgr.GetHandle(&obj1));
+void AccessSharedMem (IHandleMgr& mgr) {
+    CComPtr<IDataHandle> obj;
+    CHECK(mgr.GetHandle(&obj));
 
-    CComPtr<IDataHandle> obj2;
-    CHECK(mgr.GetHandle(&obj2));
+    // Get pointer to shared-mem segment.
+    // The segment is mapped read-only. Write attempts will therefore trigger "Access violation writing location".
+    BYTE* buffer = nullptr;
+    unsigned int size = 0;
+    CHECK(obj->GetRawData(&buffer, &size));
 
-    const unsigned int idx = 0;
-    {
-        // set mem value in first shared-mem segment
-        BYTE* buffer = nullptr;
-        unsigned int size = 0;
-        CHECK(obj1->GetRawData(&buffer, &size));
-        assert(idx < size);
-
-        buffer[idx] = set_val;
-
-        std::cout << "Value " << (int)set_val << " stored to first IDataHandle.\n";
-    }
-    {
-        // verify that the same value also appear in the second shared-mem segment at a different mem. address
-        BYTE* buffer = nullptr;
-        unsigned int size = 0;
-        CHECK(obj2->GetRawData(&buffer, &size));
-        assert(idx < size);
-        assert(buffer[idx] == set_val);
-
-        std::cout << "Value " << (int)buffer[idx] << " read from second IDataHandle.\n";
+    
+    std::cout << "Checking shared-mem buffer content..." << std::endl;
+    for (size_t i = 0; i < size; i++) {
+        if (buffer[i] != (i & 0xFF))
+            throw std::runtime_error("incorrect buffer content");
     }
 }
 
@@ -45,10 +32,7 @@ int main() {
         CHECK(mgr.CoCreateInstance(CLSID_HandleMgr));
         std::cout << "TestServer.HandleMgr created." << std::endl;
 
-        // Test shared-mem access.
-        for (size_t i = 0; i < 2; ++i) {
-            AccessTwoHandles(*mgr, (BYTE)(41 + 13 * i));
-        }
+        AccessSharedMem(*mgr);
     }
 
     // Unload COM.

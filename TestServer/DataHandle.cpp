@@ -10,7 +10,11 @@ DataHandle::~DataHandle() {
 
 void DataHandle::Initialize() {
     // create shared-mem segment
-    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, 1024*1024));
+    m_data.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, 1024));
+
+    //initialize data
+    for (size_t i = 0; i < m_data->size; i++)
+        m_data->ptr[i] = (i & 0xFF);
 }
 
 HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/unsigned int* size) {

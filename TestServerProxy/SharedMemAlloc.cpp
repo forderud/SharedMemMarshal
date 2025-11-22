@@ -20,7 +20,7 @@ SharedMemAlloc::SharedMemAlloc(MODE mode, unsigned int segm_size) : size(segm_si
     }
     else {
         // open existing shared mem segment
-        bool writable = true;
+        bool writable = false;
         handle = OpenFileMappingW(writable ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, FALSE, segm_name.c_str());
         if (!handle)
             CheckErrorAndThrow("CreateFileMapping failed");
