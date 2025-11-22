@@ -5,21 +5,19 @@
 
 
 void AccessSharedMem (IHandleMgr& mgr) {
-    {
-        CComPtr<IImageHandle> img;
-        CHECK(mgr.GetImageHandle(&img));
+    CComPtr<IImageHandle> img;
+    CHECK(mgr.GetImageHandle(&img));
 
-        Image2d frame;
-        CHECK(img->GetData(&frame));
+    Image2d frame;
+    CHECK(img->GetData(&frame));
 
-        printf("Frame time=%f\n", frame.time);
-        printf("Frame dims={%u, %u}\n", frame.dims[0], frame.dims[1]);
-        printf("Frame size=%u\n", frame.size());
-        printf("Frame data (first 128bytes): ");
-        for (size_t i = 0; (i < frame.size()) && (i < 128); i++)
-            printf("%u, ", ((BYTE*)frame.data->pvData)[i]);
-        printf("\n");
-    }
+    printf("Frame time=%f\n", frame.time);
+    printf("Frame dims={%u, %u}\n", frame.dims[0], frame.dims[1]);
+    printf("Frame size=%u\n", frame.size());
+    printf("Frame data (first 128bytes): ");
+    for (size_t i = 0; (i < frame.size()) && (i < 128); i++)
+        printf("%u, ", ((BYTE*)frame.data->pvData)[i]);
+    printf("\n");
 }
 
 int main() {
