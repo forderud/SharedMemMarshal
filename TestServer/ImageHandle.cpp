@@ -24,7 +24,7 @@ void ImageHandle::Initialize() {
     double time = 3.14;
     unsigned char pix_size = 1;
     USHORT dims[] = { 64, 32 };
-    m_image.reset(new MarshalImage(time, pix_size, dims));
+    m_image.reset(new MarshalImage(time, pix_size, dims, true));
     //TODO: Initiaize m_image->data
 }
 
