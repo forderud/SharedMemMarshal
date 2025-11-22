@@ -56,7 +56,7 @@ SharedMem::SharedMem() {
 }
 
 SharedMem::~SharedMem() {
-    //assert(!m_segment);
+    assert(m_allocations.empty());
 }
 
 BYTE* SharedMem::Allocate(size_t size) {
