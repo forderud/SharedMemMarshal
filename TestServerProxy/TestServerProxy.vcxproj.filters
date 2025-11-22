@@ -12,6 +12,7 @@
     <ClInclude Include="SharedMemAlloc.hpp" />
     <ClInclude Include="DataHandleProxy.hpp" />
     <ClInclude Include="ImageHandleProxy.hpp" />
+    <ClInclude Include="MarshalData.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestServerProxy.idl" />
