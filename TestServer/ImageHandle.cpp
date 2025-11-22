@@ -13,19 +13,16 @@ ImageHandle::~ImageHandle() {
 }
 
 void ImageHandle::Initialize() {
-    // create shared-mem segment
-    size_t size = 1024;
-    m_allocData = SharedMem::Allocate(size);
-
-    //initialize data
-    for (size_t i = 0; i < size; i++)
-        m_allocData[i] = (i & 0xFF);
-
+    // allocate image in shared-mem segment
     double time = 3.14;
     unsigned char pix_size = 1;
     USHORT dims[] = { 64, 32 };
-    m_image.reset(new MarshalImage(time, pix_size, dims, true));
-    //TODO: Initiaize m_image->data
+    m_image.reset(new MarshalImage(time, pix_size, dims, /*allocate*/true));
+
+    //initialize data
+    auto* ptr = (BYTE*)m_image->data->pvData;
+    for (size_t i = 0; i < m_image->size(); i++)
+        ptr[i] = (i & 0xFF);
 }
 
 HRESULT ImageHandle::GetData(/*out*/Image2d* data) {
