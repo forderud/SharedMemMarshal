@@ -15,7 +15,7 @@ void ImageHandle::Initialize() {
 
     //initialize data
     for (size_t i = 0; i < size; i++)
-        m_alloc->m_ptr[i] = (i & 0xFF);
+        m_alloc->GetPointer()[i] = (i & 0xFF);
 }
 
 HRESULT ImageHandle::GetData(/*out*/Image2d* data) {

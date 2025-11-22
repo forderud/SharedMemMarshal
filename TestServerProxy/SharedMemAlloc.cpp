@@ -12,7 +12,7 @@ static void CheckErrorAndThrow(const char* error_msg) {
     throw std::runtime_error(error_msg); // default message
 }
 
-SharedMem::SharedMem(MODE mode, size_t segm_size) : m_size(segm_size) {
+SharedMem::Segment::Segment(MODE mode, size_t segm_size) : m_size(segm_size) {
     std::wstring segm_name = L"SharedMemMarshal.Segment";
 
     if (mode == MODE::OWNER) {
@@ -44,10 +44,18 @@ SharedMem::SharedMem(MODE mode, size_t segm_size) : m_size(segm_size) {
     }
 }
 
-SharedMem::~SharedMem() {
+SharedMem::Segment::~Segment() {
     UnmapViewOfFile(m_ptr);
     m_ptr = nullptr;
 
     CloseHandle(m_handle);
     m_handle = nullptr;
+}
+
+SharedMem::SharedMem(MODE mode, size_t segm_size) {
+    m_segment.reset(new Segment(mode, segm_size));
+}
+
+SharedMem::~SharedMem() {
+    m_segment.reset();
 }

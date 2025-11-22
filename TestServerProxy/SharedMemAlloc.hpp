@@ -1,5 +1,6 @@
 #pragma once
 #include <cassert>
+#include <memory>
 #include <string>
 #include <stdexcept>
 #include <Windows.h>
@@ -32,9 +33,20 @@ struct SharedMem {
 
     ~SharedMem();
 
+    BYTE* GetPointer() {
+        assert(m_segment);
+        return m_segment->m_ptr;
+    }
+
 private:
-    const size_t       m_size   = 0;       ///< shared mem size
-    HANDLE             m_handle = nullptr; ///< shared mem segment handle
-public:
-    unsigned char    * m_ptr    = nullptr; ///< pointer to start of shared mem segment
+    struct Segment {
+        Segment(MODE mode, size_t segm_size);
+        ~Segment();
+
+        const size_t   m_size = 0;       ///< shared mem size
+        HANDLE         m_handle = nullptr; ///< shared mem segment handle
+        unsigned char* m_ptr = nullptr; ///< pointer to start of shared mem segment
+    };
+
+    std::unique_ptr<Segment> m_segment;
 };
