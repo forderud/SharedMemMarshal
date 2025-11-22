@@ -3,6 +3,7 @@
 #include "ComSupport.hpp"
 #include "TestServer.h"
 #include "SharedMemAlloc.hpp"
+#include "MarshalData.hpp"
 
 
 class ATL_NO_VTABLE DataHandle :
@@ -44,4 +45,5 @@ public:
 
 private:
     std::unique_ptr<SharedMemAlloc> m_alloc;
+    MarshalData                     m_data;
 };

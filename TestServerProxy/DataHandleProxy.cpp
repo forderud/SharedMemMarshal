@@ -1,5 +1,4 @@
 #include "DataHandleProxy.hpp"
-#include "MarshalData.hpp"
 
 
 DataHandleProxy::DataHandleProxy() {
@@ -12,8 +11,8 @@ HRESULT DataHandleProxy::GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) {
     if (!buffer || !size)
         return E_INVALIDARG;
 
-    *buffer = m_alloc->ptr;
-    *size = m_alloc->size;
+    *buffer = m_alloc->ptr + m_data.offset;
+    *size = m_data.size;
     return S_OK;
 }
 
@@ -35,11 +34,10 @@ HRESULT DataHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* p
 /** Deserialize object. Called from client (proxy). */
 HRESULT DataHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
     // de-serialize shared-mem metadata
-    size_t obj_size = 0;
-    RETURN_IF_FAILED(*strm >> obj_size);
+    m_data.DeSerialize(strm);
 
     // map shared-mem
-    m_alloc = std::make_unique<SharedMemAlloc>(SharedMemAlloc::CLIENT, obj_size);
+    m_alloc = std::make_unique<SharedMemAlloc>(SharedMemAlloc::CLIENT, m_data.size);
 
     // deserialize RefOwner reference to control server lifetime
     RETURN_IF_FAILED(CoUnmarshalInterface(strm, IID_PPV_ARGS(&m_server)));

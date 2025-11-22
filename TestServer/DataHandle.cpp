@@ -1,6 +1,5 @@
 #include "DataHandle.hpp"
 #include "RefOwner.hpp"
-#include "MarshalData.hpp"
 
 
 DataHandle::DataHandle() {
@@ -22,8 +21,8 @@ HRESULT DataHandle::GetRawData(/*out*/BYTE** buffer, /*out*/size_t* size) {
     if (!buffer || !size)
         return E_INVALIDARG;
 
-    *buffer = m_alloc->ptr;
-    *size = m_alloc->size;
+    *buffer = m_alloc->ptr + m_data.offset;
+    *size = m_data.size;
     return S_OK;
 }
 
@@ -57,7 +56,7 @@ HRESULT DataHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DW
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     // serialize shared-mem metadata
-    RETURN_IF_FAILED(*strm << m_alloc->size);
+    m_data.Serialize(strm);
 
     // serialize reference to a RefOwner object to manage references to this object from the proxy
     auto ref_owner = CreateLocalInstance<RefOwner>();
