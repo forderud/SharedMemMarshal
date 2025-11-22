@@ -24,6 +24,13 @@ struct MarshalImage : Image2d {
     }
 
     ~MarshalImage() {
+        if (m_owns_data)
+            SharedMem::Free((BYTE*)data->pvData);
+        data->pvData = nullptr;
+        m_owns_data = false;
+
+        CHECK(SafeArrayDestroyDescriptor(data)); // only delete descriptor, and not data
+        data = nullptr;
     }
 
     HRESULT Serialize(IStream* strm) {
