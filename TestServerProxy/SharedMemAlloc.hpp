@@ -48,6 +48,4 @@ private:
     HANDLE             handle = nullptr; ///< shared mem segment handle
 public:
     unsigned char    * ptr    = nullptr; ///< pointer to start of shared mem segment
-
-    static const size_t MARSHAL_SIZE = sizeof(size);
 };

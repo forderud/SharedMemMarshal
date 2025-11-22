@@ -1,4 +1,5 @@
 #include "ImageHandleProxy.hpp"
+#include "MarshalImage.hpp"
 
 
 ImageHandleProxy::ImageHandleProxy() {
@@ -49,7 +50,7 @@ HRESULT ImageHandleProxy::UnmarshalInterface(IStream* strm, const IID& iid, void
 /** Destroys a marshaled data packet. Have never been observed called. */
 HRESULT ImageHandleProxy::ReleaseMarshalData(IStream* strm) {
     // skip over shared-mem metadata
-    RETURN_IF_FAILED(strm->Seek({ SharedMemAlloc::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
+    RETURN_IF_FAILED(strm->Seek({ MarshalImage::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
 
     // release RefOwner ref-count
     RETURN_IF_FAILED(CoReleaseMarshalData(strm));

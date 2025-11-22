@@ -13,6 +13,7 @@
     <ClInclude Include="DataHandleProxy.hpp" />
     <ClInclude Include="ImageHandleProxy.hpp" />
     <ClInclude Include="MarshalData.hpp" />
+    <ClInclude Include="MarshalImage.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestServerProxy.idl" />

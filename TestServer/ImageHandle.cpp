@@ -1,5 +1,6 @@
 #include "ImageHandle.hpp"
 #include "RefOwner.hpp"
+#include "MarshalImage.hpp"
 
 
 ImageHandle::ImageHandle() {
@@ -41,7 +42,7 @@ HRESULT ImageHandle::GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*des
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     constexpr ULONG OBJREF_STANDARD_SIZE = 68; // sizeof(OBJREF) with flags=OBJREF_STANDARD and empty resolver address
-    *size = SharedMemAlloc::MARSHAL_SIZE + OBJREF_STANDARD_SIZE;
+    *size = MarshalImage::MARSHAL_SIZE + OBJREF_STANDARD_SIZE;
     return S_OK;
 }
 
@@ -74,7 +75,7 @@ HRESULT ImageHandle::UnmarshalInterface(IStream* strm, const IID& iid, void** pp
 /** Destroys a marshaled data packet. Have never been observed called. */
 HRESULT ImageHandle::ReleaseMarshalData(IStream* strm) {
     // skip over shared-mem metadata
-    RETURN_IF_FAILED(strm->Seek({ SharedMemAlloc::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
+    RETURN_IF_FAILED(strm->Seek({ MarshalImage::MARSHAL_SIZE, 0 }, STREAM_SEEK_CUR, nullptr));
 
     // release RefOwner ref-count
     RETURN_IF_FAILED(CoReleaseMarshalData(strm));
