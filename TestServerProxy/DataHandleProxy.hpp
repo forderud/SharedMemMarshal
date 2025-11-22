@@ -46,9 +46,9 @@ public:
     END_COM_MAP()
 
 private:
-    std::unique_ptr<SharedMemAlloc> m_alloc;
-    MarshalData                     m_data;
-    CComPtr<IUnknown>               m_server;  ///< DataHandle server reference (controls lifetime)
+    std::unique_ptr<SharedMem> m_alloc;
+    MarshalData                m_data;
+    CComPtr<IUnknown>          m_server;  ///< DataHandle server reference (controls lifetime)
 };
 
 OBJECT_ENTRY_AUTO(CLSID_DataHandleProxy, DataHandleProxy)

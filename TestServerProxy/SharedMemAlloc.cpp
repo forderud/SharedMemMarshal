@@ -12,7 +12,7 @@ static void CheckErrorAndThrow(const char* error_msg) {
     throw std::runtime_error(error_msg); // default message
 }
 
-SharedMemAlloc::SharedMemAlloc(MODE mode, size_t segm_size) : size(segm_size) {
+SharedMem::SharedMem(MODE mode, size_t segm_size) : size(segm_size) {
     std::wstring segm_name = L"SharedMemMarshal.Segment";
 
     if (mode == MODE::OWNER) {
@@ -44,7 +44,7 @@ SharedMemAlloc::SharedMemAlloc(MODE mode, size_t segm_size) : size(segm_size) {
     }
 }
 
-SharedMemAlloc::~SharedMemAlloc() {
+SharedMem::~SharedMem() {
     UnmapViewOfFile(ptr);
     ptr = nullptr;
 

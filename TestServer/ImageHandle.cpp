@@ -11,7 +11,7 @@ ImageHandle::~ImageHandle() {
 void ImageHandle::Initialize() {
     // create shared-mem segment
     size_t size = 1024;
-    m_alloc.reset(new SharedMemAlloc(SharedMemAlloc::OWNER, size));
+    m_alloc.reset(new SharedMem(SharedMem::OWNER, size));
 
     //initialize data
     for (size_t i = 0; i < size; i++)

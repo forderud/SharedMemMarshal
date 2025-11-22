@@ -22,15 +22,15 @@ template <class T> HRESULT operator>> (IStream& stream, T& data) {
 }
 
 
-struct SharedMemAlloc {
+struct SharedMem {
     enum MODE {
         OWNER,
         CLIENT,
     };
 
-    SharedMemAlloc(MODE mode, size_t segm_size);
+    SharedMem(MODE mode, size_t segm_size);
 
-    ~SharedMemAlloc();
+    ~SharedMem();
 
 private:
     const size_t       size   = 0;       ///< shared mem size
