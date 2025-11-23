@@ -17,7 +17,7 @@ Sample code for custom COM marshaling with shared memory. This pattern can be us
 * Open `SharedMemMarshal.sln` solution.
 * Build all projects.
 * Start `ImageClient` project.
-* Observe that `ImageClient.exe` is able to access image-data.
+* Observe that `ImageClient.exe` is able to access image-data exposed by the `ImageSource` process without any copying.
 
 #### Cleanup
 Run `UNREGISTER_ALL.bat` with admin privileges to clean up all registry entries.
