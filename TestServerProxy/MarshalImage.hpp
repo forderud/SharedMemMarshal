@@ -1,5 +1,23 @@
 #pragma once
 
+
+/** Serialize/deserialize an arbitrary POD type. */
+template <class T> HRESULT operator<< (IStream& stream, const T& data) {
+    unsigned long bytes_written = 0;
+    RETURN_IF_FAILED(stream.Write(&data, sizeof(data), &bytes_written));
+    if (bytes_written != sizeof(data))
+        return E_FAIL;
+    return S_OK;
+}
+template <class T> HRESULT operator>> (IStream& stream, T& data) {
+    unsigned long bytes_read = 0;
+    RETURN_IF_FAILED(stream.Read(&data, sizeof(data), &bytes_read));
+    if (bytes_read != sizeof(data))
+        return E_FAIL;
+    return S_OK;
+}
+
+
 struct MarshalImage : Image2d {
     static constexpr unsigned int MarshalSize() {
         return sizeof(time) + sizeof(format) + sizeof(dims) + sizeof(m_img_offset);
