@@ -1,5 +1,9 @@
 Sample code for custom COM marshaling with shared memory. This pattern can be used for **zero-copy exchange of large buffers between processes**. The implementation is _transparent_, meaning that clients doesn't notice that the COM `SAFEARRAY` buffers reside in shared memory.
 
+### Overview
+![Overview](Overview.svg)
+
+
 ### DCOM garbage collector limitation
 Associated StackOverflow question: https://stackoverflow.com/questions/69010789/how-to-leverage-dcom-garbage-collector-with-custom-marshaling-imarshal (answered)
 

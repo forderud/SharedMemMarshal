@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:export>
+      <bx:file format="svg"/>
+    </bx:export>
+  </defs>
+  <rect x="75.512" y="35.837" width="110.068" height="130.12" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <rect x="196.672" y="36.689" width="114.761" height="127.986" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 18px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 52.901024, -0.853242)"><tspan x="201.364" y="60.58">ImageSource</tspan><tspan x="201.364" dy="1em">​</tspan><tspan>process</tspan></text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 18px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 50.341293, -1.706485)"><tspan x="80.154" y="62.073">ImageClient</tspan><tspan x="80.154" dy="1em">​</tspan><tspan>process</tspan></text>
+  <rect x="111.775" y="93.857" width="73.805" height="72.099" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <rect x="117.748" y="127.985" width="145.903" height="34.556" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 13px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 50.767914, 2.986349)"><tspan x="139.881" y="140.571">Shared-mem segment</tspan><tspan x="139.881" dy="1em">​</tspan><tspan>with pixel data</tspan></text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 13.225255, -0.426621)"><tspan x="135.239" y="106.655">ImageSource</tspan><tspan x="135.23899841308594" dy="1em">​</tspan><tspan>Proxy DLL</tspan></text>
+</svg>
