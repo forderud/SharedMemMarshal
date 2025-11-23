@@ -16,8 +16,10 @@ HRESULT ImageHandleProxy::GetData(/*out*/Image2d* data) {
 }
 
 /** IMarshal implementation. Called from server (stub). */
-HRESULT ImageHandleProxy::GetUnmarshalClass(const IID& /*iid*/, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD /*mshlFlags*/, CLSID* /*clsid*/) {
-    abort(); // should never be called
+HRESULT ImageHandleProxy::GetUnmarshalClass(const IID& /*iid*/, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD /*mshlFlags*/, CLSID* clsid) {
+    // observed called by .Net
+    *clsid = CLSID_ImageHandleProxy; // unmarshal itself
+    return S_OK;
 }
 
 /** Indicate the total size of the marshaled object reference. Called from server (stub). */
