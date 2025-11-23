@@ -65,8 +65,13 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>echo Registering EXE...
-"$(TargetPath)" /regserver</Command>
+      <Command>echo Generating .Net interop DLL:
+TlbImp.exe /machine:x64 "$(IntDir)$(ProjectName).tlb" /out:"$(IntDir)$(ProjectName).dll"
+
+echo Registering EXE...
+"$(TargetPath)" /regserver
+
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -93,8 +98,13 @@
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>echo Registering EXE...
-"$(TargetPath)" /regserver</Command>
+      <Command>echo Generating .Net interop DLL:
+TlbImp.exe /machine:x64 "$(IntDir)$(ProjectName).tlb" /out:"$(IntDir)$(ProjectName).dll"
+
+echo Registering EXE...
+"$(TargetPath)" /regserver
+
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
