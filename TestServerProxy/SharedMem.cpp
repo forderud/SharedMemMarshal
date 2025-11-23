@@ -102,7 +102,7 @@ void SharedMem::Free(void* ptr) {
 void* SharedMem::GetPointer(size_t offset) {
     std::lock_guard<std::mutex> lock(s_mutex);
 
-    if (!s_segment)
+    if (!s_segment) // lazy initialization
         s_segment.reset(new Segment(CLIENT, /*map all*/0));
 
     return s_segment->m_ptr + offset;
