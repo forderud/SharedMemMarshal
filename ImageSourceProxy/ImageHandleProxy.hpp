@@ -4,7 +4,7 @@
 #include "Resource.h"
 #include "ImageSourceProxy.h"
 #include "../ImageSource/SharedMem.hpp"
-#include "MarshalImage.hpp"
+#include "../ImageSource/MarshalImage.hpp"
 
 
 /** Client-side proxy class for the ImageHandle class. */

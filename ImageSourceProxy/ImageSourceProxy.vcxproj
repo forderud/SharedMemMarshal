@@ -96,7 +96,6 @@
     <ClInclude Include="..\ImageSource\SharedMem.hpp" />
     <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="ImageHandleProxy.hpp" />
-    <ClInclude Include="MarshalImage.hpp" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
