@@ -12,6 +12,8 @@ static void CheckErrorAndThrow(const char* error_msg) {
     throw std::runtime_error(error_msg); // default message
 }
 
+static const wchar_t SEGMENT_NAME[] = L"SharedMemMarshal.Segment";
+
 std::mutex                          SharedMem::s_mutex;
 std::unique_ptr<SharedMem::Segment> SharedMem::s_segment;
 std::vector<SharedMem::Allocation>  SharedMem::s_allocations;
@@ -22,14 +24,12 @@ SharedMem::Inspector::~Inspector() {
 };
 
 SharedMem::Segment::Segment(MODE mode, size_t segm_size) : m_size(segm_size) {
-    std::wstring segm_name = L"SharedMemMarshal.Segment";
-
     if (mode == MODE::OWNER) {
         const DWORD maxSizeHi = (m_size >> 32) & 0xFFFFFFFF;
         const DWORD maxSizeLo = m_size & 0xFFFFFFFF;
 
         // create shared mem segment
-        m_handle = CreateFileMappingW(INVALID_HANDLE_VALUE, nullptr/*security*/, PAGE_READWRITE, maxSizeHi, maxSizeLo, segm_name.c_str());
+        m_handle = CreateFileMappingW(INVALID_HANDLE_VALUE, nullptr/*security*/, PAGE_READWRITE, maxSizeHi, maxSizeLo, SEGMENT_NAME);
         if (!m_handle)
             CheckErrorAndThrow("CreateFileMapping failed");
 
@@ -42,7 +42,7 @@ SharedMem::Segment::Segment(MODE mode, size_t segm_size) : m_size(segm_size) {
     else {
         // open existing shared mem segment
         bool writable = false;
-        m_handle = OpenFileMappingW(writable ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, FALSE, segm_name.c_str());
+        m_handle = OpenFileMappingW(writable ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, FALSE, SEGMENT_NAME);
         if (!m_handle)
             CheckErrorAndThrow("CreateFileMapping failed");
 
