@@ -31,9 +31,9 @@ namespace ImageClientCs
             var guid = Guid.Parse("{C8767698-8297-4BE1-904E-FC25034851D2}"); // HandleMgr CLSID
             var mgr = (IHandleMgr)Activator.CreateInstance(Type.GetTypeFromCLSID(guid));
 
-            for (int i = 0; i < 10; i++)
+            for (int it = 0; it < 10; it++)
             {
-                Console.WriteLine($"Iteration {i}...");
+                Console.WriteLine($"Iteration {it}...");
                 AccessImageData(mgr);
                 Console.WriteLine();
             }
