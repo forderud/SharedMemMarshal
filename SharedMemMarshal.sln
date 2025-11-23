@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		UNREGISTER_ALL.bat = UNREGISTER_ALL.bat
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageClientCs", "ImageClientCs\ImageClientCs.csproj", "{4B9F3A4E-9D65-4A9C-8B6A-0D84659C97B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -46,6 +48,10 @@ Global
 		{EDA2C7A6-9AD3-4699-9257-36986C872862}.Debug|x64.Build.0 = Debug|x64
 		{EDA2C7A6-9AD3-4699-9257-36986C872862}.Release|x64.ActiveCfg = Release|x64
 		{EDA2C7A6-9AD3-4699-9257-36986C872862}.Release|x64.Build.0 = Release|x64
+		{4B9F3A4E-9D65-4A9C-8B6A-0D84659C97B6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4B9F3A4E-9D65-4A9C-8B6A-0D84659C97B6}.Debug|x64.Build.0 = Debug|Any CPU
+		{4B9F3A4E-9D65-4A9C-8B6A-0D84659C97B6}.Release|x64.ActiveCfg = Release|Any CPU
+		{4B9F3A4E-9D65-4A9C-8B6A-0D84659C97B6}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
