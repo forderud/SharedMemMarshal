@@ -15,7 +15,7 @@ namespace ImageClientCs
             Console.WriteLine($"Frame format={frame.format}");
             Console.WriteLine($"Frame dims=({frame.dims[0]}, {frame.dims[1]})");
             Console.WriteLine($"Frame size={frame.data.Length}");
-            Console.WriteLine("Frame data=");
+            Console.Write("Frame data (first 128bytes): ");
             for (int i = 0; (i < frame.data.Length) && (i < 128); i++)
             {
                 var elm = frame.data.GetValue(i);
