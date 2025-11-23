@@ -67,14 +67,26 @@ void* SharedMem::Allocate(size_t size) {
     if (!s_segment)
         s_segment.reset(new Segment(OWNER, 128*1024*1024)); // 128MB segment size
 
-    // add new allocation after the last one
-    size_t offset = 0;
-    if (s_allocations.size() > 0) {
-        auto& last_alloc = s_allocations.back();
-        offset = last_alloc.offset + last_alloc.size;
+    // search for first available memory slot
+    size_t prev = 0; // end of prev. entry
+    for (auto it = s_allocations.cbegin(); it != s_allocations.cend(); ++it) {
+        // check for available space before "it"
+        if (prev + size <= it->offset) {
+            // register allocation in free space between existing allocations
+            Allocation new_alloc{ prev, size };
+            s_allocations.insert(it, new_alloc);
+            return s_segment->m_ptr + new_alloc.offset;
+        }
+
+        // update "prev" to point to end of current allocation
+        prev = it->offset + it->size;
     }
 
-    Allocation new_alloc{ offset, size };
+    if (prev + size > s_segment->m_size)
+        throw std::bad_alloc(); // out of memory
+
+    // add new allocation at the end
+    Allocation new_alloc{ prev, size };
     s_allocations.push_back(new_alloc);
     return s_segment->m_ptr + new_alloc.offset;
 }
