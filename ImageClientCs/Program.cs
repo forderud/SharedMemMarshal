@@ -27,10 +27,8 @@ namespace ImageClientCs
 
         static void Main(string[] args)
         {
-            // instantiate COM server
-            // IHandleMgr mgr = new ImageSource.HandleMgr();
-            var guid = Guid.Parse("{C8767698-8297-4BE1-904E-FC25034851D2}"); // HandleMgr CLSID
-            var mgr = (IHandleMgr)Activator.CreateInstance(Type.GetTypeFromCLSID(guid));
+            // instantiate COM server (in separate ImageSource process)
+            IHandleMgr mgr = new ImageSource.HandleMgr();
 
             for (int it = 0; it < 10; it++)
             {
