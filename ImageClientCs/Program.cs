@@ -1,4 +1,5 @@
 ﻿using System;
+using ImageSource;
 
 namespace ImageClientCs
 {
@@ -6,8 +7,6 @@ namespace ImageClientCs
     {
         static void Main(string[] args)
         {
-            using ImageSource;
-
             // instantiate COM server
             IHandleMgr mgr = new ImageSource.HandleMgr();
             // equivalent to Activator.CreateInstance(Type.GetTypeFromCLSID(typeof(ImageSource.HandleMgr).GUID));
