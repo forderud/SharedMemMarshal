@@ -43,18 +43,14 @@ struct SharedMem {
     }
 
 private:
-    enum MODE {
-        OWNER,
-        CLIENT,
-    };
-
     struct Allocation {
         size_t offset = 0;
         size_t size = 0;
     };
 
     struct Segment {
-        Segment(MODE mode, size_t segm_size);
+        Segment(); // open existing segment
+        Segment(size_t segm_size); // create new segment
         ~Segment();
 
         const size_t m_size = 0;       ///< shared mem size
