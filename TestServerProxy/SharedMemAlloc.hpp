@@ -1,6 +1,7 @@
 #pragma once
 #include <cassert>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <stdexcept>
 #include <vector>
@@ -24,6 +25,8 @@ template <class T> HRESULT operator>> (IStream& stream, T& data) {
 }
 
 
+/** Simple shared-memory allocator.
+    Enables "zero copy" buffer exchange across process boundaries. */
 struct SharedMem {
     /** Client-size pointer resolution. */
     static BYTE* GetPointer(size_t offset);
@@ -34,6 +37,7 @@ struct SharedMem {
     static void Free(BYTE* ptr);
 
     static size_t GetOffset(BYTE* ptr) {
+        std::lock_guard<std::mutex> lock(s_mutex);
         assert(s_segment);
         return ptr - s_segment->m_ptr;
     }
@@ -62,6 +66,7 @@ private:
         ~Inspector();
     };
 
+    static std::mutex               s_mutex; ///< protects s_segment & s_allocations
     static std::unique_ptr<Segment> s_segment;
     static std::vector<Allocation>  s_allocations;
     static Inspector                s_inspector;

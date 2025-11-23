@@ -12,6 +12,7 @@ static void CheckErrorAndThrow(const char* error_msg) {
     throw std::runtime_error(error_msg); // default message
 }
 
+std::mutex                          SharedMem::s_mutex;
 std::unique_ptr<SharedMem::Segment> SharedMem::s_segment;
 std::vector<SharedMem::Allocation>  SharedMem::s_allocations;
 
@@ -61,6 +62,8 @@ SharedMem::Segment::~Segment() {
 }
 
 BYTE* SharedMem::Allocate(size_t size) {
+    std::lock_guard<std::mutex> lock(s_mutex);
+
     if (!s_segment)
         s_segment.reset(new Segment(OWNER, 128*1024*1024)); // 128MB segment size
 
@@ -77,6 +80,8 @@ BYTE* SharedMem::Allocate(size_t size) {
 }
 
 void SharedMem::Free(BYTE* ptr) {
+    std::lock_guard<std::mutex> lock(s_mutex);
+
     size_t offset = ptr - s_segment->m_ptr;
 
     for (auto it = s_allocations.begin(); it != s_allocations.end(); it++) {
@@ -95,6 +100,8 @@ void SharedMem::Free(BYTE* ptr) {
 }
 
 BYTE* SharedMem::GetPointer(size_t offset) {
+    std::lock_guard<std::mutex> lock(s_mutex);
+
     if (!s_segment)
         s_segment.reset(new Segment(CLIENT, /*map all*/0));
 
