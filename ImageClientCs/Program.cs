@@ -15,6 +15,10 @@ namespace ImageClientCs
             IImageHandle handle = mgr.GetImageHandle();
 
             Image2d frame = handle.GetData();
+
+            Console.WriteLine($"Frame time={frame.time}");
+            Console.WriteLine($"Frame format={frame.format}");
+            Console.WriteLine($"Frame dims=({frame.dims[0]}, {frame.dims[1]})");
         }
     }
 }
