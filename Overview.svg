@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" xmlns:bx="https://boxy-svg.com">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 158" xmlns:bx="https://boxy-svg.com">
   <defs>
     <bx:export>
       <bx:file format="svg"/>
     </bx:export>
   </defs>
-  <rect x="5.546" y="8.106" width="101.779" height="187.288" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
-  <rect x="192.832" y="8.958" width="102.389" height="186.434" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 17px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 42.662117, -31.569963)"><tspan x="201.364" y="60.58">ImageSource</tspan><tspan x="201.364" dy="1em">​</tspan><tspan>process</tspan></text>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 17px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, -22.610922, -31.569965)"><tspan x="80.154" y="62.073">ImageClient</tspan><tspan x="80.154" dy="1em">​</tspan><tspan>process</tspan></text>
-  <rect x="10.652" y="129.826" width="93.43" height="61.86" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
-  <rect x="14.505" y="163.953" width="275.17" height="22.611" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; white-space: pre;" x="6.826" y="38.529"><tspan x="146.707" y="179.1" style="font-size: 12px; word-spacing: 0px;">Shared-mem segment </tspan><tspan style="font-size: 12px; word-spacing: 0px;">with pixel data</tspan></text>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, -77.232086, 38.102386)"><tspan x="135.239" y="106.655">ImageSource</tspan><tspan x="135.23899841308594" dy="1em">​</tspan><tspan>Proxy DLL</tspan></text>
-  <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" d="M 164.676 67.897 L 192.833 68.323"/>
-  <ellipse style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" cx="162.329" cy="68.538" rx="7.466" ry="8.746"/>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11px; white-space: pre;" x="119.027" y="69.966" transform="matrix(1, 0, 0, 1, 25.597267, -29.372013)">IImage<tspan x="119.0270004272461" dy="1em">​</tspan>Handle</text>
-  <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 1;" d="M 109.001 68.538 L 139.291 68.964"/>
-  <path style="stroke: rgb(0, 0, 0); fill: none; transform-box: fill-box; transform-origin: 50% 50%;" d="M 139.932 79.243 C 148.584 79.243 152.128 76.581 152.226 67.93 C 152.309 60.653 144.329 58.064 139.505 59.192" transform="matrix(-1, 0, 0, -1, 0.000027, 0.000008)"/>
+  <rect x="5.546" y="3.413" width="101.779" height="151.879" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <rect x="192.832" y="4.265" width="102.389" height="148.891" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 43.088737, -38.395901)"><tspan x="201.364" y="60.58">ImageSource</tspan><tspan x="201.364" dy="1em">​</tspan><tspan>process</tspan></text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, -21.757679, -37.542664)"><tspan x="80.154" y="62.073">ImageClient</tspan><tspan x="80.154" dy="1em">​</tspan><tspan>process</tspan></text>
+  <rect x="10.652" y="95.133" width="93.43" height="56.74" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <rect x="14.505" y="129.26" width="275.17" height="19.625" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11px; text-anchor: middle; white-space: pre;" x="150.547" y="143.127">Shared-mem segment with pixel data</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, -77.232086, 3.409553)"><tspan x="135.239" y="106.655">ImageSource</tspan><tspan x="135.239" dy="1em">​</tspan><tspan>Proxy DLL</tspan></text>
+  <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" d="M 164.676 47.204 L 192.833 47.63"/>
+  <ellipse style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" cx="162.329" cy="47.845" rx="7.466" ry="8.746"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 10px; white-space: pre;" transform="matrix(1, 0, 0, 1, 26.877131, -47.078499)"><tspan x="119.027" y="69.966">IImage</tspan><tspan x="119.027" dy="1em">​</tspan><tspan>Handle</tspan></text>
+  <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 1;" d="M 109.001 47.845 L 139.291 48.271"/>
+  <path style="stroke: rgb(0, 0, 0); fill: none; transform-box: fill-box; transform-origin: 50% 50%;" d="M 139.932 58.55 C 148.584 58.55 152.128 55.888 152.226 47.237 C 152.309 39.96 144.329 37.371 139.505 38.499" transform="matrix(-1, 0, 0, -1, 0.000027, -0.000006)"/>
   <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" d="M 291.382 283.276 C 291.382 283.276 291.382 283.276 291.382 283.276"/>
-  <rect x="115.188" y="95.656" width="70.393" height="61.86" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 9px; white-space: pre;" transform="matrix(1, 0, 0, 1, -76.791801, -2.894199)"><tspan x="194.539" y="110.068">struct Image2d {</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>  double time;</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>  uint      format;</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>  ushort  dims[2];</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>  BYTE* data;</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>}</tspan><tspan x="194.53900146484375" dy="1em">​</tspan></text>
+  <rect x="114.335" y="63.004" width="70.393" height="61.86" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 9px; white-space: pre;" transform="matrix(1, 0, 0, 1, -77.645042, -35.546074)"><tspan x="194.539" y="110.068">struct Image2d {</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>  double time;</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>  uint      format;</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>  ushort  dims[2];</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>  BYTE* data;</tspan><tspan x="194.53900146484375" dy="1em">​</tspan><tspan>}</tspan><tspan x="194.53900146484375" dy="1em">​</tspan></text>
 </svg>
