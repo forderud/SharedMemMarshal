@@ -64,7 +64,7 @@ void* SharedMem::Allocate(size_t size) {
     std::lock_guard<std::mutex> lock(s_mutex);
 
     if (!s_segment)
-        s_segment.reset(new Segment(128*1024*1024)); // 128MB segment size
+        s_segment.reset(new Segment(128*1024*1024)); // hardcoded 128MB segment size
 
     // search for first available memory slot
     size_t prev = 0; // end of prev. entry
