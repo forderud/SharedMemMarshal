@@ -16,17 +16,17 @@ HRESULT ImageHandleProxy::GetData(/*out*/Image2d* data) {
 }
 
 /** IMarshal implementation. Called from server (stub). */
-HRESULT ImageHandleProxy::GetUnmarshalClass(const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags, CLSID* clsid) {
+HRESULT ImageHandleProxy::GetUnmarshalClass(const IID& /*iid*/, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD /*mshlFlags*/, CLSID* /*clsid*/) {
     abort(); // should never be called
 }
 
 /** Indicate the total size of the marshaled object reference. Called from server (stub). */
-HRESULT ImageHandleProxy::GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) {
+HRESULT ImageHandleProxy::GetMarshalSizeMax(const IID& /*iid*/, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD /*mshlFlags*/, /*out*/ULONG* /*size*/) {
     abort(); // should never be called
 }
 
 /** Serialize object. Called from server (stub). */
-HRESULT ImageHandleProxy::MarshalInterface(IStream* strm, const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags) {
+HRESULT ImageHandleProxy::MarshalInterface(IStream* /*strm*/, const IID& /*iid*/, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD /*mshlFlags*/) {
     abort(); // should never be called
 }
 
