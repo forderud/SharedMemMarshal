@@ -4,12 +4,13 @@ Sample code for custom COM marshaling with shared memory. This pattern can be us
 <!-- Use https://boxy-svg.com/ to edit the SVG -->
 ![Overview](Overview.svg)
 
-| Project     | Description |
-|-------------|-------------|
-| `ImageSource` | COM server EXE that exposes image-data |
-| `ImageSourceProxy` | COM proxy DLL that is automatically loaded into the client process to facilitate custom marshaling. |
+| Project          | Description |
+|------------------|-------------|
+| `ImageSource`    | COM server EXE that exposes image-data |
+|`ImageSourceProxy`| COM proxy DLL that is automatically loaded into the client process to facilitate custom marshaling. |
 | `ImageClientCpp` | C++ command-line test project for accessing image-data through shared memory. |
-| `UnitTests`   | Unit-test project. |
+| `ImageClientCs`  | C# command-line test project for accessing image-data through shared memory. |
+| `UnitTests`      | Unit-test project. |
 
 ### Getting started
 #### Instuctions
