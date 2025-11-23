@@ -61,7 +61,7 @@ SharedMem::Segment::~Segment() {
     m_handle = nullptr;
 }
 
-BYTE* SharedMem::Allocate(size_t size) {
+void* SharedMem::Allocate(size_t size) {
     std::lock_guard<std::mutex> lock(s_mutex);
 
     if (!s_segment)
@@ -79,10 +79,10 @@ BYTE* SharedMem::Allocate(size_t size) {
     return s_segment->m_ptr + new_alloc.offset;
 }
 
-void SharedMem::Free(BYTE* ptr) {
+void SharedMem::Free(void* ptr) {
     std::lock_guard<std::mutex> lock(s_mutex);
 
-    size_t offset = ptr - s_segment->m_ptr;
+    size_t offset = (BYTE*)ptr - s_segment->m_ptr;
 
     for (auto it = s_allocations.begin(); it != s_allocations.end(); it++) {
         if (offset != it->offset)
@@ -99,7 +99,7 @@ void SharedMem::Free(BYTE* ptr) {
     throw std::runtime_error("Unknonw allocation");
 }
 
-BYTE* SharedMem::GetPointer(size_t offset) {
+void* SharedMem::GetPointer(size_t offset) {
     std::lock_guard<std::mutex> lock(s_mutex);
 
     if (!s_segment)

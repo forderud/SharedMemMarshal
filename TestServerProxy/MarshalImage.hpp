@@ -16,16 +16,16 @@ struct MarshalImage : Image2d {
         if (do_allocate && new_size) {
             // allocate image pointer in shared mem.
             assert(data->pvData == nullptr);
-            data->pvData = static_cast<unsigned char*>(SharedMem::Allocate(new_size));
+            data->pvData = SharedMem::Allocate(new_size);
             data->rgsabound[0] = { new_size, 0 };
-            m_img_offset = SharedMem::GetOffset((BYTE*)data->pvData);
+            m_img_offset = SharedMem::GetOffset(data->pvData);
             m_owns_data = true;
         }
     }
 
     ~MarshalImage() {
         if (m_owns_data)
-            SharedMem::Free((BYTE*)data->pvData);
+            SharedMem::Free(data->pvData);
         data->pvData = nullptr;
         m_owns_data = false;
 

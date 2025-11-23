@@ -29,17 +29,17 @@ template <class T> HRESULT operator>> (IStream& stream, T& data) {
     Enables "zero copy" buffer exchange across process boundaries. */
 struct SharedMem {
     /** Client-size pointer resolution. */
-    static BYTE* GetPointer(size_t offset);
+    static void* GetPointer(size_t offset);
 
     /** Owner-size allocation, free & offset calculation. */
-    static BYTE* Allocate(size_t size);
+    static void* Allocate(size_t size);
 
-    static void Free(BYTE* ptr);
+    static void Free(void* ptr);
 
-    static size_t GetOffset(BYTE* ptr) {
+    static size_t GetOffset(void* ptr) {
         std::lock_guard<std::mutex> lock(s_mutex);
         assert(s_segment);
-        return ptr - s_segment->m_ptr;
+        return (BYTE*)ptr - s_segment->m_ptr;
     }
 
 private:
@@ -57,9 +57,9 @@ private:
         Segment(MODE mode, size_t segm_size);
         ~Segment();
 
-        const size_t   m_size = 0;       ///< shared mem size
-        HANDLE         m_handle = nullptr; ///< shared mem segment handle
-        unsigned char* m_ptr = nullptr; ///< pointer to start of shared mem segment
+        const size_t m_size = 0;       ///< shared mem size
+        HANDLE       m_handle = nullptr; ///< shared mem segment handle
+        BYTE*        m_ptr = nullptr; ///< pointer to start of shared mem segment
     };
 
     struct Inspector {
