@@ -3,6 +3,13 @@
 #include "TestServerProxy_i.c"
 #include "ComSupport.hpp"
 
+// exported symbols (in addition to DllMain)
+#pragma comment( linker, "/export:DllCanUnloadNow,PRIVATE" )
+#pragma comment( linker, "/export:DllGetClassObject,PRIVATE" )
+#pragma comment( linker, "/export:DllRegisterServer,PRIVATE" )
+#pragma comment( linker, "/export:DllUnregisterServer,PRIVATE" )
+#pragma comment( linker, "/export:DllInstall,PRIVATE" )
+
 
 class TestServerProxyModule : public ATL::CAtlDllModuleT<TestServerProxyModule> {
 public:

@@ -16,7 +16,6 @@
     <Midl Include="TestServerProxy.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Module.def" />
     <None Include="ImageHandleProxy.rgs" />
   </ItemGroup>
   <ItemGroup>
