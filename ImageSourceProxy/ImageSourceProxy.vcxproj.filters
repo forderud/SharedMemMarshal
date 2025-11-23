@@ -7,7 +7,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="ImageHandleProxy.hpp" />
     <ClInclude Include="..\ImageSource\SharedMem.hpp" />
   </ItemGroup>

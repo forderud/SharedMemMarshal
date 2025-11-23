@@ -1,7 +1,7 @@
 #include "Resource.h"
 #include "ImageSourceProxy.h"
 #include "ImageSourceProxy_i.c"
-#include "ComSupport.hpp"
+#include "../ImageSource/ComSupport.hpp"
 
 // exported symbols (in addition to DllMain)
 #pragma comment( linker, "/export:DllCanUnloadNow,PRIVATE" )

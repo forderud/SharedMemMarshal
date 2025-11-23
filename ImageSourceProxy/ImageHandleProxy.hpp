@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "ComSupport.hpp"
+#include "../ImageSource/ComSupport.hpp"
 #include "Resource.h"
 #include "ImageSourceProxy.h"
 #include "../ImageSource/SharedMem.hpp"

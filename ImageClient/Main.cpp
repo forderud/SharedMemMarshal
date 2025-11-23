@@ -1,7 +1,7 @@
 #include <iostream>
-#include "..\ImageSource\ImageSource.h"
-#include "..\ImageSource\ImageSource_i.c"
-#include "ComSupport.hpp"
+#include "../ImageSource/ImageSource.h"
+#include "../ImageSource/ImageSource_i.c"
+#include "../ImageSource/ComSupport.hpp"
 
 
 void AccessImageData(IHandleMgr& mgr) {

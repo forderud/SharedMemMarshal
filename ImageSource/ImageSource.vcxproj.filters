@@ -13,6 +13,7 @@
     <ClInclude Include="ImageHandle.hpp" />
     <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="MarshalImage.hpp" />
+    <ClInclude Include="ComSupport.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ImageSource.idl" />

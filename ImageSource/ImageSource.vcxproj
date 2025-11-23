@@ -104,6 +104,7 @@
     <ClCompile Include="SharedMem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="HandleMgr.hpp" />
     <ClInclude Include="ImageHandle.hpp" />
     <ClInclude Include="MarshalImage.hpp" />
