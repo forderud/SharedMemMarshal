@@ -2,7 +2,7 @@
 #include <memory>
 #include "ComSupport.hpp"
 #include "TestServer.h"
-#include "SharedMemAlloc.hpp"
+#include "SharedMem.hpp"
 #include "MarshalImage.hpp"
 
 

@@ -3,12 +3,12 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ImageHandleProxy.cpp" />
-    <ClCompile Include="SharedMemAlloc.cpp" />
+    <ClCompile Include="SharedMem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ComSupport.hpp" />
-    <ClInclude Include="SharedMemAlloc.hpp" />
+    <ClInclude Include="SharedMem.hpp" />
     <ClInclude Include="ImageHandleProxy.hpp" />
     <ClInclude Include="MarshalImage.hpp" />
   </ItemGroup>

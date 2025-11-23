@@ -100,13 +100,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\TestServerProxy\SharedMemAlloc.cpp" />
+    <ClCompile Include="..\TestServerProxy\SharedMem.cpp" />
     <ClCompile Include="HandleMgr.cpp" />
     <ClCompile Include="ImageHandle.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\TestServerProxy\SharedMemAlloc.hpp" />
+    <ClInclude Include="..\TestServerProxy\SharedMem.hpp" />
     <ClInclude Include="HandleMgr.hpp" />
     <ClInclude Include="ImageHandle.hpp" />
     <ClInclude Include="RefOwner.hpp" />

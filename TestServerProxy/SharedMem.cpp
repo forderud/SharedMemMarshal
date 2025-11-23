@@ -1,4 +1,4 @@
-#include "SharedMemAlloc.hpp"
+#include "SharedMem.hpp"
 
 
 static void CheckErrorAndThrow(const char* error_msg) {

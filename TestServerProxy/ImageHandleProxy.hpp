@@ -3,7 +3,7 @@
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "TestServerProxy.h"
-#include "SharedMemAlloc.hpp"
+#include "SharedMem.hpp"
 #include "MarshalImage.hpp"
 
 
