@@ -5,7 +5,7 @@ struct MarshalImage : Image2d {
         return sizeof(time) + sizeof(pix_size) + sizeof(dims) + sizeof(m_img_offset);
     }
 
-    MarshalImage(double time, unsigned char ps, USHORT dims[2], bool do_allocate) : Image2d(time, pix_size, dims, /*allocate*/false) {
+    MarshalImage(double time, unsigned char ps, USHORT dims[2], bool do_allocate) : Image2d(time, ps, dims, /*allocate*/false) {
         CHECK(SafeArrayAllocDescriptorEx(VT_UI1, 1, &data));
         data->cbElements = 1;
         data->fFeatures |= FADF_AUTO;  // prevent data from being deleted
