@@ -38,6 +38,11 @@ namespace ImageClientCs
                 AccessImageData(mgr);
                 Console.WriteLine();
             }
+
+            // call GC to release all COM server references before exiting
+            mgr = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }
