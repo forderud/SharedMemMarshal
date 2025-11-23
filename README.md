@@ -7,7 +7,7 @@ Sample code for custom COM marshaling with shared memory. This pattern can be us
 | Project     | Description |
 |-------------|-------------|
 | `ImageSource` | COM server EXE that exposes image-data |
-| `ImageSourceProxy` | COM proxy DLL that is automatically loaded into the client process to facillitate custom marshaling. |
+| `ImageSourceProxy` | COM proxy DLL that is automatically loaded into the client process to facilitate custom marshaling. |
 | `ImageClient` | Command-line test project for accessing image-data through shared memory. |
 | `UnitTests`   | Unit-test project. |
 
