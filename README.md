@@ -1,6 +1,7 @@
 Sample code for custom COM marshaling with shared memory. This pattern can be used for **zero-copy exchange of large buffers between processes**. The implementation is _transparent_, meaning that clients doesn't notice that the COM `SAFEARRAY` buffers reside in shared memory.
 
 ### Overview
+<!-- Use https://boxy-svg.com/ to edit the SVG -->
 ![Overview](Overview.svg)
 
 | Project     | Description |
