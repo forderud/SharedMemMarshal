@@ -13,12 +13,12 @@
     <ClInclude Include="MarshalImage.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="TestServerProxy.idl" />
+    <Midl Include="ImageSourceProxy.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ImageHandleProxy.rgs" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="TestServerProxy.rc" />
+    <ResourceCompile Include="ImageSourceProxy.rc" />
   </ItemGroup>
 </Project>

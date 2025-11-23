@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}</ProjectGuid>
-    <RootNamespace>TestServerProxy</RootNamespace>
+    <RootNamespace>ImageSourceProxy</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -101,13 +101,13 @@
     <ClInclude Include="SharedMem.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="TestServerProxy.idl" />
+    <Midl Include="ImageSourceProxy.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ImageHandleProxy.rgs" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="TestServerProxy.rc" />
+    <ResourceCompile Include="ImageSourceProxy.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

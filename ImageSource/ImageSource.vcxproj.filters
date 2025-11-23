@@ -4,14 +4,14 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="HandleMgr.cpp" />
     <ClCompile Include="ImageHandle.cpp" />
-    <ClCompile Include="..\TestServerProxy\SharedMem.cpp" />
+    <ClCompile Include="..\ImageSourceProxy\SharedMem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="HandleMgr.hpp" />
     <ClInclude Include="RefOwner.hpp" />
     <ClInclude Include="ImageHandle.hpp" />
-    <ClInclude Include="..\TestServerProxy\SharedMem.hpp" />
+    <ClInclude Include="..\ImageSourceProxy\SharedMem.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ImageSource.idl" />

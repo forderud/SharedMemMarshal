@@ -6,7 +6,7 @@ echo NOTICE: Script MUST be run as Administrator.
 setlocal enableextensions
 cd /d "%~dp0"
 
-:: TestServerProxy typelib
+:: ImageSourceProxy typelib
 reg delete "HKCR\TypeLib\{8E42F33F-E5E3-46B4-8B39-0A03DCF338CC}"   /f 2> NUL
 
 :: remove interfaces

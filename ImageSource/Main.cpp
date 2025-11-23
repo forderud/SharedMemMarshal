@@ -1,7 +1,7 @@
 #include <atlbase.h>
 #include "ImageSource.h"
 #include "ImageSource_i.c"
-#include "TestServerProxy_i.c"
+#include "ImageSourceProxy_i.c"
 #include "ComSupport.hpp"
 
 

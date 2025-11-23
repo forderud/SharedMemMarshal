@@ -1,6 +1,6 @@
 #include "Resource.h"
-#include "TestServerProxy.h"
-#include "TestServerProxy_i.c"
+#include "ImageSourceProxy.h"
+#include "ImageSourceProxy_i.c"
 #include "ComSupport.hpp"
 
 // exported symbols (in addition to DllMain)
@@ -11,12 +11,12 @@
 #pragma comment( linker, "/export:DllInstall,PRIVATE" )
 
 
-class TestServerProxyModule : public ATL::CAtlDllModuleT<TestServerProxyModule> {
+class ImageSourceProxyModule : public ATL::CAtlDllModuleT<ImageSourceProxyModule> {
 public:
-    DECLARE_LIBID(LIBID_TestServerProxy)
+    DECLARE_LIBID(LIBID_ImageSourceProxy)
 };
 
-TestServerProxyModule _AtlModule;
+ImageSourceProxyModule _AtlModule;
 
 
 // DLL Entry Point

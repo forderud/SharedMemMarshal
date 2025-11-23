@@ -2,7 +2,7 @@
 #include <memory>
 #include "ComSupport.hpp"
 #include "Resource.h"
-#include "TestServerProxy.h"
+#include "ImageSourceProxy.h"
 #include "SharedMem.hpp"
 #include "MarshalImage.hpp"
 
