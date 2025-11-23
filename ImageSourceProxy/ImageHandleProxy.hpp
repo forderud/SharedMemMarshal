@@ -3,7 +3,7 @@
 #include "ComSupport.hpp"
 #include "Resource.h"
 #include "ImageSourceProxy.h"
-#include "SharedMem.hpp"
+#include "../ImageSource/SharedMem.hpp"
 #include "MarshalImage.hpp"
 
 

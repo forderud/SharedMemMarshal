@@ -13,7 +13,6 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{FC057D3F-1FE0-44F4-B7CD-EDFE92BADF46}</ProjectGuid>
-
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -89,16 +88,16 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ImageSource\SharedMem.cpp" />
     <ClCompile Include="ImageHandleProxy.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="SharedMem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ImageSource\SharedMem.hpp" />
     <ClInclude Include="ComSupport.hpp" />
     <ClInclude Include="ImageHandleProxy.hpp" />
     <ClInclude Include="MarshalImage.hpp" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SharedMem.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ImageSourceProxy.idl" />
