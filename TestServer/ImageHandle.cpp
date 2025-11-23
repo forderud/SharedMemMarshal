@@ -31,7 +31,7 @@ HRESULT ImageHandle::GetData(/*out*/Image2d* data) {
 
 /** IMarshal implementation. Called from server (stub). */
 HRESULT ImageHandle::GetUnmarshalClass(const IID& iid, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags, CLSID* clsid) {
-    assert(iid == IID_IImageHandle);
+    assert(iid == IID_IImageHandle); iid;
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     *clsid = CLSID_ImageHandleProxy; // use ImageHandleProxy class for unmarshaling
@@ -40,7 +40,7 @@ HRESULT ImageHandle::GetUnmarshalClass(const IID& iid, void* /*pv*/, DWORD /*des
 
 /** Indicate the total size of the marshaled object reference. Called from server (stub). */
 HRESULT ImageHandle::GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags, /*out*/ULONG* size) {
-    assert(iid == IID_IImageHandle);
+    assert(iid == IID_IImageHandle); iid;
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
     constexpr ULONG OBJREF_STANDARD_SIZE = 68; // sizeof(OBJREF) with flags=OBJREF_STANDARD and empty resolver address
@@ -54,7 +54,7 @@ HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, D
     //if (destContext != MSHCTX_LOCAL)
     //    return E_FAIL;
 
-    assert(iid == IID_IImageHandle);
+    assert(iid == IID_IImageHandle); iid;
     assert(pv == this); pv;             // class marshals itself
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 

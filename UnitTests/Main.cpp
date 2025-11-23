@@ -48,7 +48,7 @@ void VerifyThat_FADF_AUTO_NeitherDeletesDataNorDescriptor() {
     // SafeArrayDestroy does not delete the SAFEARRAY descriptor when FADF_AUTO is set.
     // It therfore needs to be manually deleted with SafeArrayDestroyDescriptor.
     HRESULT hr = SafeArrayDestroyDescriptor(sa_ptr);
-    assert(SUCCEEDED(hr));
+    assert(SUCCEEDED(hr)); hr;
 }
 
 
