@@ -1,16 +1,16 @@
 #include <atlbase.h>
-#include "TestServer.h"
-#include "TestServer_i.c"
+#include "ImageSource.h"
+#include "ImageSource_i.c"
 #include "TestServerProxy_i.c"
 #include "ComSupport.hpp"
 
 
-class TestServerModule : public ATL::CAtlExeModuleT<TestServerModule> {
+class ImageSourceModule : public ATL::CAtlExeModuleT<ImageSourceModule> {
 public:
-    DECLARE_LIBID(LIBID_TestServer)
+    DECLARE_LIBID(LIBID_ImageSource)
 };
 
-TestServerModule _AtlModule;
+ImageSourceModule _AtlModule;
 
 
 // EXE Entry Point

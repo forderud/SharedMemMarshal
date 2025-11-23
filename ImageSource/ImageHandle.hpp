@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include "ComSupport.hpp"
-#include "TestServer.h"
+#include "ImageSource.h"
 #include "SharedMem.hpp"
 #include "MarshalImage.hpp"
 

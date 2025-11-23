@@ -111,10 +111,10 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="TestServer.idl" />
+    <Midl Include="ImageSource.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="TestServer.rc" />
+    <ResourceCompile Include="ImageSource.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HandleMgr.rgs" />

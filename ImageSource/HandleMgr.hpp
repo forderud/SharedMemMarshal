@@ -2,7 +2,7 @@
 #include <memory>
 #include "ComSupport.hpp"
 #include "Resource.h"
-#include "TestServer.h"
+#include "ImageSource.h"
 
 
 class ATL_NO_VTABLE HandleMgr :
