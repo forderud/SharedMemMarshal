@@ -18,6 +18,7 @@ template <class T> HRESULT operator>> (IStream& stream, T& data) {
 }
 
 
+/** Image2d serialization wrapper. */
 struct MarshalImage : Image2d {
     static constexpr unsigned int MarshalSize() {
         return sizeof(time) + sizeof(format) + sizeof(dims) + sizeof(m_img_offset);
@@ -51,7 +52,7 @@ struct MarshalImage : Image2d {
         data = nullptr;
     }
 
-    HRESULT Serialize(IStream* strm) {
+    HRESULT Serialize(IStream* strm) const {
         // serialize metadata
         RETURN_IF_FAILED(*strm << time);
         RETURN_IF_FAILED(*strm << format);
