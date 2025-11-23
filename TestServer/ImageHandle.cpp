@@ -30,7 +30,7 @@ HRESULT ImageHandle::GetData(/*out*/Image2d* data) {
 }
 
 /** IMarshal implementation. Called from server (stub). */
-HRESULT ImageHandle::GetUnmarshalClass(const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags, CLSID* clsid) {
+HRESULT ImageHandle::GetUnmarshalClass(const IID& iid, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags, CLSID* clsid) {
     assert(iid == IID_IImageHandle);
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
@@ -49,7 +49,7 @@ HRESULT ImageHandle::GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*des
 }
 
 /** Serialize object. Called from server (stub). */
-HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DWORD destContext, void* reserved, DWORD mshlFlags) {
+HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags) {
     // verify that comm is between processes on same computer with shared-mem support 
     //if (destContext != MSHCTX_LOCAL)
     //    return E_FAIL;
@@ -70,7 +70,7 @@ HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, D
 }
 
 /** Deserialize object. Called from client (proxy). */
-HRESULT ImageHandle::UnmarshalInterface(IStream* strm, const IID& iid, void** ppv) {
+HRESULT ImageHandle::UnmarshalInterface(IStream* /*strm*/, const IID& /*iid*/, void** /*ppv*/) {
     abort(); // should never be called
 }
 
