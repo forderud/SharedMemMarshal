@@ -5,13 +5,8 @@ namespace ImageClientCs
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void AccessImageData(IHandleMgr mgr)
         {
-            // instantiate COM server
-            // IHandleMgr mgr = new ImageSource.HandleMgr();
-            var guid = Guid.Parse("{C8767698-8297-4BE1-904E-FC25034851D2}"); // HandleMgr CLSID
-            var mgr = (IHandleMgr)Activator.CreateInstance(Type.GetTypeFromCLSID(guid));
-
             IImageHandle handle = mgr.GetImageHandle();
 
             Image2d frame = handle.GetData();
@@ -24,6 +19,23 @@ namespace ImageClientCs
             {
                 var elm = frame.data.GetValue(i);
                 Console.Write(elm + ", ");
+            }
+            Console.WriteLine();
+        }
+
+
+        static void Main(string[] args)
+        {
+            // instantiate COM server
+            // IHandleMgr mgr = new ImageSource.HandleMgr();
+            var guid = Guid.Parse("{C8767698-8297-4BE1-904E-FC25034851D2}"); // HandleMgr CLSID
+            var mgr = (IHandleMgr)Activator.CreateInstance(Type.GetTypeFromCLSID(guid));
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine($"Iteration {i}...");
+                AccessImageData(mgr);
+                Console.WriteLine();
             }
         }
     }
