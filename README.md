@@ -11,6 +11,16 @@ Sample code for custom COM marshaling with shared memory. This pattern can be us
 | `ImageClient` | Command-line test project for accessing image-data through shared memory. |
 | `UnitTests`   | Unit-test project. |
 
+### Getting started
+#### Instuctions
+* Start Visual Studio with admin privileges.
+* Open `SharedMemMarshal.sln` solution.
+* Build all projects.
+* Start `ImageClient` project.
+* Observe that `ImageClient.exe` is able to access image-data.
+
+#### Cleanup
+Run `UNREGISTER_ALL.bat` with admin privileges to clean up all registry entries.
 
 ### DCOM garbage collector limitation
 Associated StackOverflow question: https://stackoverflow.com/questions/69010789/how-to-leverage-dcom-garbage-collector-with-custom-marshaling-imarshal (answered)
