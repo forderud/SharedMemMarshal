@@ -2,10 +2,10 @@
 
 struct MarshalImage : Image2d {
     static constexpr unsigned int MarshalSize() {
-        return sizeof(time) + sizeof(pix_size) + sizeof(dims) + sizeof(m_img_offset);
+        return sizeof(time) + sizeof(format) + sizeof(dims) + sizeof(m_img_offset);
     }
 
-    MarshalImage(double time, unsigned char ps, USHORT dims[2], bool do_allocate) : Image2d(time, ps, dims, /*allocate*/false) {
+    MarshalImage(double time, unsigned int format, USHORT dims[2], bool do_allocate) : Image2d(time, format, dims, /*allocate*/false) {
         CHECK(SafeArrayAllocDescriptorEx(VT_UI1, 1, &data));
         data->cbElements = 1;
         data->fFeatures |= FADF_AUTO;  // prevent data from being deleted
@@ -36,7 +36,7 @@ struct MarshalImage : Image2d {
     HRESULT Serialize(IStream* strm) {
         // serialize metadata
         RETURN_IF_FAILED(*strm << time);
-        RETURN_IF_FAILED(*strm << pix_size);
+        RETURN_IF_FAILED(*strm << format);
         RETURN_IF_FAILED(*strm << dims);
         RETURN_IF_FAILED(*strm << m_img_offset);
         // Don't serialize the image-data, since it might be large.
@@ -48,14 +48,14 @@ struct MarshalImage : Image2d {
         // deserialize metadata
         double time = 0;
         CHECK(*strm >> time);
-        unsigned char pix_size = 0;
-        CHECK(*strm >> pix_size);
+        unsigned int format = 0;
+        CHECK(*strm >> format);
         unsigned short dims[2] = {};
         CHECK(*strm >> dims);
         size_t img_offset = 0;
         CHECK(*strm >> img_offset);
 
-        auto frame = std::make_unique<MarshalImage>(time, pix_size, dims, false);
+        auto frame = std::make_unique<MarshalImage>(time, format, dims, false);
 
         // use already allocated image data from shared memory
         frame->m_img_offset = img_offset;

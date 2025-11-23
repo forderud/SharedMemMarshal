@@ -12,6 +12,7 @@ void AccessImageData(IHandleMgr& mgr) {
     CHECK(img->GetData(&frame));
 
     printf("Frame time=%f\n", frame.time);
+    printf("Frame format=%u\n", frame.format);
     printf("Frame dims={%u, %u}\n", frame.dims[0], frame.dims[1]);
     printf("Frame size=%u\n", frame.size());
     {

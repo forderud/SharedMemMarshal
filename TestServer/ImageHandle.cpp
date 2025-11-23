@@ -11,9 +11,9 @@ ImageHandle::~ImageHandle() {
 void ImageHandle::Initialize() {
     // allocate image in shared-mem segment
     double time = 3.14;
-    unsigned char pix_size = 1;
+    unsigned int format = 42;
     USHORT dims[] = { 64, 32 };
-    m_image.reset(new MarshalImage(time, pix_size, dims, /*allocate*/true));
+    m_image.reset(new MarshalImage(time, format, dims, /*allocate*/true));
 
     //initialize data
     auto* ptr = (BYTE*)m_image->data->pvData;
