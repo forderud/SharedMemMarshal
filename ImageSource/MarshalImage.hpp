@@ -34,7 +34,6 @@ struct MarshalImage : Image2d {
         auto new_size = size();
         if (do_allocate && new_size) {
             // allocate image pointer in shared mem.
-            assert(data->pvData == nullptr);
             data->pvData = SharedMem::Allocate(new_size);
             data->rgsabound[0] = { new_size, 0 };
             m_img_offset = SharedMem::GetOffset(data->pvData);
