@@ -27,7 +27,7 @@ struct MarshalImage : Image2d {
     MarshalImage(double time, unsigned int format, USHORT dims[2], bool do_allocate) : Image2d(time, format, dims, /*allocate*/false) {
         CHECK(SafeArrayAllocDescriptorEx(VT_UI1, 1, &data));
         data->cbElements = 1;
-        data->fFeatures |= FADF_AUTO;  // prevent data from being deleted
+        data->fFeatures |= FADF_AUTO;  // prevent data and descriptor from being deleted
         data->pvData = nullptr;        // assign later
         data->rgsabound[0] = { 0, 0 }; // assign later
 
