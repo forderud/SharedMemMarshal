@@ -25,6 +25,8 @@ namespace ImageClientCs
                 }
                 Console.WriteLine();
             }
+
+            handle = null; // trigger quicker GC cleanup
         }
 
 
