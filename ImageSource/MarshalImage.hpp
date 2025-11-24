@@ -24,7 +24,7 @@ struct MarshalImage : Image2d {
         return sizeof(time) + sizeof(format) + sizeof(dims) + sizeof(m_img_offset);
     }
 
-    /** Create new Image2d with new buffer and FADF_AUTO set. */
+    /** Create Image2d with new buffer. */
     MarshalImage(double time, unsigned int format, USHORT dims[2]) : Image2d(time, format, dims, /*allocate*/false) {
         CHECK(SafeArrayAllocDescriptorEx(VT_UI1, 1, &data));
         data->cbElements = 1;
@@ -42,7 +42,7 @@ struct MarshalImage : Image2d {
         }
     }
 
-    /** Create new Image2d based on shared-mem buffer and FADF_AUTO set. */
+    /** Create shallow Image2d based on existing buffer. */
     MarshalImage(double time, unsigned int format, USHORT dims[2], size_t img_offset) : Image2d(time, format, dims, /*allocate*/false) {
         CHECK(SafeArrayAllocDescriptorEx(VT_UI1, 1, &data));
         data->cbElements = 1;
