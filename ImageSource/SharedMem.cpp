@@ -17,6 +17,8 @@ static const wchar_t SEGMENT_NAME[] = L"SharedMemMarshal.Segment";
 std::mutex                          SharedMem::s_mutex;
 std::unique_ptr<SharedMem::Segment> SharedMem::s_segment;
 std::vector<SharedMem::Allocation>  SharedMem::s_allocations;
+SharedMem::Inspector                SharedMem::s_inspector;
+
 
 SharedMem::Inspector::~Inspector() {
     // memory leak check
