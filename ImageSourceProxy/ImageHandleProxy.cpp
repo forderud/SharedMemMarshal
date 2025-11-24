@@ -11,7 +11,17 @@ HRESULT ImageHandleProxy::GetData(/*out*/Image2d* data) {
     if (!data)
         return E_INVALIDARG;
 
-    *data = Image2d(*m_image, false); // shallow copy
+    // make shallow copy that accesses the same data
+    SAFEARRAY* sa = nullptr;
+    {
+        if (FAILED(SafeArrayAllocDescriptorEx(VT_UI1, 1, &sa))) // sets data[-4] = VT_UI1; data->cDims = 1; data->fFeatures = FADF_HAVEVARTYPE
+            abort();
+        sa->fFeatures = m_image->data->fFeatures | FADF_AUTO; // prevent data from being deleted
+        sa->cbElements = m_image->data->cbElements;
+        sa->pvData = m_image->data->pvData;
+        sa->rgsabound[0] = m_image->data->rgsabound[0];
+    }
+    *data = Image2d(*m_image, std::move(sa)); // shallow copy
     return S_OK;
 }
 
