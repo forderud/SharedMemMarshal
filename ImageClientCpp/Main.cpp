@@ -38,8 +38,8 @@ int main() {
         CHECK(mgr.CoCreateInstance(CLSID_HandleMgr));
         std::cout << "ImageSource.HandleMgr created." << std::endl;
 
-        // access image-data 10k times with console logging every 1k iteration
-        for (unsigned int it = 0; it < 10000; it++) {
+        // access image-data 20k times with console logging every 1k iteration
+        for (unsigned int it = 0; it < 20000; it++) {
             bool verbose = (it % 1000) == 0;
             if (verbose)
                 printf("Iteration %u...\n", it);
