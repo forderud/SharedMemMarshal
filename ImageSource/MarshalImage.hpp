@@ -24,7 +24,8 @@ struct MarshalImage : Image2d {
         return sizeof(time) + sizeof(format) + sizeof(dims) + sizeof(m_img_offset);
     }
 
-    MarshalImage(double time, unsigned int format, USHORT dims[2], bool do_allocate) : Image2d(time, format, dims, /*allocate*/false) {
+    /** Create new Image2d with new buffer and FADF_AUTO set. */
+    MarshalImage(double time, unsigned int format, USHORT dims[2]) : Image2d(time, format, dims, /*allocate*/false) {
         CHECK(SafeArrayAllocDescriptorEx(VT_UI1, 1, &data));
         data->cbElements = 1;
         data->fFeatures |= FADF_AUTO;  // prevent data and descriptor from being automatically deleted
@@ -32,13 +33,29 @@ struct MarshalImage : Image2d {
         data->rgsabound[0] = { 0, 0 }; // assign later
 
         auto new_size = size();
-        if (do_allocate && new_size) {
+        if (new_size) {
             // allocate image pointer in shared mem.
             data->pvData = SharedMem::Allocate(new_size);
             data->rgsabound[0] = { new_size, 0 };
             m_img_offset = SharedMem::GetOffset(data->pvData);
             m_owns_data = true;
         }
+    }
+
+    /** Create new Image2d based on shared-mem buffer and FADF_AUTO set. */
+    MarshalImage(double time, unsigned int format, USHORT dims[2], size_t img_offset) : Image2d(time, format, dims, /*allocate*/false) {
+        CHECK(SafeArrayAllocDescriptorEx(VT_UI1, 1, &data));
+        data->cbElements = 1;
+        data->fFeatures |= FADF_AUTO;  // prevent data and descriptor from being automatically deleted
+        data->pvData = nullptr;        // assign later
+        data->rgsabound[0] = { 0, 0 }; // assign later
+
+        auto new_size = size();
+        // use already allocated image data from shared memory
+        data->pvData = SharedMem::GetPointer(img_offset);
+        data->rgsabound[0] = { new_size, 0 };
+        m_img_offset = img_offset;
+        m_owns_data = false;
     }
 
     ~MarshalImage() {
@@ -73,14 +90,8 @@ struct MarshalImage : Image2d {
         size_t img_offset = 0;
         CHECK(*strm >> img_offset);
 
-        auto frame = std::make_unique<MarshalImage>(time, format, dims, false);
-
         // use already allocated image data from shared memory
-        frame->m_img_offset = img_offset;
-        frame->data->pvData = SharedMem::GetPointer(img_offset);
-        frame->data->rgsabound[0] = { frame->size(), 0 };
-
-        return frame;
+        return std::make_unique<MarshalImage>(time, format, dims, img_offset);
     }
 
     size_t m_img_offset = 0; // shared-mem segment offset

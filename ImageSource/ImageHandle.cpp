@@ -13,7 +13,7 @@ void ImageHandle::Initialize() {
     double time = 3.14;
     unsigned int format = 42;
     USHORT dims[] = { 64, 32 };
-    m_image.reset(new MarshalImage(time, format, dims, /*allocate*/true));
+    m_image.reset(new MarshalImage(time, format, dims));
 
     //initialize data
     auto* ptr = (BYTE*)m_image->data->pvData;
