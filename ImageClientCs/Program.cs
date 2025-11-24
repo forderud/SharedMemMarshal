@@ -41,7 +41,12 @@ namespace ImageClientCs
                     Console.WriteLine($"Iteration {it}...");
                 AccessImageData(mgr, verbose);
                 if (verbose)
+                {
+                    // call GC to ease mem. leak investigation
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                     Console.WriteLine();
+                }
             }
 
             // call GC to release all COM server references before exiting
