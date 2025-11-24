@@ -4,25 +4,27 @@
 #include "../ImageSource/ComSupport.hpp"
 
 
-void AccessImageData(IHandleMgr& mgr) {
+void AccessImageData(IHandleMgr& mgr, bool verbose) {
     CComPtr<IImageHandle> img; // controls image-data lifetime
     CHECK(mgr.GetImageHandle(&img));
 
     Image2d frame;
     CHECK(img->GetData(&frame));
 
-    printf("Frame time=%f\n", frame.time);
-    printf("Frame format=%u\n", frame.format);
-    printf("Frame dims={%u, %u}\n", frame.dims[0], frame.dims[1]);
-    printf("Frame size=%u\n", frame.size());
-    {
-        // access image-data in shared-mem segment.
-        // The segment is mapped read-only. Write attempts will therefore trigger "Access violation writing location".
-        auto* data = (BYTE*)frame.data->pvData;
-        printf("Frame data (first 128bytes): ");
-        for (size_t i = 0; (i < frame.size()) && (i < 128); i++)
-            printf("%u, ", data[i]);
-        printf("\n");
+    if (verbose) {
+        printf("Frame time=%f\n", frame.time);
+        printf("Frame format=%u\n", frame.format);
+        printf("Frame dims={%u, %u}\n", frame.dims[0], frame.dims[1]);
+        printf("Frame size=%u\n", frame.size());
+        {
+            // access image-data in shared-mem segment.
+            // The segment is mapped read-only. Write attempts will therefore trigger "Access violation writing location".
+            auto* data = (BYTE*)frame.data->pvData;
+            printf("Frame data (first 128bytes): ");
+            for (size_t i = 0; (i < frame.size()) && (i < 128); i++)
+                printf("%u, ", data[i]);
+            printf("\n");
+        }
     }
 }
 
@@ -36,10 +38,14 @@ int main() {
         CHECK(mgr.CoCreateInstance(CLSID_HandleMgr));
         std::cout << "ImageSource.HandleMgr created." << std::endl;
 
-        for (unsigned int it = 0; it < 10; it++) {
-            printf("Iteration %u...\n", it);
-            AccessImageData(*mgr);
-            printf("\n");
+        // access image-data 100 times with console logging every 10th iteration
+        for (unsigned int it = 0; it < 100; it++) {
+            bool verbose = (it % 10) == 0;
+            if (verbose)
+                printf("Iteration %u...\n", it);
+            AccessImageData(*mgr, verbose);
+            if (verbose)
+                printf("\n");
         }
     }
 
