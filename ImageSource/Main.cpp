@@ -13,7 +13,7 @@ public:
 ImageSourceModule _AtlModule;
 
 
-// EXE Entry Point
+/** EXE entry point if building for "Windows" subsystem. */
 int wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, wchar_t* /*lpCmdLine*/, int nShowCmd/*=SW_SHOWDEFAULT*/) {
     // initialize COM early to enable IGlobalOptions config
     _AtlModule.InitializeCom();
@@ -26,4 +26,10 @@ int wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, wchar_t* /*lp
     }
 
     return _AtlModule.WinMain(nShowCmd);
+}
+
+/** EXE entry point if building for "Console" subsystem. */
+int wmain(int /*argc*/, wchar_t* /*argv*/[]) {
+    // forward the call to "Windows" subsystem entry point
+    return wWinMain(nullptr, nullptr, GetCommandLineW(), SW_SHOWDEFAULT);
 }
