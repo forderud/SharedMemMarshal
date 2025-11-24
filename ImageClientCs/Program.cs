@@ -33,10 +33,10 @@ namespace ImageClientCs
             // instantiate COM server (in separate ImageSource process)
             IHandleMgr mgr = new ImageSource.HandleMgr();
 
-            // access image-data 100 times with console logging every 10th iteration
-            for (int it = 0; it < 100; it++)
+            // access image-data 10k times with console logging every 1k iteration
+            for (int it = 0; it < 10000; it++)
             {
-                bool verbose = (it % 10) == 0;
+                bool verbose = (it % 1000) == 0;
                 if (verbose)
                     Console.WriteLine($"Iteration {it}...");
                 AccessImageData(mgr, verbose);
