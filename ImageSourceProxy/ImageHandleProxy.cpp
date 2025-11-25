@@ -18,7 +18,7 @@ HRESULT ImageHandleProxy::GetData(/*out*/Image2d* data) {
 /** IMarshal implementation. Called from server (stub). */
 HRESULT ImageHandleProxy::GetUnmarshalClass(const IID& /*iid*/, void* /*pv*/, DWORD /*destContext*/, void* /*reserved*/, DWORD /*mshlFlags*/, CLSID* clsid) {
     // observed called by .Net
-    *clsid = CLSID_ImageHandleProxy; // unmarshal itself
+    *clsid = __uuidof(ImageHandleProxy); // unmarshal itself
     return S_OK;
 }
 

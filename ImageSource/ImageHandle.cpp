@@ -34,7 +34,7 @@ HRESULT ImageHandle::GetUnmarshalClass(const IID& iid, void* /*pv*/, DWORD /*des
     assert(iid == IID_IImageHandle); iid;
     assert(mshlFlags == MSHLFLAGS_NORMAL); mshlFlags; // normal out-of-process marshaling
 
-    *clsid = CLSID_ImageHandleProxy; // use ImageHandleProxy class for unmarshaling
+    *clsid = __uuidof(ImageHandleProxy); // use ImageHandleProxy class for unmarshaling
     return S_OK;
 }
 
