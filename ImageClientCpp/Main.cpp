@@ -1,6 +1,5 @@
 #include <iostream>
 #include "../ImageSource/ImageSource.h"
-#include "../ImageSource/ImageSource_i.c"
 #include "../ImageSource/ComSupport.hpp"
 
 
@@ -35,7 +34,7 @@ int main() {
     {
         // create COM object in a separate ImageSource.exe process
         CComPtr<IHandleMgr> mgr;
-        CHECK(mgr.CoCreateInstance(CLSID_HandleMgr));
+        CHECK(mgr.CoCreateInstance(__uuidof(HandleMgr)));
         std::cout << "ImageSource.HandleMgr created." << std::endl;
 
         // access image-data 20k times with console logging every 1k iteration
