@@ -51,13 +51,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\ImageSourceProxy</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>..\ImageSourceProxy</AdditionalIncludeDirectories>
       <HeaderFileName>%(Filename).h</HeaderFileName>
     </Midl>
     <ResourceCompile>
@@ -81,7 +79,6 @@ echo Registering EXE...
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\ImageSourceProxy</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -89,7 +86,6 @@ echo Registering EXE...
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>..\ImageSourceProxy</AdditionalIncludeDirectories>
       <HeaderFileName>%(Filename).h</HeaderFileName>
     </Midl>
     <ResourceCompile>

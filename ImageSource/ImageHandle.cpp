@@ -1,5 +1,6 @@
 #include "ImageHandle.hpp"
 #include "RefOwner.hpp"
+#include "../ImageSourceProxy/ImageSourceProxy.h"
 
 
 ImageHandle::ImageHandle() {
