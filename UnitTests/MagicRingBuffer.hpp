@@ -16,7 +16,7 @@ public:
             GetSystemInfo(&sysinfo);
 
             if (size % sysinfo.dwAllocationGranularity)
-                throw std::runtime_error("Buffer size not multiple of allocation granularity"); // usually 64k
+                throw std::invalid_argument("Buffer size not multiple of allocation granularity"); // usually 64k
         }
 
         // create page-file-backed memory section
