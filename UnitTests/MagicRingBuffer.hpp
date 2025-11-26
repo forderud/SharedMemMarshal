@@ -62,6 +62,7 @@ public:
     }
 
     BYTE& operator[] (size_t idx) {
+        assert(idx < 2 * m_size);
         return m_ptr1[idx];
     }
 
