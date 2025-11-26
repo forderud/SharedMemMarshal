@@ -5,7 +5,8 @@
 
 /** "Magic" ring buffer that's mapped twice into virtual memory.
     This simplifies wrap-around handling when reading & writing to the buffer, since the buffer is repeated in the [size, 2*size) range.
-    DOC: https://en.wikipedia.org/wiki/Circular_buffer#Optimization and https://gist.github.com/rygorous/3158316 */
+    DOC: https://en.wikipedia.org/wiki/Circular_buffer#Optimization and https://gist.github.com/rygorous/3158316
+    IMPROVEMENT OPPORTUNITY: https://andreleite.com/posts/2025/nstl/virtual-memory-ring-buffer/ */
 class MagicRingBuffer {
 public:
     MagicRingBuffer(size_t size) : m_size(size) {
