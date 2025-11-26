@@ -2,6 +2,7 @@
 #include <cassert>
 #include <atlsafe.h>
 
+void RingBufferTests();
 
 /** Creates a SafeArray object that points to existing data. */
 template <unsigned int N>
@@ -54,4 +55,5 @@ void VerifyThat_FADF_AUTO_NeitherDeletesDataNorDescriptor() {
 
 int main() {
     VerifyThat_FADF_AUTO_NeitherDeletesDataNorDescriptor();
+    RingBufferTests();
 }

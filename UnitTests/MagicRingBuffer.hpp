@@ -1,0 +1,95 @@
+#pragma once
+#include <stdexcept>
+#include <Windows.h>
+
+
+/** "Magic" ring buffer that's mapped twice into virtual memory.
+    This simplifies wrap-around handling when reading & writing to the buffer.
+    DOC: https://en.wikipedia.org/wiki/Circular_buffer#Optimization and https://gist.github.com/rygorous/3158316 */
+class MagicRingBuffer {
+public:
+    MagicRingBuffer(size_t size) : m_size(size) {
+        if (size & 0xFFFF)
+            throw std::runtime_error("Buffer size not multiple of 64k");
+
+        Allocate(size);
+    }
+
+    ~MagicRingBuffer() {
+        Clear();
+        m_size = 0;
+    }
+
+    /** Get ring-buffer start address. */
+    BYTE* Ptr() const {
+        return m_ptr;
+    }
+    /** Get ring-buffer size. Buffer indices are valid up to 2x m_size since the buffer is mapped in twice. */
+    size_t Size() const {
+        return m_size;
+    }
+
+private:
+    /** Allocate buffer that is mapped in twice. Retry-based implementation due to risk of data race. */
+    void* Allocate(size_t size, unsigned int num_retries = 4) {
+        void* ptr = nullptr;
+        while (!ptr && (num_retries-- != 0)) {
+            void* target_addr = GetViableAddress(2 * size);
+            ptr = TryAllocateAt(size, target_addr); // might fail
+        }
+
+        return ptr;
+    }
+
+    void* TryAllocateAt(size_t size, void* desired_addr = 0) {
+        // try to allocate and map our space
+        size_t alloc_size = 2 * size;
+        m_handle = CreateFileMappingA(INVALID_HANDLE_VALUE, 0, PAGE_READWRITE, (alloc_size >> 32), (alloc_size & 0xffffffff), 0);
+        if (!m_handle)
+            throw std::runtime_error("Buffer mapping failure");
+
+        // map first instance of buffer
+        // MIGHT SPORADICALLY FAIL if another thread have just allocated another buffer in same address range
+        m_ptr = (BYTE*)MapViewOfFileEx(m_handle, FILE_MAP_ALL_ACCESS, 0, 0, size, desired_addr);
+        if (!m_ptr) {
+            Clear();
+            return nullptr;
+        }
+        // map second instance of buffer
+        // MIGHT SPORADICALLY FAIL if another thread have just allocated another buffer in same address range
+        void* ptr2 = MapViewOfFileEx(m_handle, FILE_MAP_ALL_ACCESS, 0, 0, size, (BYTE*)desired_addr + size);
+        if (!ptr2) {
+            Clear();
+            return nullptr;
+        }
+
+        return m_ptr;
+    }
+
+    void Clear() {
+        if (m_ptr) {
+            UnmapViewOfFile(m_ptr);
+            UnmapViewOfFile(m_ptr + m_size);
+            m_ptr = 0;
+        }
+
+        if (m_handle) {
+            CloseHandle(m_handle);
+            m_handle = 0;
+        }
+    }
+
+    /** Determine a suitable address for a buffer of given sizeby first reserving a memory region and then immediately freeing it. */
+    static void* GetViableAddress(size_t size) {
+        void* ptr = VirtualAlloc(0, size, MEM_RESERVE, PAGE_NOACCESS);
+        if (!ptr)
+            throw std::bad_alloc();
+
+        VirtualFree(ptr, 0, MEM_RELEASE);
+        return ptr;
+    }
+
+    size_t m_size = 0;
+    HANDLE m_handle = 0;
+    BYTE*  m_ptr = nullptr;
+};
