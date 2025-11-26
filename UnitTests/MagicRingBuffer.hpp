@@ -35,29 +35,30 @@ private:
         void* ptr = nullptr;
         while (!ptr && (num_retries-- != 0)) {
             void* target_addr = GetViableAddress(2 * size);
-            ptr = TryAllocateAt(size, target_addr); // might fail
+            ptr = TryAllocateAt(size, target_addr); // might sporadically fail
         }
 
         return ptr;
     }
 
-    void* TryAllocateAt(size_t size, void* desired_addr = 0) {
+    /** Attempt to allocate a buffer of given size twice from the given start address. */
+    void* TryAllocateAt(size_t size, void* start_addr = 0) {
         // try to allocate and map our space
         size_t alloc_size = 2 * size;
-        m_handle = CreateFileMappingA(INVALID_HANDLE_VALUE, 0, PAGE_READWRITE, (alloc_size >> 32), (alloc_size & 0xffffffff), 0);
+        m_handle = CreateFileMappingW(INVALID_HANDLE_VALUE, 0, PAGE_READWRITE, (alloc_size >> 32), (alloc_size & 0xffffffff), 0);
         if (!m_handle)
             throw std::runtime_error("Buffer mapping failure");
 
         // map first instance of buffer
         // MIGHT SPORADICALLY FAIL if another thread have just allocated another buffer in same address range
-        m_ptr = (BYTE*)MapViewOfFileEx(m_handle, FILE_MAP_ALL_ACCESS, 0, 0, size, desired_addr);
+        m_ptr = (BYTE*)MapViewOfFileEx(m_handle, FILE_MAP_ALL_ACCESS, 0, 0, size, start_addr);
         if (!m_ptr) {
             Clear();
             return nullptr;
         }
         // map second instance of buffer
         // MIGHT SPORADICALLY FAIL if another thread have just allocated another buffer in same address range
-        void* ptr2 = MapViewOfFileEx(m_handle, FILE_MAP_ALL_ACCESS, 0, 0, size, (BYTE*)desired_addr + size);
+        void* ptr2 = MapViewOfFileEx(m_handle, FILE_MAP_ALL_ACCESS, 0, 0, size, (BYTE*)start_addr + size);
         if (!ptr2) {
             Clear();
             return nullptr;
