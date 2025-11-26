@@ -31,4 +31,4 @@ The DCOM garbage collector usually cleans up leaking stub references after clien
 ### Links
 * [IMarhal](https://learn.microsoft.com/en-us/windows/win32/api/objidl/nn-objidl-imarshal) interface
 * Inside COM+: [Will That Be Custom or Standard Marshaling?](https://thrysoee.dk/InsideCOM+/ch14c.htm) - uses event objects to synchronize destruction from proxy to server.
-* .Net [unmanaged memory leak when c# get data from COM component](https://github.com/dotnet/runtime/issues/121291) issue.
+* .Net [unmanaged memory leak when c# get data from COM component](https://github.com/dotnet/runtime/issues/121291) issue (resolved).
