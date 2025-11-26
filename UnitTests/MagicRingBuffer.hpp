@@ -31,7 +31,7 @@ public:
 
         // split second half of placeholder range
         BOOL ok = VirtualFree((BYTE*)placeholder + size, size, MEM_RELEASE | MEM_PRESERVE_PLACEHOLDER);
-        assert(ok);
+        assert(ok); ok;
 
         // map first buffer instance into virtual memory
         m_ptr1 = (BYTE*)MapViewOfFile3(m_handle, GetCurrentProcess(), placeholder, 0, size, MEM_REPLACE_PLACEHOLDER, PAGE_READWRITE, nullptr, 0);
