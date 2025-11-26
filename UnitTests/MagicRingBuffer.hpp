@@ -32,7 +32,7 @@ public:
 private:
     /** Allocate buffer that is mapped in twice. Retry-based implementation due to risk of data race. */
     void* Allocate(size_t size, unsigned int retries = 4) {
-        // allocate buffer object
+        // create page-file-backed memory section
         m_handle = CreateFileMappingW(INVALID_HANDLE_VALUE, 0, PAGE_READWRITE, (size >> 32), (size & 0xFFFFFFFF), 0);
         if (!m_handle)
             throw std::bad_alloc();
