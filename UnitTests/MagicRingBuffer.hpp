@@ -26,8 +26,10 @@ public:
 
         // reserve virtual address range that's twice as large
         void* placeholder = VirtualAlloc2(GetCurrentProcess(), nullptr, 2*size, MEM_RESERVE | MEM_RESERVE_PLACEHOLDER, PAGE_NOACCESS, nullptr, 0);
-        if (!placeholder)
+        if (!placeholder) {
+            Clear();
             throw std::bad_alloc();
+        }
 
         // split second half of placeholder range
         BOOL ok = VirtualFree((BYTE*)placeholder + size, size, MEM_RELEASE | MEM_PRESERVE_PLACEHOLDER);
