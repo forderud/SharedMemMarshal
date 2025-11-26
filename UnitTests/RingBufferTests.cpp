@@ -13,5 +13,4 @@ void RingBufferTests() {
     // verify that the same buffer pattern is magically repeated in [size, 2*size) range
     for (size_t i = 0; i < size; i++)
         assert(buffer[size + i] == (i % 0xFF));
-
 }
