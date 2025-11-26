@@ -17,7 +17,6 @@ public:
 
     ~MagicRingBuffer() {
         Clear();
-        m_size = 0;
     }
 
     /** Get ring-buffer start address. */
@@ -32,9 +31,14 @@ public:
 private:
     /** Allocate buffer that is mapped in twice. Retry-based implementation due to risk of data race. */
     void* Allocate(size_t size, unsigned int retries = 4) {
+        // allocate buffer object
+        m_handle = CreateFileMappingW(INVALID_HANDLE_VALUE, 0, PAGE_READWRITE, (size >> 32), (size & 0xffffffff), 0);
+        if (!m_handle)
+            throw std::bad_alloc();
+
         for (size_t i = 0; i < retries; i++) {
             void* target_addr = GetViableAddress(2 * size);
-            void* ptr = TryAllocateAt(size, target_addr); // might sporadically fail
+            void* ptr = TryMapAt(size, target_addr); // might sporadically fail
             if (ptr)
                 return ptr;
         }
@@ -42,14 +46,8 @@ private:
         throw std::bad_alloc();
     }
 
-    /** Attempt to allocate a buffer of given size twice from the given start address. */
-    void* TryAllocateAt(size_t size, void* start_addr = 0) {
-        // allocate and map our space
-        size_t alloc_size = 2 * size;
-        m_handle = CreateFileMappingW(INVALID_HANDLE_VALUE, 0, PAGE_READWRITE, (alloc_size >> 32), (alloc_size & 0xffffffff), 0);
-        if (!m_handle)
-            throw std::bad_alloc();
-
+    /** Attempt to map a buffer of given size twice from the given start address. */
+    void* TryMapAt(size_t size, void* start_addr = 0) {
         // try to map first instance of buffer
         // MIGHT SPORADICALLY FAIL if another thread have just allocated another buffer in same address range
         m_ptr = (BYTE*)MapViewOfFileEx(m_handle, FILE_MAP_ALL_ACCESS, 0, 0, size, start_addr);
@@ -91,7 +89,7 @@ private:
         return ptr;
     }
 
-    size_t m_size = 0;
+    const size_t m_size = 0;
     HANDLE m_handle = 0;
     BYTE*  m_ptr = nullptr;
 };
