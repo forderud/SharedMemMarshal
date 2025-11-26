@@ -4,7 +4,7 @@
 
 
 /** "Magic" ring buffer that's mapped twice into virtual memory.
-    This simplifies wrap-around handling when reading & writing to the buffer.
+    This simplifies wrap-around handling when reading & writing to the buffer, since the buffer is repeated in the [size, 2*size) range.
     DOC: https://en.wikipedia.org/wiki/Circular_buffer#Optimization and https://gist.github.com/rygorous/3158316 */
 class MagicRingBuffer {
 public:
@@ -31,14 +31,15 @@ public:
 
 private:
     /** Allocate buffer that is mapped in twice. Retry-based implementation due to risk of data race. */
-    void* Allocate(size_t size, unsigned int num_retries = 4) {
-        void* ptr = nullptr;
-        while (!ptr && (num_retries-- != 0)) {
+    void* Allocate(size_t size, unsigned int retries = 4) {
+        for (size_t i = 0; i < retries; i++) {
             void* target_addr = GetViableAddress(2 * size);
-            ptr = TryAllocateAt(size, target_addr); // might sporadically fail
+            void* ptr = TryAllocateAt(size, target_addr); // might sporadically fail
+            if (ptr)
+                return ptr;
         }
 
-        return ptr;
+        throw std::bad_alloc();
     }
 
     /** Attempt to allocate a buffer of given size twice from the given start address. */
