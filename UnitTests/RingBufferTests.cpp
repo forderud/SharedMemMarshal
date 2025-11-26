@@ -8,10 +8,10 @@ void RingBufferTests() {
 
     // initialize buffer with buffer[idx] = idx values
     for (size_t i = 0; i < size; i++)
-        buffer.Ptr()[i] = (i % 0xFF);
+        buffer[i] = (i % 0xFF);
 
-    // verify that the same buffer pattern is repeated in [size, 2*size) range
+    // verify that the same buffer pattern is magically repeated in [size, 2*size) range
     for (size_t i = 0; i < size; i++)
-        assert(buffer.Ptr()[size + i] == (i % 0xFF));
+        assert(buffer[size + i] == (i % 0xFF));
 
 }

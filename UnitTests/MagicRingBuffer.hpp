@@ -6,7 +6,7 @@
 
 
 /** "Magic" ring buffer that's mapped twice into virtual memory. The buffer size MUST be a multiple of the allocation granularity (usually 64k).
-    This simplifies wrap-around handling when reading & writing to the buffer, since the buffer is repeated in the [size, 2*size) range.
+    This simplifies wrap-around handling when reading & writing to the buffer, since the buffer content is repeated in the [size, 2*size) range.
     DOC: https://en.wikipedia.org/wiki/Circular_buffer#Optimization and https://andreleite.com/posts/2025/nstl/virtual-memory-ring-buffer/ */
 class MagicRingBuffer {
 public:
@@ -60,6 +60,11 @@ public:
     BYTE* Ptr() const {
         return m_ptr1;
     }
+
+    BYTE& operator[] (size_t idx) {
+        return m_ptr1[idx];
+    }
+
     /** Get ring-buffer size. Buffer indices are valid up to 2*size since the buffer is mapped in twice. */
     size_t Size() const {
         return m_size;
