@@ -30,7 +30,8 @@ public:
             throw std::bad_alloc();
 
         // split second half of placeholder range
-        VirtualFree((BYTE*)placeholder + size, size, MEM_RELEASE | MEM_PRESERVE_PLACEHOLDER);
+        BOOL ok = VirtualFree((BYTE*)placeholder + size, size, MEM_RELEASE | MEM_PRESERVE_PLACEHOLDER);
+        assert(ok);
 
         // map first buffer instance into virtual memory
         m_ptr1 = (BYTE*)MapViewOfFile3(m_handle, GetCurrentProcess(), placeholder, 0, size, MEM_REPLACE_PLACEHOLDER, PAGE_READWRITE, nullptr, 0);
@@ -38,6 +39,7 @@ public:
             Clear();
             throw std::bad_alloc();
         }
+        assert(m_ptr1 == placeholder);
 
         // map second buffer instance into virtual memory
         m_ptr2 = (BYTE*)MapViewOfFile3(m_handle, GetCurrentProcess(), (BYTE*)placeholder + size, 0, size, MEM_REPLACE_PLACEHOLDER, PAGE_READWRITE, nullptr, 0);
@@ -45,7 +47,6 @@ public:
             Clear();
             throw std::bad_alloc();
         }
-
         assert(m_ptr2 == m_ptr1 + size);
     }
 
