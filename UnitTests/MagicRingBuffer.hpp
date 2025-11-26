@@ -14,25 +14,6 @@ public:
         if (size & 0xFFFF)
             throw std::runtime_error("Buffer size not multiple of 64k");
 
-        Allocate(size);
-    }
-
-    ~MagicRingBuffer() {
-        Clear();
-    }
-
-    /** Get ring-buffer start address. */
-    BYTE* Ptr() const {
-        return m_ptr1;
-    }
-    /** Get ring-buffer size. Buffer indices are valid up to 2x m_size since the buffer is mapped in twice. */
-    size_t Size() const {
-        return m_size;
-    }
-
-private:
-    /** Allocate buffer that is mapped in twice. */
-    void Allocate(size_t size) {
         // create page-file-backed memory section
         m_handle = CreateFileMappingW(INVALID_HANDLE_VALUE, 0, PAGE_READWRITE, (size >> 32), (size & 0xFFFFFFFF), 0);
         if (!m_handle)
@@ -63,6 +44,20 @@ private:
         assert(m_ptr2 == m_ptr1 + size);
     }
 
+    ~MagicRingBuffer() {
+        Clear();
+    }
+
+    /** Get ring-buffer start address. */
+    BYTE* Ptr() const {
+        return m_ptr1;
+    }
+    /** Get ring-buffer size. Buffer indices are valid up to 2x m_size since the buffer is mapped in twice. */
+    size_t Size() const {
+        return m_size;
+    }
+
+private:
     void Clear() {
         if (m_ptr2) {
             UnmapViewOfFile(m_ptr2);
