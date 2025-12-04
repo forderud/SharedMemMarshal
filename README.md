@@ -8,8 +8,8 @@ Sample code for custom COM marshaling with shared memory. This pattern can be us
 |------------------|-------------|
 | `ImageSource`    | COM _server_ EXE that exposes image-data. |
 |`ImageSourceProxy`| COM _proxy_ DLL that is automatically loaded into the client process to facilitate custom marshaling. This is fully _transparent_ without the client process' awareness. |
-| `ImageClientCpp` | Sample C++ command-line project for accessing image-data through shared memory. |
-| `ImageClientCs`  | Sample C# command-line project for accessing image-data through shared memory. |
+| `ImageClientCpp` | Sample C++ command-line project for accessing image-data that happens to be stored in shared memory. |
+| `ImageClientCs`  | Sample C# command-line project for accessing image-data that happens to be stored in shared memory. |
 | `UnitTests`      | Unit-test project. |
 
 ### Getting started
