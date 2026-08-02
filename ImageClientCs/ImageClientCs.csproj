@@ -6,7 +6,6 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4B9F3A4E-9D65-4A9C-8B6A-0D84659C97B6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ImageClientCs</RootNamespace>
     <AssemblyName>ImageClientCs</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
