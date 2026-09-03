@@ -49,10 +49,9 @@ HRESULT ImageHandle::GetMarshalSizeMax(const IID& iid, void* /*pv*/, DWORD /*des
 }
 
 /** Serialize object. Called from server (stub). */
-HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DWORD /*destContext*/, void* /*reserved*/, DWORD mshlFlags) {
-    // verify that comm is between processes on same computer with shared-mem support 
-    //if (destContext != MSHCTX_LOCAL)
-    //    return E_FAIL;
+HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, DWORD destContext, void* /*reserved*/, DWORD mshlFlags) {
+    // verify that comm is either in-proc between apartments or out-of-proc
+    assert((destContext == MSHCTX_LOCAL) || (destContext == MSHCTX_INPROC));
 
     assert(iid == __uuidof(IImageHandle)); iid;
     assert(pv == this); pv;             // class marshals itself
@@ -64,7 +63,7 @@ HRESULT ImageHandle::MarshalInterface(IStream* strm, const IID& iid, void* pv, D
     // serialize reference to a RefOwner object to manage references to this object from the proxy
     auto ref_owner = CreateLocalInstance<RefOwner>();
     ref_owner->SetObject(static_cast<IImageHandle*>(this));
-    RETURN_IF_FAILED(CoMarshalInterface(strm, IID_IUnknown, ref_owner, MSHCTX_LOCAL, NULL, mshlFlags));
+    RETURN_IF_FAILED(CoMarshalInterface(strm, IID_IUnknown, ref_owner, destContext, NULL, mshlFlags));
 
     return S_OK;
 }
