@@ -8,7 +8,7 @@
 
 
 /** Client-side proxy class for the ImageHandle class. */
-class ATL_NO_VTABLE ImageHandleProxy :
+class ImageHandleProxy :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<ImageHandleProxy, &CLSID_ImageHandleProxy>,
     public IImageHandle,

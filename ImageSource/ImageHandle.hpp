@@ -6,7 +6,7 @@
 #include "MarshalImage.hpp"
 
 
-class ATL_NO_VTABLE ImageHandle :
+class ImageHandle :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<ImageHandle>, // no registry entries
     public IImageHandle,

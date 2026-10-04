@@ -3,7 +3,7 @@
 
 
 /** Tiny COM oject for controlling the lifetime of another object. */
-class ATL_NO_VTABLE RefOwner :
+class RefOwner :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<RefOwner>, // no registry entries
     public IUnknown {

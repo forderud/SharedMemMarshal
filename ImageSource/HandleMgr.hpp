@@ -5,7 +5,7 @@
 #include "ImageSource.h"
 
 
-class ATL_NO_VTABLE HandleMgr :
+class HandleMgr :
     public CComObjectRootEx<CComMultiThreadModel>, // also compatible with single-threaded apartment
     public CComCoClass<HandleMgr, &CLSID_HandleMgr>,
     public IHandleMgr {
